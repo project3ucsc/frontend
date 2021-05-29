@@ -15,8 +15,14 @@
 .login-form {
   padding: 20px;
   background-color: #0000000f;
-  max-width: 400px;
-  margin: auto 50px;
+  max-width: 600px;
+  min-width: 200px;
+  margin: auto;
+
+  img{
+    margin-bottom: 25px;
+    width: 100%;
+  }
 
 }
 .login-form-forgot {

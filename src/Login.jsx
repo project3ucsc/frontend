@@ -1,19 +1,21 @@
 // import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, Checkbox  } from 'antd';
+import { Form, Input, Button, Checkbox   } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import './login.scss';
+import logo from './img/logo.png'
 
 const Login = () => {
 
 
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
+    
   };
 
   return (
         
-         <div className="login-container" >
+    <div className="login-container" >
       <Form
         name="normal_login"
         className="login-form"
@@ -22,6 +24,7 @@ const Login = () => {
         }}
         onFinish={onFinish}
       >
+        <img  src={logo} />
         <Form.Item
           name="username"
           rules={[
@@ -33,6 +36,7 @@ const Login = () => {
         >
           <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
         </Form.Item>
+
         <Form.Item
           name="password"
           rules={[
@@ -48,6 +52,7 @@ const Login = () => {
             placeholder="Password"
           />
         </Form.Item>
+
         <Form.Item>
           <Form.Item name="remember" valuePropName="checked" noStyle>
             <Checkbox>Remember me</Checkbox>
@@ -65,7 +70,7 @@ const Login = () => {
           Or <a>register now!</a>
         </Form.Item>
       </Form>
-      </div>
+    </div>
    
     
   );
