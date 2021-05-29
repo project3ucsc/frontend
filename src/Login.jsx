@@ -1,15 +1,40 @@
-// import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, Checkbox   } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Form, Input, Button, Checkbox , Alert } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import 'antd/dist/antd.css';
+import axios from 'axios'
+import { setSessionData,removeSessionData } from './utils/common'
+
 import './login.scss';
 import logo from './img/logo.png'
 
-const Login = () => {
 
 
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values);
+const Login = ({history}) => {
+  const [loading, setLoading] = useState(false)
+  const [error, seterror] = useState('')
+
+
+  
+  const onFinish = ({username,password}) => {
+    setLoading(true)
+
+    axios.post( 'http://localhost:3001/login' ,{ username, password }).then(res => {
+      setLoading(false)
+      setSessionData(res.data)
+      history.push('/dashboard')
+    }).catch(err => {
+      setLoading(false)
+
+      if (err.response.status === 500 )
+        seterror('Usename or password incorrect')
+      else if ( err.response.status === 401 )
+        seterror('Authentication Failed')
+      else
+        seterror('Unknown error occured')
+
+      // console.log(err.response.data);
+    })
+
     
   };
 
@@ -24,7 +49,18 @@ const Login = () => {
         }}
         onFinish={onFinish}
       >
-        <img  src={logo} />
+        <img  src={logo} alt='logo' />
+
+        {(error !== '') &&
+           <Alert
+           message="Error Text"
+           description={error}
+           type="error"
+           closable
+           onClose={() => seterror('')}
+         />
+        }
+
         <Form.Item
           name="username"
           rules={[
@@ -64,7 +100,7 @@ const Login = () => {
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit" className="login-form-button">
+          <Button loading={loading}  type="primary" htmlType="submit" className="login-form-button">
             Log in
           </Button>
           Or <a>register now!</a>
