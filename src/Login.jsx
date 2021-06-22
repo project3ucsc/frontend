@@ -1,49 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { Form, Input, Button, Checkbox , Alert } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { Form, Input, Button, Checkbox, Alert } from "antd";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { authenticationservice } from "./services/authentication.service";
+import "./login.scss";
+import logo from "./img/logo.png";
 
+const Login = ({ history }) => {
+  const [loading, setLoading] = useState(false);
+  const [error, seterror] = useState("");
 
-
-import axios from 'axios'
-import { setSessionData } from './utils/common'
-import {authenticationservice} from './services/authentication.service'
-import './login.scss';
-import logo from './img/logo.png'
-
-
-
-const Login = ({history}) => {
-  
-  const [loading, setLoading] = useState(false)
-  const [error, seterror] = useState('')
-
-
-  
-  const onFinish = ({username,password}) => {
-    setLoading(true)
-    axios.post( 'http://localhost:3002/login' ,{ username, password }).then(res => {
-      setLoading(false)
-      setSessionData(res.data)
-      history.push('/dashboard')
-    }).catch(err => {
-      setLoading(false)
-
-      if (err.response.status === 500 )
-        seterror('Usename or password incorrect')
-      else if ( err.response.status === 401 )
-        seterror('Authentication Failed')
-      else
-        seterror('Unknown error occured')
-
-      // console.log(err.response.data);
-    })
-    
+  const onFinish = ({ username, password }) => {
+    setLoading(true);
+    authenticationservice
+      .login(username, password)
+      .then((data) => history.push("/dashboard"))
+      .catch((err) => {
+        setLoading(false);
+        seterror(err.message);
+      });
   };
 
   return (
-        
-    <div className="login-container" >
+    <div className="login-container">
       <Form
         name="normal_login"
         className="login-form"
@@ -52,28 +31,31 @@ const Login = ({history}) => {
         }}
         onFinish={onFinish}
       >
-        <img  src={logo} alt='logo' />
+        <img src={logo} alt="logo" />
 
-        {(error !== '') &&
-           <Alert
-           message="Error Text"
-           description={error}
-           type="error"
-           closable
-           onClose={() => seterror('')}
-         />
-        }
+        {error !== "" && (
+          <Alert
+            message="Error Text"
+            description={error}
+            type="error"
+            closable
+            onClose={() => seterror("")}
+          />
+        )}
 
         <Form.Item
           name="username"
           rules={[
             {
               required: true,
-              message: 'Please input your Username!',
+              message: "Please input your Username!",
             },
           ]}
         >
-          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+          <Input
+            prefix={<UserOutlined className="site-form-item-icon" />}
+            placeholder="Username"
+          />
         </Form.Item>
 
         <Form.Item
@@ -81,7 +63,7 @@ const Login = ({history}) => {
           rules={[
             {
               required: true,
-              message: 'Please input your Password!',
+              message: "Please input your Password!",
             },
           ]}
         >
@@ -103,15 +85,18 @@ const Login = ({history}) => {
         </Form.Item>
 
         <Form.Item>
-          <Button loading={loading}  type="primary" htmlType="submit" className="login-form-button">
+          <Button
+            loading={loading}
+            type="primary"
+            htmlType="submit"
+            className="login-form-button"
+          >
             Log in
           </Button>
           Or <a>register now!</a>
         </Form.Item>
       </Form>
     </div>
-   
-    
   );
 };
 

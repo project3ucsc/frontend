@@ -1,26 +1,14 @@
-
-export const getSessionData = () => {
-    const data = localStorage.getItem('user')
-    if(data) return JSON.parse(data)
-    else return null
-}
-
-export const setSessionData = (user) => {
-    const data = JSON.stringify(user)
-    localStorage.setItem('user',data)
-}
-
-export const removeSessionData = () => {
-    localStorage.removeItem('user')
-}
+import { createBrowserHistory } from "history";
 
 export function authHeader() {
-    // return authorization header with jwt token
-    let user = JSON.parse(localStorage.getItem('user'));
+  // return authorization header with jwt token
+  let user = JSON.parse(localStorage.getItem("user"));
 
-    if (user && user.token) {
-        return { 'Authorization': 'Bearer ' + user.token };
-    } else {
-        return {};
-    }
+  if (user && user.token) {
+    return { Authorization: "Bearer " + user.token };
+  } else {
+    return {};
+  }
 }
+
+export const history = createBrowserHistory();
