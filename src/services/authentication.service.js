@@ -16,7 +16,7 @@ export const getSessionData = () => {
 function login(username, password) {
   return new Promise((resolve, reject) => {
     axios
-      .post("http://localhost:3002/login", { username, password })
+      .post("http://knowledge-hub-backend.azurewebsites.net/login", { username, password })
       .then((res) => {
         const data = JSON.stringify(res.data);
         localStorage.setItem("user", data);
