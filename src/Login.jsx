@@ -1,15 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+
 import { Form, Input, Button, Checkbox , Alert } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import axios from 'axios'
-import { setSessionData,removeSessionData } from './utils/common'
 
+
+
+import axios from 'axios'
+import { setSessionData } from './utils/common'
+import {authenticationservice} from './services/authentication.service'
 import './login.scss';
 import logo from './img/logo.png'
 
 
 
 const Login = ({history}) => {
+  
   const [loading, setLoading] = useState(false)
   const [error, seterror] = useState('')
 
@@ -17,8 +22,7 @@ const Login = ({history}) => {
   
   const onFinish = ({username,password}) => {
     setLoading(true)
-
-    axios.post( 'http://localhost:3001/login' ,{ username, password }).then(res => {
+    axios.post( 'http://localhost:3002/login' ,{ username, password }).then(res => {
       setLoading(false)
       setSessionData(res.data)
       history.push('/dashboard')
@@ -34,7 +38,6 @@ const Login = ({history}) => {
 
       // console.log(err.response.data);
     })
-
     
   };
 

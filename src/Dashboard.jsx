@@ -14,7 +14,7 @@ export default function Dashboard({history}) {
     return (
         <div>
             <h1>Dashboard</h1>
-            <h2>Welcome {session.username} </h2>
+            {/* <h2>Welcome {session.username} </h2> */}
             {
                 session ? <Button onClick={logout} >logout</Button> :  <Button><Link to='/login' >login</Link></Button>
             }
