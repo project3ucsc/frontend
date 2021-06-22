@@ -79,9 +79,9 @@ const Login = ({ history }) => {
             <Checkbox>Remember me</Checkbox>
           </Form.Item>
 
-          <a className="login-form-forgot" href="#">
+          <button className="login-form-forgot" onClick={console.log(5)} >
             Forgot password
-          </a>
+          </button>
         </Form.Item>
 
         <Form.Item>
@@ -93,7 +93,7 @@ const Login = ({ history }) => {
           >
             Log in
           </Button>
-          Or <a>register now!</a>
+          Or <button>register now!</button>
         </Form.Item>
       </Form>
     </div>
