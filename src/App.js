@@ -3,14 +3,14 @@ import { Router, Switch, Route } from "react-router-dom";
 import "antd/dist/antd.css";
 import { Button } from "antd";
 
-import Login from "./Login";
-import Home from "./Home";
-import Dashboard from "./Dashboard";
-import { history, Role } from "./utils/common";
-import auth from "./services/authentication.service";
+import Login from "Pages/Login";
+import Home from "Pages/Home";
+import Dashboard from "Pages/Dashboard";
+import { history, Role } from "Utils/common";
+import auth from "Services/authentication.service";
 
-import PrivateRoute from "./utils/PrivateRoute";
-import PublicRoute from "./utils/PublicRoute";
+import PrivateRoute from "Utils/PrivateRoute";
+import PublicRoute from "Utils/PublicRoute";
 
 function App() {
   const [currentUser, setCurrentUser] = useState();
