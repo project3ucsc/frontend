@@ -1,26 +1,31 @@
 // import React from 'react'
 import axios from "axios";
-import { history } from "../utils/common";
+import { BehaviorSubject } from "rxjs";
 
-export const authenticationservice = {
+const currentUserSubject = new BehaviorSubject(
+  JSON.parse(localStorage.getItem("user"))
+);
+
+const authenticationservice = {
   login,
   logout,
-};
-
-export const getSessionData = () => {
-  const data = localStorage.getItem("user");
-  if (data) return JSON.parse(data);
-  else return null;
+  currentuser: currentUserSubject.asObservable(),
+  get currentUseValue() {
+    return currentUserSubject.value;
+  },
 };
 
 function login(username, password) {
   return new Promise((resolve, reject) => {
     axios
-      .post("https://knowledge-hub-backend.azurewebsites.net/login", { username, password })
+      .post("https://knowledge-hub-backend.azurewebsites.net/login", {
+        username,
+        password,
+      })
       .then((res) => {
         const data = JSON.stringify(res.data);
         localStorage.setItem("user", data);
-
+        currentUserSubject.next(res.data);
         resolve(res.data);
       })
       .catch((err) => {
@@ -36,5 +41,7 @@ function login(username, password) {
 
 function logout() {
   localStorage.removeItem("user");
-  history.push("/login");
+  currentUserSubject.next(null);
 }
+
+export default authenticationservice;

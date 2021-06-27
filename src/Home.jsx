@@ -1,22 +1,20 @@
 import React from "react";
-import { Link } from "react-router-dom";
+// import { history } from "./utils/common";
 import { Button } from "antd";
-import {
-  getSessionData,
-  authenticationservice,
-} from "./services/authentication.service";
 
-export default function Home() {
+export default function Home({ history, currentUser }) {
   return (
     <div>
-      <h1>Home</h1>
-      {getSessionData() ? (
-        <Button onClick={authenticationservice.logout}>logout</Button>
-      ) : (
-        <Button>
-          <Link to="/login">login</Link>
+      {!currentUser && (
+        <Button
+          onClick={() => {
+            history.push("/login");
+          }}
+        >
+          Login
         </Button>
       )}
+      <h1>Home</h1>
     </div>
   );
 }
