@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Router, Switch, Route } from "react-router-dom";
 import "antd/dist/antd.css";
 import { Button } from "antd";
 
 import Login from "./Login";
 import Home from "./Home";
 import Dashboard from "./Dashboard";
-import { history } from "./utils/common";
+import { history, Role } from "./utils/common";
 import auth from "./services/authentication.service";
 
 import PrivateRoute from "./utils/PrivateRoute";
@@ -38,7 +38,12 @@ function App() {
             render={(props) => <Home {...props} currentUser={currentUser} />}
           />
           <PublicRoute exact path="/login" component={Login} />
-          <PrivateRoute exact path="/dashboard" component={Dashboard} />
+          <PrivateRoute
+            exact
+            path="/dashboard"
+            roles={[Role.SCHOOLADMIN, Role.STUDENT, Role.PRINCIPAl]}
+            component={Dashboard}
+          />
         </Switch>
       </Router>
     </div>

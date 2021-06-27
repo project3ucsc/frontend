@@ -8,7 +8,7 @@ export default function PublicRoute({ component: Component, ...rest }) {
     <Route
       {...rest}
       render={(props) =>
-        !auth.currentUseValue ? (
+        !auth.currentUserValue ? (
           <Component {...props} />
         ) : (
           <Redirect

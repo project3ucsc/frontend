@@ -10,7 +10,7 @@ const authenticationservice = {
   login,
   logout,
   currentuser: currentUserSubject.asObservable(),
-  get currentUseValue() {
+  get currentUserValue() {
     return currentUserSubject.value;
   },
 };
@@ -26,7 +26,7 @@ function login(username, password) {
         const data = JSON.stringify(res.data);
         localStorage.setItem("user", data);
         currentUserSubject.next(res.data);
-        resolve(res.data);
+        resolve();
       })
       .catch((err) => {
         if (err.response.status === 500)

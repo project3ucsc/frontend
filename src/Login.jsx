@@ -14,7 +14,7 @@ const Login = ({ history }) => {
     setLoading(true);
     auth
       .login(username, password)
-      .then((data) => history.push("/dashboard"))
+      .then(() => history.push("/dashboard"))
       .catch((err) => {
         setLoading(false);
         seterror(err.message);

@@ -12,3 +12,11 @@ export function authHeader() {
 }
 
 export const history = createBrowserHistory();
+
+export const Role = {
+  STUDENT: "STUDENT",
+  TEACHER: "TEACHER",
+  PRINCIPAl: "PRINCIPAl",
+  SCHOOLADMIN: "SCHOOLADMIN",
+  ADMIN: "ADMIN",
+};
