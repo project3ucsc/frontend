@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Router, Switch, Route } from "react-router-dom";
 import "antd/dist/antd.css";
 import "./index.scss";
-import { Layout, Button } from "antd";
-import { LogoutOutlined, LoginOutlined } from "@ant-design/icons";
+import { Layout, Button, Avatar } from "antd";
+import { LogoutOutlined, LoginOutlined, UserOutlined } from "@ant-design/icons";
 
 import Login from "Pages/Login";
 import Home from "Pages/Home";
@@ -41,8 +41,11 @@ function App() {
             <>
               <Button type="default" className="logoutbtn" onClick={logout}>
                 <LogoutOutlined />
-              </Button>{" "}
-              <span className="logtext">{currentUser.username}</span>
+              </Button>
+              <span className="logtext">
+                <Avatar size="small" icon={<UserOutlined />} />
+                {currentUser.username}
+              </span>
             </>
           ) : (
             <>

@@ -30,9 +30,18 @@
       line-height: 31px;
       margin-right: 10px;
     }
+    .ant-avatar {
+      margin-right: 5px;
+      margin-bottom: 2px;
+    }
     .logoutbtn {
       float: right;
       margin: 16px 0 16px 0;
     }
   }
+}
+
+.card-wrapper {
+  display: flex;
+  flex-wrap: wrap;
 }
