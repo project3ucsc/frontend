@@ -1,6 +1,6 @@
 import React from "react";
 import { Layout } from "antd";
-import ContentLayout from "Components/ContentLayout";
+import ContentLayout from "components/ContentLayout";
 
 export default function Home() {
   const { Content } = Layout;
