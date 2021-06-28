@@ -1,20 +1,22 @@
 import React from "react";
-// import { history } from "./utils/common";
-import { Button } from "antd";
+import { Layout } from "antd";
+import ContentLayout from "Components/ContentLayout";
 
-export default function Home({ history, currentUser }) {
+export default function Home() {
+  const { Content } = Layout;
+
   return (
-    <div>
-      {!currentUser && (
-        <Button
-          onClick={() => {
-            history.push("/login");
-          }}
-        >
-          Login
-        </Button>
-      )}
-      <h1>Home</h1>
-    </div>
+    <ContentLayout paths={["Home"]}>
+      <Content
+        className="site-layout-background"
+        style={{
+          padding: 24,
+          margin: 0,
+          minHeight: 280,
+        }}
+      >
+        Bla bla home
+      </Content>
+    </ContentLayout>
   );
 }

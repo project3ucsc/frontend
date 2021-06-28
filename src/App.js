@@ -3,7 +3,7 @@ import { Router, Switch, Route } from "react-router-dom";
 import "antd/dist/antd.css";
 import "./index.scss";
 import { Layout, Button } from "antd";
-import { LogoutOutlined } from "@ant-design/icons";
+import { LogoutOutlined, LoginOutlined } from "@ant-design/icons";
 
 import Login from "Pages/Login";
 import Home from "Pages/Home";
@@ -35,32 +35,32 @@ function App() {
     <div className="App">
       <Layout className="MainLayout">
         <Layout.Header className="header">
-          <div className="logo" />
+          <div className="logo"> KNOWLEDGEHUB </div>
 
-          {/* {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />} */}
-          {/* <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
-            <Menu.Item key="1">
-              <Button type="primary" onClick={toggleCollapsed}>
-                <MenuUnfoldOutlined />
-              </Button>
-            </Menu.Item>
-            <Menu.Item key="2">nav 2</Menu.Item>
-
-            {currentUser && <Menu.Item key="3">logout</Menu.Item>}
-          </Menu> */}
-
-          <Button type="primary" onClick={logout}>
-            <LogoutOutlined />
-          </Button>
+          {currentUser ? (
+            <>
+              <Button type="default" className="logoutbtn" onClick={logout}>
+                <LogoutOutlined />
+              </Button>{" "}
+              <span className="logtext">{currentUser.username}</span>
+            </>
+          ) : (
+            <>
+              <Button
+                type="default"
+                className="logoutbtn"
+                onClick={() => history.push("/login")}
+              >
+                <LoginOutlined />
+              </Button>{" "}
+              <span className="logtext"> You are not logged in</span>
+            </>
+          )}
         </Layout.Header>
 
         <Router history={history}>
           <Switch>
-            <Route
-              exact
-              path="/"
-              render={(props) => <Home {...props} currentUser={currentUser} />}
-            />
+            <Route exact path="/" render={(props) => <Home {...props} />} />
             <PublicRoute exact path="/login" component={Login} />
             <PrivateRoute
               exact

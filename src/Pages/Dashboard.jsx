@@ -1,19 +1,15 @@
 import React from "react";
-import { Layout, Breadcrumb } from "antd";
+import { Layout } from "antd";
+import ContentLayout from "Components/ContentLayout";
 
-import "./Dashboard.scss";
-import Nav from "Components/Nav";
-export default function Dashboard({ collapsed }) {
+import SideBar from "Components/SideBar";
+export default function Dashboard() {
   const { Content } = Layout;
   return (
     <Layout>
-      <Nav />
+      <SideBar />
 
-      <Layout style={{ padding: "0 24px 24px" }}>
-        <Breadcrumb style={{ margin: "16px 0" }}>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
-        </Breadcrumb>
+      <ContentLayout paths={["Home", "Dashboard"]}>
         <Content
           className="site-layout-background"
           style={{
@@ -22,9 +18,9 @@ export default function Dashboard({ collapsed }) {
             minHeight: 280,
           }}
         >
-          Content
+          Bla bla dzfg;ihdfb dshb
         </Content>
-      </Layout>
+      </ContentLayout>
     </Layout>
   );
 }
