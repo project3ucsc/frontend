@@ -1,5 +1,5 @@
 import { Route, Redirect } from "react-router-dom";
-import { getSessionData } from "../services/authentication.service";
+import auth from "Services/authentication.service";
 
 import React from "react";
 
@@ -8,7 +8,7 @@ export default function PublicRoute({ component: Component, ...rest }) {
     <Route
       {...rest}
       render={(props) =>
-        !getSessionData() ? (
+        !auth.currentUserValue ? (
           <Component {...props} />
         ) : (
           <Redirect

@@ -2,9 +2,9 @@ import React, { useState } from "react";
 
 import { Form, Input, Button, Checkbox, Alert } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { authenticationservice } from "./services/authentication.service";
+import auth from "Services/authentication.service";
 import "./login.scss";
-import logo from "./img/logo.png";
+import logo from "img/logo.png";
 
 const Login = ({ history }) => {
   const [loading, setLoading] = useState(false);
@@ -12,9 +12,9 @@ const Login = ({ history }) => {
 
   const onFinish = ({ username, password }) => {
     setLoading(true);
-    authenticationservice
+    auth
       .login(username, password)
-      .then((data) => history.push("/dashboard"))
+      .then(() => history.push("/dashboard"))
       .catch((err) => {
         setLoading(false);
         seterror(err.message);
@@ -79,7 +79,7 @@ const Login = ({ history }) => {
             <Checkbox>Remember me</Checkbox>
           </Form.Item>
 
-          <button className="login-form-forgot" onClick={console.log(5)} >
+          <button className="login-form-forgot" onClick={console.log(5)}>
             Forgot password
           </button>
         </Form.Item>
