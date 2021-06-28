@@ -1,5 +1,5 @@
-.login-container{
-  background-image: url('./img/bg1.jpg');
+.login-container {
+  background-image: url("../img/bg1.jpg");
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -19,21 +19,19 @@
   min-width: 200px;
   margin: auto;
 
-  img{
+  img {
     margin-bottom: 25px;
     width: 100%;
   }
-
 }
 .login-form-forgot {
   float: right;
 }
 .ant-col-rtl {
-    .login-form-forgot {
+  .login-form-forgot {
     float: left;
   }
 }
 .login-form-button {
   width: 100%;
 }
-

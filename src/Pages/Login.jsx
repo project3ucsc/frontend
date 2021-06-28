@@ -4,7 +4,7 @@ import { Form, Input, Button, Checkbox, Alert } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import auth from "Services/authentication.service";
 import "./login.scss";
-import logo from "./img/logo.png";
+import logo from "img/logo.png";
 
 const Login = ({ history }) => {
   const [loading, setLoading] = useState(false);
