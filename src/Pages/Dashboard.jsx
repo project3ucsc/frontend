@@ -1,8 +1,8 @@
 import React from "react";
 import { Layout, Row, Col, Card, Space } from "antd";
-import ContentLayout from "Components/ContentLayout";
+import ContentLayout from "components/ContentLayout";
 
-import SideBar from "Components/SideBar";
+import SideBar from "components/SideBar";
 export default function Dashboard() {
   const subjects = ["Maths", "Chemistry", "Physics", "English"];
 

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { Form, Input, Button, Checkbox, Alert } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import auth from "Services/authentication.service";
+import auth from "services/authentication.service";
 import "./login.scss";
 import logo from "img/logo.png";
 

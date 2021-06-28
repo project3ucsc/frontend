@@ -5,14 +5,14 @@ import "./index.scss";
 import { Layout, Button, Avatar } from "antd";
 import { LogoutOutlined, LoginOutlined, UserOutlined } from "@ant-design/icons";
 
-import Login from "Pages/Login";
-import Home from "Pages/Home";
-import Dashboard from "Pages/Dashboard";
-import { history, Role } from "Utils/common";
-import auth from "Services/authentication.service";
+import Login from "pages/Login";
+import Home from "pages/Home";
+import Dashboard from "pages/Dashboard";
+import { history, Role } from "utils/common";
+import auth from "services/authentication.service";
 
-import PrivateRoute from "Utils/PrivateRoute";
-import PublicRoute from "Utils/PublicRoute";
+import PrivateRoute from "utils/PrivateRoute";
+import PublicRoute from "utils/PublicRoute";
 
 function App() {
   const [currentUser, setCurrentUser] = useState();
