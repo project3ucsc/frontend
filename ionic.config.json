@@ -1,0 +1,7 @@
+{
+  "name": "knowledgehub",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
