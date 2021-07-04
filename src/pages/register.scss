@@ -1,0 +1,47 @@
+.reg-container {
+  background-image: url("../img/bg.png");
+  background-color: #0c274f;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  margin: auto;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+
+  .topic {
+    margin: auto;
+    color: white;
+    font-size: 3em;
+    font-family: auto;
+  }
+}
+// .ant-alert {
+//   margin-bottom: 15px;
+// }
+
+.reg-form {
+  padding: 20px;
+  background-color: #ffffffd2;
+  max-width: 600px;
+  min-width: 200px;
+  height: 100%;
+}
+.img-container {
+  max-width: 600px;
+  min-width: 200px;
+}
+.slide-img {
+  max-width: 600px;
+  min-width: 200px;
+  object-fit: cover;
+}
+
+@media only screen and (max-width: 1200px) {
+  .img-container {
+    display: none;
+  }
+}
