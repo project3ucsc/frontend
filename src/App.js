@@ -6,6 +6,7 @@ import { Layout, Button, Avatar } from "antd";
 import { LogoutOutlined, LoginOutlined, UserOutlined } from "@ant-design/icons";
 
 import Login from "pages/Login";
+import Register from "pages/Register";
 import Home from "pages/Home";
 import Dashboard from "pages/Dashboard";
 import { history, Role } from "utils/common";
@@ -65,6 +66,7 @@ function App() {
           <Switch>
             <Route exact path="/" render={(props) => <Home {...props} />} />
             <PublicRoute exact path="/login" component={Login} />
+            <PublicRoute exact path="/register" component={Register} />
             <PrivateRoute
               exact
               path="/dashboard"

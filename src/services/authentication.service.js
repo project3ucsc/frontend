@@ -9,6 +9,7 @@ const currentUserSubject = new BehaviorSubject(
 const authenticationservice = {
   login,
   logout,
+  register,
   currentuser: currentUserSubject.asObservable(),
   get currentUserValue() {
     return currentUserSubject.value;
@@ -27,6 +28,28 @@ function login(username, password) {
         localStorage.setItem("user", data);
         currentUserSubject.next(res.data);
         resolve();
+      })
+      .catch((err) => {
+        if (err.response.status === 500)
+          reject(new Error("Usename or password incorrect"));
+        else if (err.response.status === 401)
+          reject(new Error("Authentication Failed"));
+        else reject(new Error("Unknown error occured"));
+        // console.log(err.response.data);
+      });
+  });
+}
+
+function register(data) {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(
+        "https://knowledge-hub-backend.azurewebsites.net/login/register",
+        data
+      )
+      .then((res) => {
+        const data = JSON.stringify(res.data);
+        resolve(data);
       })
       .catch((err) => {
         if (err.response.status === 500)
