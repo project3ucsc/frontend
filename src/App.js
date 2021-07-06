@@ -15,6 +15,7 @@ import auth from "services/authentication.service";
 
 import PrivateRoute from "utils/PrivateRoute";
 import PublicRoute from "utils/PublicRoute";
+import ForgotPass from "pages/ForgotPass";
 
 function App() {
   const [currentUser, setCurrentUser] = useState();
@@ -70,6 +71,7 @@ function App() {
             <Route exact path="/" render={(props) => <Home {...props} />} />
 
             <PublicRoute exact path="/login" component={Login} />
+            <PublicRoute exact path="/forgot-password" component={ForgotPass} />
             <PublicRoute exact path="/register" component={Register} />
             <PrivateRoute
               exact

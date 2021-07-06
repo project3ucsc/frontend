@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Form, Input, Button, Checkbox, Alert } from "antd";
+import { Form, Input, Button, Checkbox, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import auth from "services/authentication.service";
 import "./login.scss";
@@ -8,7 +8,6 @@ import logo from "img/logo.png";
 
 const Login = ({ history }) => {
   const [loading, setLoading] = useState(false);
-  const [error, seterror] = useState("");
 
   const onFinish = ({ username, password }) => {
     setLoading(true);
@@ -17,7 +16,7 @@ const Login = ({ history }) => {
       .then(() => history.push("/dashboard"))
       .catch((err) => {
         setLoading(false);
-        seterror(err.message);
+        message.error(err.message);
       });
   };
 
@@ -32,16 +31,6 @@ const Login = ({ history }) => {
         onFinish={onFinish}
       >
         <img src={logo} alt="logo" />
-
-        {error !== "" && (
-          <Alert
-            message="Error Text"
-            description={error}
-            type="error"
-            closable
-            onClose={() => seterror("")}
-          />
-        )}
 
         <Form.Item
           name="username"

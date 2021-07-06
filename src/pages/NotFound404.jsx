@@ -1,7 +1,7 @@
 import { Result, Button } from "antd";
-import { history } from "utils/common";
+// import { history } from "utils/common";
 
-export default function NotFound404() {
+export default function NotFound404({ history }) {
   return (
     <Result
       status="404"
