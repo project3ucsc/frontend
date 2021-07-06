@@ -9,6 +9,7 @@ import Login from "pages/Login";
 import Register from "pages/Register";
 import Home from "pages/Home";
 import Dashboard from "pages/Dashboard";
+import NotFound404 from "pages/NotFound404";
 import { history, Role } from "utils/common";
 import auth from "services/authentication.service";
 
@@ -36,7 +37,9 @@ function App() {
     <div className="App">
       <Layout className="MainLayout">
         <Layout.Header className="header">
-          <div className="logo"> KNOWLEDGEHUB </div>
+          <div className="logo" onClick={() => history.push("/dashboard")}>
+            KNOWLEDGEHUB
+          </div>
 
           {currentUser ? (
             <>
@@ -65,6 +68,7 @@ function App() {
         <Router history={history}>
           <Switch>
             <Route exact path="/" render={(props) => <Home {...props} />} />
+
             <PublicRoute exact path="/login" component={Login} />
             <PublicRoute exact path="/register" component={Register} />
             <PrivateRoute
@@ -73,6 +77,9 @@ function App() {
               roles={[Role.SCHOOLADMIN, Role.STUDENT, Role.PRINCIPAl]}
               component={Dashboard}
             />
+
+            {/* default route */}
+            <Route component={NotFound404} />
           </Switch>
         </Router>
       </Layout>
