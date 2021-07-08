@@ -8,12 +8,10 @@ import { LogoutOutlined, LoginOutlined, UserOutlined } from "@ant-design/icons";
 import Login from "pages/Login";
 import Register from "pages/Register";
 import Home from "pages/Home";
-import Dashboard from "pages/Dashboard";
-import NotFound404 from "pages/NotFound404";
-import { history, Role } from "utils/common";
+import MainUserRouter from "components/routers";
+import { history } from "utils/common";
 import auth from "services/authentication.service";
 
-import PrivateRoute from "utils/PrivateRoute";
 import PublicRoute from "utils/PublicRoute";
 import ForgotPass from "pages/ForgotPass";
 
@@ -73,15 +71,7 @@ function App() {
             <PublicRoute exact path="/login" component={Login} />
             <PublicRoute exact path="/forgot-password" component={ForgotPass} />
             <PublicRoute exact path="/register" component={Register} />
-            <PrivateRoute
-              exact
-              path="/dashboard"
-              roles={[Role.SCHOOLADMIN, Role.STUDENT, Role.PRINCIPAl]}
-              component={Dashboard}
-            />
-
-            {/* default route */}
-            <Route component={NotFound404} />
+            <MainUserRouter />
           </Switch>
         </Router>
       </Layout>

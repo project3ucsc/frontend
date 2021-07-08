@@ -4,7 +4,17 @@ import "./register.scss";
 import logo from "img/cbg2.png";
 import auth from "services/authentication.service";
 
-import { Form, Input, Select, Radio, Checkbox, Button, Row, Col } from "antd";
+import {
+  Form,
+  Input,
+  Select,
+  Radio,
+  Checkbox,
+  Button,
+  Row,
+  Col,
+  Divider,
+} from "antd";
 const { Option } = Select;
 
 const formItemLayout = {
@@ -111,8 +121,8 @@ const RegisterForm = () => {
       scrollToFirstError
     >
       <Form.Item
-        label="User type"
         name="usertype"
+        label="User type"
         rules={[
           {
             required: true,
@@ -127,7 +137,7 @@ const RegisterForm = () => {
           <Radio.Button value={Role.SCHOOLADMIN}>
             {Role.SCHOOLADMIN}
           </Radio.Button>
-          <Radio.Button value={Role.ADMIN}>{Role.ADMIN}</Radio.Button>
+          {/* <Radio.Button value={Role.ADMIN}>{Role.ADMIN}</Radio.Button> */}
         </Radio.Group>
       </Form.Item>
 
@@ -224,25 +234,6 @@ const RegisterForm = () => {
           }}
         />
       </Form.Item>
-
-      {(userRole === Role.STUDENT || userRole === Role.TEACHER) && (
-        <Form.Item
-          name="school"
-          label="Select School"
-          rules={[
-            {
-              required: true,
-              message: "Please select school!",
-            },
-          ]}
-        >
-          <Select placeholder="select your school">
-            <Option value="male">Bcc</Option>
-            <Option value="female">Ac</Option>
-            <Option value="other">Fhd</Option>
-          </Select>
-        </Form.Item>
-      )}
       <Form.Item
         name="gender"
         label="Gender"
@@ -259,6 +250,44 @@ const RegisterForm = () => {
           <Option value="other">Other</Option>
         </Select>
       </Form.Item>
+      {userRole === Role.PRINCIPAl ? (
+        <>
+          <Divider>School Details</Divider>
+          <Form.Item
+            name="schoolname"
+            label="School Name"
+            rules={[
+              {
+                required: true,
+                message: "Please input School name!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item name="schooladr" label="School Adress">
+            <Input />
+          </Form.Item>
+        </>
+      ) : (
+        <Form.Item
+          name="school"
+          label="Select School"
+          rules={[
+            {
+              required: true,
+              message: "Please select school!",
+            },
+          ]}
+        >
+          <Select placeholder="select your school">
+            <Option value="bcc">Bcc</Option>
+            <Option value="acc">Ac</Option>
+            <Option value="fd">Fhd</Option>
+          </Select>
+        </Form.Item>
+      )}
 
       <Form.Item
         name="agreement"
