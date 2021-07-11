@@ -11,7 +11,7 @@ import {
 
 import { Layout, Menu } from "antd";
 
-export default function SideBar() {
+export default function SAdminSideBar() {
   const { SubMenu } = Menu;
   const subjects = ["Maths", "Chemistry", "Physics", "English"];
   return (
@@ -35,28 +35,21 @@ export default function SideBar() {
           <Link to="/">Home</Link>
         </Menu.Item>
         <Menu.Item key="2" icon={<PieChartOutlined />}>
-          Dashboard
-        </Menu.Item>
-        <SubMenu key="sub1" icon={<AppstoreOutlined />} title="Subjects">
-          {subjects.map((subject, index) => (
-            <Menu.Item key={"s" + index}>{subject}</Menu.Item>
-          ))}
-        </SubMenu>
-        <Menu.Item key="3" icon={<DesktopOutlined />}>
-          Option 2
-        </Menu.Item>
-        <Menu.Item key="4" icon={<ContainerOutlined />}>
-          Option 3
+          <Link to="/dashboard">Home</Link>
         </Menu.Item>
 
-        <SubMenu key="sub2" icon={<MailOutlined />} title="Navigation Two">
-          <Menu.Item key="9">Option 9</Menu.Item>
-          <Menu.Item key="10">Option 10</Menu.Item>
-          <SubMenu key="sub3" title="Submenu">
-            <Menu.Item key="11">Option 11</Menu.Item>
-            <Menu.Item key="12">Option 12</Menu.Item>
-          </SubMenu>
-        </SubMenu>
+        <Menu.Item key="3" icon={<DesktopOutlined />}>
+          <Link to="/managesections">Sections</Link>
+        </Menu.Item>
+        <Menu.Item key="4" icon={<ContainerOutlined />}>
+          <Link to="/manageclasses">ClassRooms</Link>
+        </Menu.Item>
+        <Menu.Item key="5" icon={<ContainerOutlined />}>
+          <Link to="/timeslots">TimeSlots</Link>
+        </Menu.Item>
+        <Menu.Item key="6" icon={<ContainerOutlined />}>
+          <Link to="/timetables">TimeTables</Link>
+        </Menu.Item>
       </Menu>
     </Layout.Sider>
   );

@@ -6,6 +6,7 @@ import NotAuth403 from "pages/NotAuth403";
 
 import StudentRouter from "./StudentRouter";
 import TeacherRouter from "./TeacherRouter";
+import SAdiminRouter from "./SAdiminRouter";
 
 export default function MainUserRouter() {
   if (auth.currentUserValue) {
@@ -21,7 +22,7 @@ export default function MainUserRouter() {
       return <StudentRouter />;
     }
     if (currentrole === Role.SCHOOLADMIN) {
-      return <StudentRouter />;
+      return <SAdiminRouter />;
     }
     if (currentrole === Role.ADMIN) {
       return <StudentRouter />;
