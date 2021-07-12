@@ -12,6 +12,7 @@ import MainUserRouter from "components/routers";
 import { history } from "utils/common";
 import auth from "services/authentication.service";
 
+import SideBar from "components/SideBars";
 import PublicRoute from "utils/PublicRoute";
 import ForgotPass from "pages/ForgotPass";
 
@@ -64,16 +65,24 @@ function App() {
           )}
         </Layout.Header>
 
-        <Router history={history}>
-          <Switch>
-            <Route exact path="/" render={(props) => <Home {...props} />} />
+        <Layout>
+          <Router history={history}>
+            <SideBar />
 
-            <PublicRoute exact path="/login" component={Login} />
-            <PublicRoute exact path="/forgot-password" component={ForgotPass} />
-            <PublicRoute exact path="/register" component={Register} />
-            <MainUserRouter />
-          </Switch>
-        </Router>
+            <Switch>
+              <Route exact path="/" render={(props) => <Home {...props} />} />
+
+              <PublicRoute exact path="/login" component={Login} />
+              <PublicRoute
+                exact
+                path="/forgot-password"
+                component={ForgotPass}
+              />
+              <PublicRoute exact path="/register" component={Register} />
+              <MainUserRouter />
+            </Switch>
+          </Router>
+        </Layout>
       </Layout>
     </div>
   );

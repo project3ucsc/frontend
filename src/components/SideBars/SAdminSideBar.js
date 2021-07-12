@@ -1,19 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {
-  AppstoreOutlined,
-  PieChartOutlined,
+  TableOutlined,
+  BorderOuterOutlined,
   DesktopOutlined,
-  ContainerOutlined,
-  MailOutlined,
+  SolutionOutlined,
+  ScheduleOutlined,
   HomeOutlined,
 } from "@ant-design/icons";
 
 import { Layout, Menu } from "antd";
 
 export default function SAdminSideBar() {
-  const { SubMenu } = Menu;
-  const subjects = ["Maths", "Chemistry", "Physics", "English"];
   return (
     <Layout.Sider
       width={200}
@@ -34,20 +32,20 @@ export default function SAdminSideBar() {
         <Menu.Item key="1" icon={<HomeOutlined />}>
           <Link to="/">Home</Link>
         </Menu.Item>
-        <Menu.Item key="2" icon={<PieChartOutlined />}>
-          <Link to="/dashboard">Home</Link>
+        <Menu.Item key="2" icon={<DesktopOutlined />}>
+          <Link to="/dashboard">Dashboard</Link>
         </Menu.Item>
 
-        <Menu.Item key="3" icon={<DesktopOutlined />}>
+        <Menu.Item key="3" icon={<BorderOuterOutlined />}>
           <Link to="/managesections">Sections</Link>
         </Menu.Item>
-        <Menu.Item key="4" icon={<ContainerOutlined />}>
+        <Menu.Item key="4" icon={<SolutionOutlined />}>
           <Link to="/manageclasses">ClassRooms</Link>
         </Menu.Item>
-        <Menu.Item key="5" icon={<ContainerOutlined />}>
+        <Menu.Item key="5" icon={<ScheduleOutlined />}>
           <Link to="/timeslots">TimeSlots</Link>
         </Menu.Item>
-        <Menu.Item key="6" icon={<ContainerOutlined />}>
+        <Menu.Item key="6" icon={<TableOutlined />}>
           <Link to="/timetables">TimeTables</Link>
         </Menu.Item>
       </Menu>
