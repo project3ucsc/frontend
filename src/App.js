@@ -8,12 +8,13 @@ import { LogoutOutlined, LoginOutlined, UserOutlined } from "@ant-design/icons";
 import Login from "pages/Login";
 import Register from "pages/Register";
 import Home from "pages/Home";
-import Dashboard from "pages/Dashboard";
-import { history, Role } from "utils/common";
+import MainUserRouter from "components/routers";
+import { history } from "utils/common";
 import auth from "services/authentication.service";
 
-import PrivateRoute from "utils/PrivateRoute";
+import SideBar from "components/SideBars";
 import PublicRoute from "utils/PublicRoute";
+import ForgotPass from "pages/ForgotPass";
 
 function App() {
   const [currentUser, setCurrentUser] = useState();
@@ -36,7 +37,9 @@ function App() {
     <div className="App">
       <Layout className="MainLayout">
         <Layout.Header className="header">
-          <div className="logo"> KNOWLEDGEHUB </div>
+          <div className="logo" onClick={() => history.push("/dashboard")}>
+            KNOWLEDGEHUB
+          </div>
 
           {currentUser ? (
             <>
@@ -62,19 +65,24 @@ function App() {
           )}
         </Layout.Header>
 
-        <Router history={history}>
-          <Switch>
-            <Route exact path="/" render={(props) => <Home {...props} />} />
-            <PublicRoute exact path="/login" component={Login} />
-            <PublicRoute exact path="/register" component={Register} />
-            <PrivateRoute
-              exact
-              path="/dashboard"
-              roles={[Role.SCHOOLADMIN, Role.STUDENT, Role.PRINCIPAl]}
-              component={Dashboard}
-            />
-          </Switch>
-        </Router>
+        <Layout>
+          <Router history={history}>
+            <SideBar />
+
+            <Switch>
+              <Route exact path="/" render={(props) => <Home {...props} />} />
+
+              <PublicRoute exact path="/login" component={Login} />
+              <PublicRoute
+                exact
+                path="/forgot-password"
+                component={ForgotPass}
+              />
+              <PublicRoute exact path="/register" component={Register} />
+              <MainUserRouter />
+            </Switch>
+          </Router>
+        </Layout>
       </Layout>
     </div>
   );

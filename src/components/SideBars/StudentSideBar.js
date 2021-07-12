@@ -11,7 +11,7 @@ import {
 
 import { Layout, Menu } from "antd";
 
-export default function SideBar() {
+export default function StudentSideBar() {
   const { SubMenu } = Menu;
   const subjects = ["Maths", "Chemistry", "Physics", "English"];
   return (
