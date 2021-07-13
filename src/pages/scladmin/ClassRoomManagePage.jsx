@@ -190,8 +190,19 @@ export default function ClassRoomManagePage() {
                 </Form.List>
                 <Space align="baseline" style={spacestyle}>
                   <Form.Item>
-                    <Button type="primary" htmlType="submit">
-                      Submit
+                    <Button
+                      style={{ marginRight: 25 }}
+                      type="default"
+                      htmlType="button"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      style={{ marginLeft: 25 }}
+                      type="primary"
+                      htmlType="submit"
+                    >
+                      Save
                     </Button>
                   </Form.Item>
                 </Space>

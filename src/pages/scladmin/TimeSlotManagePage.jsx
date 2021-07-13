@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Layout, Row, Col, Form, Select, Button, Input, Space } from "antd";
+import {
+  Layout,
+  Row,
+  Col,
+  Form,
+  Select,
+  Button,
+  TimePicker,
+  Space,
+} from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-
+import moment from "moment";
 import ContentLayout from "components/ContentLayout";
 
 const { Option } = Select;
@@ -12,36 +21,37 @@ const spacestyle = {
   justifyContent: "center",
 };
 
-const teachers = [
-  { id: 1, name: "Mr.Perera" },
-  { id: 2, name: "Mr.Shamalii" },
-  { id: 3, name: "Mrs.Sewwandi" },
-];
+const { Content } = Layout;
 
-const subjects = [
-  { id: 1, name: "Maths" },
-  { id: 2, name: "Physics" },
-  { id: 3, name: "Chemistry" },
-  { id: 4, name: "Gen. English" },
-];
 export default function TimeSlotManagePage() {
   const [level, setLevel] = useState("pri");
-  const [teacher, setTeacher] = useState([
-    { subject: subjects[0].id, teacher: teachers[0].id },
+  const [timeslots, setTimeslots] = useState([
+    { range: [moment("06:11", "HH:mm"), moment("07:21", "HH:mm")] },
+    { range: [moment("07:21", "HH:mm"), moment("07:21", "HH:mm")] },
+    { range: [moment("06:11", "HH:mm"), moment("07:21", "HH:mm")] },
   ]);
-  const { Content } = Layout;
-  const [clsselectform] = Form.useForm();
   const [timeslotform] = Form.useForm();
   useEffect(() => {
-    timeslotform.setFieldsValue({ subjects: teacher });
-  }, [timeslotform, teacher]);
+    timeslotform.setFieldsValue({ timeslotlist: timeslots });
+  }, [timeslotform, timeslots]);
 
   const LevelChange = ({ level }) => {
-    setTeacher([{ subject: subjects[1].id, teacher: teachers[1].id }]);
+    setLevel(level);
+    setTimeslots([
+      { range: [moment("08:00", "HH:mm"), moment("09:20", "HH:mm")] },
+      { range: [moment("09:25", "HH:mm"), moment("10:40", "HH:mm")] },
+    ]);
     console.log(level);
   };
-  const onFinish = (values) => {
-    console.log("Received values of form:", values);
+  const onFinish = ({ timeslotlist }) => {
+    console.log(JSON.stringify(timeslotlist));
+    let times = timeslotlist.map((timeslot) => {
+      return [
+        timeslot.range[0].format("HH:mm"),
+        timeslot.range[1].format("HH:mm"),
+      ];
+    });
+    console.log(times);
   };
 
   return (
@@ -63,7 +73,6 @@ export default function TimeSlotManagePage() {
               <Form
                 style={{ justifyContent: "center" }}
                 layout="inline"
-                form={clsselectform}
                 onFinish={LevelChange}
                 initialValues={{ level: level }}
               >
@@ -98,14 +107,14 @@ export default function TimeSlotManagePage() {
               <Form
                 form={timeslotform}
                 initialValues={{
-                  subjects: teacher,
+                  timeslotlist: timeslots,
                 }}
                 style={{ justifyContent: "center", marginTop: 30 }}
                 name="dynamic_form_nest_item"
                 onFinish={onFinish}
                 autoComplete="off"
               >
-                <Form.List name="subjects">
+                <Form.List name="timeslotlist">
                   {(fields, { add, remove }) => {
                     // console.log(fields);
 
@@ -114,42 +123,18 @@ export default function TimeSlotManagePage() {
                         {fields.map(({ key, name, fieldKey, ...restField }) => (
                           <Space key={key} align="baseline" style={spacestyle}>
                             <Form.Item
+                              label={"Period " + (name + 1)}
                               {...restField}
-                              name={[name, "subject"]}
-                              fieldKey={[fieldKey, "subject"]}
+                              name={[name, "range"]}
+                              fieldKey={[fieldKey, "range"]}
                               rules={[
-                                { required: true, message: "Missing subject" },
+                                {
+                                  required: true,
+                                  message: "Select time range",
+                                },
                               ]}
                             >
-                              <Select
-                                placeholder="select subject"
-                                style={{ minWidth: 150 }}
-                              >
-                                {subjects.map((subject) => (
-                                  <Option key={subject.id} value={subject.id}>
-                                    {subject.name}
-                                  </Option>
-                                ))}
-                              </Select>
-                            </Form.Item>
-                            <Form.Item
-                              {...restField}
-                              name={[name, "teacher"]}
-                              fieldKey={[fieldKey, "teacher"]}
-                              rules={[
-                                { required: true, message: "Missing teacher" },
-                              ]}
-                            >
-                              <Select
-                                placeholder="select teacher"
-                                style={{ minWidth: 150 }}
-                              >
-                                {teachers.map((teacher) => (
-                                  <Option key={teacher.id} value={teacher.id}>
-                                    {teacher.name}
-                                  </Option>
-                                ))}
-                              </Select>
+                              <TimePicker.RangePicker format="HH:mm" />
                             </Form.Item>
                             <MinusCircleOutlined onClick={() => remove(name)} />
                           </Space>
@@ -173,8 +158,19 @@ export default function TimeSlotManagePage() {
                 </Form.List>
                 <Space align="baseline" style={spacestyle}>
                   <Form.Item>
-                    <Button type="primary" htmlType="submit">
-                      Submit
+                    <Button
+                      style={{ marginRight: 25 }}
+                      type="default"
+                      htmlType="button"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      style={{ marginLeft: 25 }}
+                      type="primary"
+                      htmlType="submit"
+                    >
+                      Save
                     </Button>
                   </Form.Item>
                 </Space>
