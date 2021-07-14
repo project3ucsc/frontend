@@ -8,6 +8,7 @@ import {
   Button,
   TimePicker,
   Space,
+  Typography,
 } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import moment from "moment";
@@ -22,6 +23,7 @@ const spacestyle = {
 };
 
 const { Content } = Layout;
+const { Title } = Typography;
 
 export default function TimeSlotManagePage() {
   const [level, setLevel] = useState("pri");
@@ -68,6 +70,10 @@ export default function TimeSlotManagePage() {
         }}
       >
         <div className="container-back">
+          <Title level={4}>Enter number of classes in each grade</Title>
+          <Title type="secondary" level={5}>
+            If your school doesn't have particular sections uncheck them
+          </Title>
           <Row>
             <Col sm={24} xl={24}>
               <Form

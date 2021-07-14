@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Layout, Row, Col, Form, Select, Button, Table } from "antd";
+import { Layout, Row, Col, Form, Select, Button, Typography } from "antd";
 import ContentLayout from "components/ContentLayout";
 import TimeTableManager from "components/TimeTableManager";
 
 const { Option } = Select;
+const { Title } = Typography;
 
 const data = [
   { key: 1, time: "08.00-09.10", mon: 1, tue: 1, wed: 1, thu: 1, fri: 1 },
@@ -21,7 +22,7 @@ const subjects = [
 
 export default function TimeTableManagePage() {
   const { Content } = Layout;
-
+  const [classroomid, setClassroomid] = useState(0);
   const onClassRoomSelect = (val) => {
     console.log(val);
   };
@@ -38,6 +39,10 @@ export default function TimeTableManagePage() {
           minHeight: 280,
         }}
       >
+        <Title level={4}>Enter number of classes in each grade</Title>
+        <Title type="secondary" level={5}>
+          If your school doesn't have particular sections uncheck them
+        </Title>
         <Row>
           <Col sm={24} xl={24}>
             <Form
@@ -89,7 +94,7 @@ export default function TimeTableManagePage() {
             </Form>
           </Col>
         </Row>
-        <Row>
+        <Row style={{ justifyContent: "center" }}>
           <Col>
             <TimeTableManager data={data} subs={subjects} />
           </Col>
