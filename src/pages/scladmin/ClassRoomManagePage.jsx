@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { Layout, Row, Col, Form, Select, Button, Space } from "antd";
+import {
+  Layout,
+  Row,
+  Col,
+  Form,
+  Select,
+  Button,
+  Space,
+  Typography,
+} from "antd";
 import ContentLayout from "components/ContentLayout";
 import "./ClassRoomManagePage.scss";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
+const { Title } = Typography;
 
 const spacestyle = {
   display: "flex",
@@ -58,6 +68,10 @@ export default function ClassRoomManagePage() {
         }}
       >
         <div className="container-back">
+          <Title level={4}>Enter number of classes in each grade</Title>
+          <Title type="secondary" level={5}>
+            If your school doesn't have particular sections uncheck them
+          </Title>
           <Row>
             <Col sm={24} xl={24}>
               <Form

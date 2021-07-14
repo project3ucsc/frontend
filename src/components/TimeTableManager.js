@@ -106,8 +106,19 @@ export default function TimeTableManager({ data, subs }) {
         </div>
       </div>
       <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Submit
+        <Button
+          style={{ marginRight: 20, float: "right" }}
+          type="primary"
+          htmlType="submit"
+        >
+          Save
+        </Button>
+        <Button
+          style={{ marginRight: 20, float: "right" }}
+          type="default"
+          htmlType="button"
+        >
+          Cancel
         </Button>
       </Form.Item>
     </Form>
