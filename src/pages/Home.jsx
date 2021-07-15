@@ -162,6 +162,7 @@ export default function Home() {
   //   this.setState({ visible: flag });
   //  };
 
+  const { Content } = Layout;
   return (
     // <ContentLayout paths={["Home"]}>
 
