@@ -8,10 +8,13 @@ import {
   Button,
   Space,
   Typography,
+  message,
+  Input,
 } from "antd";
 import ContentLayout from "components/ContentLayout";
 import "./ClassRoomManagePage.scss";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import classroomservice from "services/classroom.service";
 
 const { Option } = Select;
 const { Title } = Typography;
@@ -21,36 +24,80 @@ const spacestyle = {
   marginBottom: 8,
   justifyContent: "center",
 };
-const teachers = [
-  { id: 1, name: "Mr.Perera" },
-  { id: 2, name: "Mr.Shamalii" },
-  { id: 3, name: "Mrs.Sewwandi" },
-];
-
-const subjects = [
-  { id: 1, name: "Maths" },
-  { id: 2, name: "Physics" },
-  { id: 3, name: "Chemistry" },
-  { id: 4, name: "Gen. English" },
-];
 
 export default function ClassRoomManagePage() {
   const { Content } = Layout;
   const [SubjectDetails, setSubjectDetails] = useState([
-    { subject: subjects[0].id, teacher: teachers[0].id },
-    { subject: subjects[1].id, teacher: teachers[1].id },
-    { subject: subjects[2].id, teacher: teachers[2].id },
+    {
+      sdid: 2,
+      subject: 1,
+      teacher: 4,
+    },
   ]);
+
+  // states for upper form
+  const [gradeclassform] = Form.useForm();
+  const [gradesnclasses, setGradesnclasses] = useState([]);
+  const [gradecount, setGradecount] = useState([]);
+
+  const [grade, setGrade] = useState("");
+  const [classno, setClassno] = useState();
+
+  // states for down form
   const [subjectform] = Form.useForm();
+  const [subjects, setSubjects] = useState([]);
+  const [teachers, setTeachers] = useState([]);
+
+  useEffect(() => {
+    classroomservice
+      .getsection_and_no_classes()
+      .then((data) => {
+        setGradesnclasses(data);
+        console.log(data);
+      })
+      .catch((e) => {
+        message.error(e.message);
+      });
+  }, []);
 
   useEffect(() => {
     subjectform.setFieldsValue({ subjects: SubjectDetails });
   }, [subjectform, SubjectDetails]);
 
-  const onClassRoomSelect = (val) => {
-    setSubjectDetails([{ subject: subjects[1].id, teacher: teachers[1].id }]);
-    console.log(val);
+  const onClassRoomSelect = async (val) => {
+    const splitedgrade = val.grade.split(".");
+    setGrade(splitedgrade[0]);
+    setClassno(val.class);
+    try {
+      let data = await classroomservice.getclassdetails(
+        splitedgrade[0],
+        val.class
+      );
+      setSubjects(data.subjects);
+      setTeachers(data.teachers);
+      let mappedsubdetails = data.allsubjectdetails.subject_detail.map(
+        (subject_detail) => {
+          return {
+            sdid: subject_detail.id,
+            subject: subject_detail.subject.id,
+            teacher: subject_detail.teacher.id,
+          };
+        }
+      );
+      setSubjectDetails(mappedsubdetails);
+      console.log(mappedsubdetails);
+    } catch (error) {
+      console.log(error);
+    }
+    // setSubjectDetails([{ subject: subjects[1].id, teacher: teachers[1].id }]);
+    // console.log(val);
   };
+  const onGradeChange = (val) => {
+    const data = val.split(".");
+    setGradecount(parseInt(data[1]));
+    gradeclassform.setFieldsValue({ class: null });
+  };
+
   const onFinish = (values) => {
     console.log("Received values of form:", values);
   };
@@ -75,6 +122,7 @@ export default function ClassRoomManagePage() {
           <Row>
             <Col sm={24} xl={24}>
               <Form
+                form={gradeclassform}
                 style={{ justifyContent: "center" }}
                 layout="inline"
                 // form={clsselectform}
@@ -90,12 +138,22 @@ export default function ClassRoomManagePage() {
                     },
                   ]}
                 >
-                  <Select placeholder="select grade" style={{ minWidth: 100 }}>
-                    <Option value="1">1</Option>
-                    <Option value="2">2</Option>
-                    <Option value="3">3</Option>
-                    <Option value="4">4</Option>
-                    <Option value="5">5</Option>
+                  <Select
+                    placeholder="select grade"
+                    style={{ minWidth: 100 }}
+                    onChange={onGradeChange}
+                  >
+                    {gradesnclasses.map((gradesnclass) => {
+                      return (
+                        <Option
+                          value={
+                            gradesnclass.grade + "." + gradesnclass.classcount
+                          }
+                        >
+                          {gradesnclass.grade}
+                        </Option>
+                      );
+                    })}
                   </Select>
                 </Form.Item>
                 <Form.Item
@@ -109,10 +167,9 @@ export default function ClassRoomManagePage() {
                   ]}
                 >
                   <Select placeholder="select class" style={{ minWidth: 100 }}>
-                    <Option value="2">A</Option>
-                    <Option value="3">B</Option>
-                    <Option value="4">C</Option>
-                    <Option value="5">D</Option>
+                    {[...Array(gradecount)].map((e, i) => (
+                      <Option value={i + 1}>{i + 1}</Option>
+                    ))}
                   </Select>
                 </Form.Item>
                 <Form.Item>
@@ -146,6 +203,14 @@ export default function ClassRoomManagePage() {
                           <Space key={key} align="baseline" style={spacestyle}>
                             <Form.Item
                               {...restField}
+                              name={[name, "sdid"]}
+                              fieldKey={[fieldKey, "sdid"]}
+                            >
+                              <Input defaultValue="null" hidden />
+                            </Form.Item>
+
+                            <Form.Item
+                              {...restField}
                               name={[name, "subject"]}
                               fieldKey={[fieldKey, "subject"]}
                               rules={[
@@ -177,18 +242,23 @@ export default function ClassRoomManagePage() {
                               >
                                 {teachers.map((teacher) => (
                                   <Option key={teacher.id} value={teacher.id}>
-                                    {teacher.name}
+                                    {teacher.username}
                                   </Option>
                                 ))}
                               </Select>
                             </Form.Item>
-                            <MinusCircleOutlined onClick={() => remove(name)} />
+                            <MinusCircleOutlined
+                              onClick={() => {
+                                remove(name);
+                                console.log(fieldKey);
+                              }}
+                            />
                           </Space>
                         ))}
                         <Space align="baseline" style={spacestyle}>
                           <Form.Item>
                             <Button
-                              style={{ width: 350, minWidth: 260 }}
+                              style={{ width: 330, minWidth: 260 }}
                               type="dashed"
                               onClick={() => add()}
                               block

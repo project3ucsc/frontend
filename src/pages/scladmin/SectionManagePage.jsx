@@ -9,9 +9,11 @@ import {
   Input,
   Button,
   Typography,
+  message,
 } from "antd";
 import ContentLayout from "components/ContentLayout";
 import "./Sectionmanage.scss";
+import classroomservice from "services/classroom.service";
 
 const { Title } = Typography;
 
@@ -83,8 +85,18 @@ export default function SectionManagePage() {
 
   function onFinish(val) {
     setLoading(true);
+    classroomservice
+      .CreateConfigureClasses(val)
+      .then((data) => {
+        setLoading(false);
+        console.log(data);
+        message.success("done");
+      })
+      .catch((e) => {
+        setLoading(false);
 
-    console.log(val);
+        message.error(e.message);
+      });
   }
 
   return (
