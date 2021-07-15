@@ -1,6 +1,7 @@
 import { createBrowserHistory } from "history";
 
 export const history = createBrowserHistory();
+
  export const apiurl = "https://knowledge-hub-backend.azurewebsites.net";
 //export const apiurl = "http://localhost:3001";
 
