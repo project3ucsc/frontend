@@ -4,3 +4,9 @@
 // .site-layout-background{
 //     background-color:blue;
 // }
+
+.card-wrapper-home {
+    display: flex;
+    flex-wrap: wrap;
+    //justify-content: space-between;
+  }
