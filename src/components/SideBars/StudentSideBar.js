@@ -7,6 +7,7 @@ import {
   ContainerOutlined,
   MailOutlined,
   HomeOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 
 import { Layout, Menu } from "antd";
@@ -35,7 +36,7 @@ export default function StudentSideBar() {
           <Link to="/">Home</Link>
         </Menu.Item>
         <Menu.Item key="2" icon={<PieChartOutlined />}>
-          Dashboard
+          <Link to="/Dashboard">Dashboard</Link>
         </Menu.Item>
         <SubMenu key="sub1" icon={<AppstoreOutlined />} title="Subjects">
           {subjects.map((subject, index) => (
@@ -47,6 +48,9 @@ export default function StudentSideBar() {
         </Menu.Item>
         <Menu.Item key="4" icon={<ContainerOutlined />}>
           Option 3
+        </Menu.Item>
+        <Menu.Item key="5" icon={<UserOutlined />}>
+          <Link to="/Profile">Profile</Link>
         </Menu.Item>
 
         <SubMenu key="sub2" icon={<MailOutlined />} title="Navigation Two">
