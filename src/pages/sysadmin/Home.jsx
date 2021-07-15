@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Row, Col, Card, Calendar, Badge } from "antd";
+import { Layout, Row, Col, Calendar, Badge } from "antd";
 import ContentLayout from "components/ContentLayout";
 
 

@@ -18,11 +18,11 @@ const { Content } = Layout;
 const { RangePicker } = DatePicker;
 const openNotification = () => {
   notification.open({
-    message: 'Notification Title',
+    message: "Notification Title",
     description:
-      'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+      "This is the content of the notification. This is the content of the notification. This is the content of the notification.",
     onClick: () => {
-      console.log('Notification Clicked!');
+      console.log("Notification Clicked!");
     },
   });
 };
@@ -136,7 +136,6 @@ export default function EduProg() {
               <Form.Item
                 name="time"
                 label="Broadcast Time and Date range"
-                
                 rules={[
                   {
                     required: false,
@@ -146,7 +145,6 @@ export default function EduProg() {
               >
                 <Space direction="vertical" size={12}>
                   <RangePicker showTime />
-                 
                 </Space>
               </Form.Item>
 
@@ -158,10 +156,10 @@ export default function EduProg() {
             </Form>
           </Col>
           <Col xs={24} xl={6}>
-          <Button type="primary" onClick={openNotification}>
-    Open the notification box
-  </Button>
-  </Col>
+            <Button type="primary" onClick={openNotification}>
+              Open the notification box
+            </Button>
+          </Col>
         </Row>
       </Content>
     </ContentLayout>
