@@ -2,6 +2,8 @@ import React from "react";
 import { Layout,Card,Menu,message,Image,Dropdown,Rate,PageHeader, Button, Descriptions,Tabs ,Row,Col,Input,Space  } from "antd";
 //import ContentLayout from "components/ContentLayout";
 import { DownOutlined ,UserOutlined} from '@ant-design/icons';
+//import "./home.scss";
+
 
 export default function Home() {
   const { Content } = Layout;
