@@ -1,0 +1,14 @@
+.card-flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+
+  .ant-form-item {
+    margin: 3px;
+    padding: 8px;
+    background-color: rgb(240, 242, 245);
+
+    .ant-form-item-control {
+      width: 70px;
+    }
+  }
+}
