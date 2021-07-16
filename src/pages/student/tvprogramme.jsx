@@ -42,7 +42,7 @@ export default function tvprogramme() {
       >
         <Row>
           <Col xs={24} xl={14}>
-            <div className="card-wrapper">
+            
               
                 
                   <Form
@@ -166,7 +166,7 @@ export default function tvprogramme() {
                   </Form>
                 
 
-            </div>
+            
           </Col>
           
           <Col xs={24} xl={10}>
