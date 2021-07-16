@@ -1,0 +1,31 @@
+.teachercard {
+    .ant-card-body {
+      height: 450px;
+      overflow-y: scroll;
+  
+      .ant-list-item {
+        background-color: aliceblue;
+        margin-bottom: 5px;
+        // margin: 5px;
+        &:hover {
+          background-color: rgb(211, 234, 255);
+        }
+      }
+    }
+  }
+  .anncard {
+    .ant-card-body {
+      height: 450px;
+      overflow-y: scroll;
+  
+      .ant-list-item {
+        background-color: #00bcd438;
+        margin-bottom: 5px;
+  
+        &:hover {
+          background-color: #00bbd456;
+        }
+      }
+    }
+  }
+  

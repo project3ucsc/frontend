@@ -2,6 +2,7 @@
 import { Route, Switch } from "react-router-dom";
 import Dashboard from "pages/student/Dashboard";
 import Profile from "pages/student/Profile";
+import Physics from "pages/student/Physics";
 import Fp from "pages/ForgotPass";
 import NotFound404 from "pages/NotFound404";
 
@@ -13,6 +14,7 @@ export default function StudentRouter() {
       <Switch>
         <Route exact path="/dashboard" component={Dashboard} />
         <Route exact path="/profile" component={Profile} />
+        <Route exact path="/physics" component={Physics} />
         <Route exact path="/s" component={Fp} />
         <Route component={NotFound404} />
       </Switch>
