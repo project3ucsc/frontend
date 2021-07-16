@@ -2,8 +2,11 @@ import auth from "services/authentication.service";
 
 import { Role } from "utils/common";
 
+import SystemAdminSideBar from "./SystemAdminSideBar";
 import SAdminSideBar from "./SAdminSideBar";
 import StudentSideBar from "./StudentSideBar";
+import TeacherSideBar from "./TeacherSideBar";
+import PrincipalSideBar from "./PrincipalSideBar";
 
 export default function SideBar() {
   if (auth.currentUserValue) {
@@ -13,16 +16,16 @@ export default function SideBar() {
     }
 
     if (currentrole === Role.TEACHER) {
-      return <StudentSideBar />;
+      return <TeacherSideBar />;
     }
     if (currentrole === Role.PRINCIPAl) {
-      return <StudentSideBar />;
+      return <PrincipalSideBar />;
     }
     if (currentrole === Role.SCHOOLADMIN) {
       return <SAdminSideBar />;
     }
     if (currentrole === Role.ADMIN) {
-      return <StudentSideBar />;
+      return <SystemAdminSideBar />;
     }
   }
 
