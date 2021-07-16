@@ -58,9 +58,7 @@ export default function StudentSideBar() {
           </SubMenu>
         </SubMenu>
 
-        <Menu.Item key="13" icon={<HomeOutlined />}>
-          
-        </Menu.Item> 
+        
 
       </Menu>
     </Layout.Sider>
