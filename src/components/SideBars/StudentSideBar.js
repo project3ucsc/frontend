@@ -47,7 +47,11 @@ export default function StudentSideBar() {
           </Menu.Item>
         </SubMenu>
         <Menu.Item key="3" icon={<DesktopOutlined />}>
+
+          <Link to="/tvprogramme">TV Programmes</Link>
+
           <Link to="/timetable">Time Table</Link>
+
         </Menu.Item>
         <Menu.Item key="4" icon={<UserOutlined />}>
           <Link to="/Profile">Profile</Link>
@@ -63,6 +67,7 @@ export default function StudentSideBar() {
             <Menu.Item key="11">Option 11</Menu.Item>
             <Menu.Item key="12">Option 12</Menu.Item>
           </SubMenu>
+
         </SubMenu> */}
       </Menu>
     </Layout.Sider>
