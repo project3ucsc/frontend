@@ -7,6 +7,7 @@ import {
   SolutionOutlined,
   ScheduleOutlined,
   HomeOutlined,
+  AuditOutlined
 } from "@ant-design/icons";
 
 import { Layout, Menu } from "antd";
@@ -47,6 +48,9 @@ export default function TeacherSideBar() {
         </Menu.Item>
         <Menu.Item key="6" icon={<TableOutlined />}>
           <Link to="/timetables">TimeTables</Link>
+        </Menu.Item>
+        <Menu.Item key="7" icon={<AuditOutlined />}>
+          <Link to="/applyleave">ApplyLeave</Link>
         </Menu.Item>
       </Menu>
     </Layout.Sider>
