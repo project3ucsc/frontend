@@ -1,0 +1,53 @@
+// .site-card-border-less-wrapper {
+//     // padding: 20px;
+//     // background: black;
+//     // //border-color: black;
+//     // //margin: 0%;
+//     // background-color:#dfe6eb;
+//   }
+
+
+.card-wrapper-student-dash {
+    display: flex;
+    flex-wrap: wrap;
+    //justify-content: space-between;
+  }
+
+  .site-calendar-demo-card {
+    width: 260px;
+    height: 300px;
+    border: 1px solid #f0f0f0;
+    border-radius: 2px;
+  }
+
+  .anncard {
+    .ant-card-body {
+      height: 450px;
+      overflow-y: scroll;
+  
+      .ant-list-item {
+        background-color: #00bcd438;
+        margin-bottom: 5px;
+  
+        &:hover {
+          background-color: #00bbd456;
+        }
+      }
+    }
+  }
+
+  .teachercard {
+    .ant-card-body {
+      height: 450px;
+      overflow-y: scroll;
+  
+      .ant-list-item {
+        background-color: aliceblue;
+        margin-bottom: 5px;
+        // margin: 5px;
+        &:hover {
+          background-color: rgb(211, 234, 255);
+        }
+      }
+    }
+  }
