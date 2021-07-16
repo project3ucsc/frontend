@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Router, Switch, Route } from "react-router-dom";
 import "antd/dist/antd.css";
+
 import "./index.scss";
 import { Layout, Button, Avatar } from "antd";
 import { LogoutOutlined, LoginOutlined, UserOutlined } from "@ant-design/icons";

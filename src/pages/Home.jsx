@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Layout,
   Card,
@@ -19,13 +19,23 @@ import {
 //import ContentLayout from "components/ContentLayout";
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import "./Home.scss";
+import axios from "axios";
+import { apiurl } from "utils/common";
+
+const { Content } = Layout;
+const { TabPane } = Tabs;
+const { Search } = Input;
+const { Meta } = Card;
 
 export default function Home() {
-  const { Content } = Layout;
-  const { TabPane } = Tabs;
-  const { Search } = Input;
-  const { Meta } = Card;
+  const [freeProgs, setFreeProgs] = useState([]);
 
+  useEffect(() => {
+    axios.get(apiurl + "/freeprog").then((res) => {
+      console.log(res.data);
+      setFreeProgs(res.data);
+    });
+  }, []);
   const onSearch = (value) => console.log(value);
 
   const operations = (
@@ -162,7 +172,7 @@ export default function Home() {
   //   this.setState({ visible: flag });
   //  };
 
-  const { Content } = Layout;
+  // const { Content } = Layout;
   return (
     // <ContentLayout paths={["Home"]}>
 
@@ -271,14 +281,14 @@ export default function Home() {
           <Row>
             <Col xs={24} xl={24}>
               <div className="card-wrapper-home">
-                {tvPrograms.map((item, i) => (
+                {freeProgs.map((item, i) => (
                   // <Card key={i}>{item.title},{item.name}</Card>
-                  <Card className="edu-card" key={i} hoverable>
-                    <Image width={300} height={200} src={item.picture} />
-                    <Meta title={item.name} description={item.title} />
+                  <Card className="edu-card" key={item.id} hoverable>
+                    <Image width={300} height={200} src={item.imgurl} />
+                    <Meta title={item.title} description={item.discription} />
                     <br />
                     <Space direction="horizontal">
-                      <Rate allowHalf defaultValue={item.rate} />
+                      <Rate allowHalf defaultValue={item.rating} />
                       <Button type="primary">See more</Button>
                     </Space>
                   </Card>

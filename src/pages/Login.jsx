@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { Form, Input, Button, Checkbox, message } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { MailOutlined, LockOutlined } from "@ant-design/icons";
 import auth from "services/authentication.service";
 import "./login.scss";
 import logo from "img/logo.png";
@@ -9,10 +9,10 @@ import logo from "img/logo.png";
 const Login = ({ history }) => {
   const [loading, setLoading] = useState(false);
 
-  const onFinish = ({ username, password }) => {
+  const onFinish = ({ email, password }) => {
     setLoading(true);
     auth
-      .login(username, password)
+      .login(email, password)
       .then(() => history.push("/dashboard"))
       .catch((err) => {
         setLoading(false);
@@ -33,17 +33,21 @@ const Login = ({ history }) => {
         <img src={logo} alt="logo" />
 
         <Form.Item
-          name="username"
+          name="email"
           rules={[
             {
+              type: "email",
+              message: "The input is not valid E-mail!",
+            },
+            {
               required: true,
-              message: "Please input your Username!",
+              message: "Please input your E-mail!",
             },
           ]}
         >
           <Input
-            prefix={<UserOutlined className="site-form-item-icon" />}
-            placeholder="Username"
+            prefix={<MailOutlined className="site-form-item-icon" />}
+            placeholder="Email"
           />
         </Form.Item>
 
