@@ -48,6 +48,9 @@ export default function SystemAdminSideBar() {
         <Menu.Item key="6" icon={<TableOutlined />}>
           <Link to="/timetables">Tutor Managment</Link>
         </Menu.Item>
+        <Menu.Item key="7" icon={<HomeOutlined />}>
+          <Link to="/RegSchool">School Managment</Link>
+        </Menu.Item>
       </Menu>
     </Layout.Sider>
   );

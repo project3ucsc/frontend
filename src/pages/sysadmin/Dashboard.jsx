@@ -92,72 +92,72 @@ export default function Dashboard() {
           </Col>
 
           <Col xs={24} xl={6}>
-          <>
-    <Alert
-      message="Success Tips"
-      type="success"
-      showIcon
-      action={
-        <Button size="small" type="text">
-          View
-        </Button>
-      }
-      closable
-    />
+            <>
+              <Alert
+                message="Success Tips"
+                type="success"
+                showIcon
+                action={
+                  <Button size="small" type="text">
+                    View
+                  </Button>
+                }
+                closable
+              />
 
-<Alert
-      message="Success Tips"
-      type="success"
-      showIcon
-      action={
-        <Button size="small" type="text">
-          View
-        </Button>
-      }
-      closable
-    />
-     <Alert
-      message="Success Tips"
-      type="success"
-      showIcon
-      action={
-        <Button size="small" type="text">
-          View
-        </Button>
-      }
-      closable
-    />
-    
-    
-    <Alert
-      message="3 new Education programmes on the process stage."
-      type="warning"
-      action={
-        <Space>
-          <Button size="small" type="ghost">
-            Done
-          </Button>
-        </Space>
-      }
-      closable
-    />
-    <Alert
-      message="Info Text"
-      description="Information about newly added schools"
-      type="info"
-      action={
-        <Space direction="vertical">
-          <Button size="small" type="primary">
-            View
-          </Button>
-          <Button size="small" danger type="ghost">
-            Decline
-          </Button>
-        </Space>
-      }
-      closable
-    />
-  </>,
+              <Alert
+                message="Success Tips"
+                type="success"
+                showIcon
+                action={
+                  <Button size="small" type="text">
+                    View
+                  </Button>
+                }
+                closable
+              />
+              <Alert
+                message="Success Tips"
+                type="success"
+                showIcon
+                action={
+                  <Button size="small" type="text">
+                    View
+                  </Button>
+                }
+                closable
+              />
+
+              <Alert
+                message="3 new Education programmes on the process stage."
+                type="warning"
+                action={
+                  <Space>
+                    <Button size="small" type="ghost">
+                      Done
+                    </Button>
+                  </Space>
+                }
+                closable
+              />
+              <Alert
+                message="Info Text"
+                description="Information about newly added schools"
+                type="info"
+                action={
+                  <Space direction="vertical">
+                    <Button size="small" type="primary">
+                      View
+                    </Button>
+                    <Button size="small" danger type="ghost">
+                      Decline
+                    </Button>
+                  </Space>
+                }
+                closable
+              />
+            </>
+            ,
             <Button type="primary" onClick={openNotification}>
               Open the notification box
             </Button>
