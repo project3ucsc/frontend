@@ -47,20 +47,11 @@ export default function StudentSideBar() {
           Option 2
         </Menu.Item>
         <Menu.Item key="4" icon={<ContainerOutlined />}>
-          Option 3
+          <Link to="/timetable">TimeTable</Link>
         </Menu.Item>
         <Menu.Item key="5" icon={<UserOutlined />}>
           <Link to="/Profile">Profile</Link>
         </Menu.Item>
-
-        <SubMenu key="sub2" icon={<MailOutlined />} title="Navigation Two">
-          <Menu.Item key="9">Option 9</Menu.Item>
-          <Menu.Item key="10">Option 10</Menu.Item>
-          <SubMenu key="sub3" title="Submenu">
-            <Menu.Item key="11">Option 11</Menu.Item>
-            <Menu.Item key="12">Option 12</Menu.Item>
-          </SubMenu>
-        </SubMenu>
       </Menu>
     </Layout.Sider>
   );

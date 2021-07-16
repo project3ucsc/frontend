@@ -1,8 +1,17 @@
-import React, { useState } from "react";
-import { Layout, Row, Col, Form, Select, Button, Typography } from "antd";
+import React, { useState, useEffect } from "react";
+import {
+  Layout,
+  Row,
+  Col,
+  Form,
+  Select,
+  Button,
+  Typography,
+  message,
+} from "antd";
 import ContentLayout from "components/ContentLayout";
 import TimeTableManager from "components/TimeTableManager";
-
+import classroomservice from "services/classroom.service";
 const { Option } = Select;
 const { Title } = Typography;
 
@@ -21,6 +30,29 @@ const subjects = [
 ];
 
 export default function TimeTableManagePage() {
+  const [gradeclassform] = Form.useForm();
+
+  const [gradesnclasses, setGradesnclasses] = useState([]);
+  const [gradecount, setGradecount] = useState([]);
+
+  useEffect(() => {
+    classroomservice
+      .getsection_and_no_classes()
+      .then((data) => {
+        setGradesnclasses(data);
+        console.log(data);
+      })
+      .catch((e) => {
+        message.error(e.message);
+      });
+  }, []);
+
+  const onGradeChange = (val) => {
+    const data = val.split(".");
+    setGradecount(parseInt(data[1]));
+    gradeclassform.setFieldsValue({ class: null });
+  };
+
   const { Content } = Layout;
   const [classroomid, setClassroomid] = useState(0);
   const onClassRoomSelect = (val) => {
@@ -46,6 +78,7 @@ export default function TimeTableManagePage() {
         <Row>
           <Col sm={24} xl={24}>
             <Form
+              form={gradeclassform}
               style={{ justifyContent: "center" }}
               layout="inline"
               // form={clsselectform}
@@ -61,12 +94,23 @@ export default function TimeTableManagePage() {
                   },
                 ]}
               >
-                <Select placeholder="select grade" style={{ minWidth: 100 }}>
-                  <Option value="1">1</Option>
-                  <Option value="2">2</Option>
-                  <Option value="3">3</Option>
-                  <Option value="4">4</Option>
-                  <Option value="5">5</Option>
+                <Select
+                  placeholder="select grade"
+                  style={{ minWidth: 100 }}
+                  onChange={onGradeChange}
+                >
+                  {gradesnclasses.map((gradesnclass, i) => {
+                    return (
+                      <Option
+                        key={i}
+                        value={
+                          gradesnclass.grade + "." + gradesnclass.classcount
+                        }
+                      >
+                        {gradesnclass.grade}
+                      </Option>
+                    );
+                  })}
                 </Select>
               </Form.Item>
               <Form.Item
@@ -80,10 +124,11 @@ export default function TimeTableManagePage() {
                 ]}
               >
                 <Select placeholder="select class" style={{ minWidth: 100 }}>
-                  <Option value="2">A</Option>
-                  <Option value="3">B</Option>
-                  <Option value="4">C</Option>
-                  <Option value="5">D</Option>
+                  {[...Array(gradecount)].map((e, i) => (
+                    <Option key={i} value={i + 1}>
+                      {i + 1}
+                    </Option>
+                  ))}
                 </Select>
               </Form.Item>
               <Form.Item>

@@ -10,5 +10,6 @@ export const Role = {
   TEACHER: "TEACHER",
   PRINCIPAl: "PRINCIPAl",
   SCHOOLADMIN: "SCHOOLADMIN",
+  TUTOR: "TUTOR",
   ADMIN: "ADMIN",
 };

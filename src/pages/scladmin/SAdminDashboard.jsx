@@ -12,6 +12,7 @@ import {
   Form,
   Input,
   Select,
+  Descriptions,
 } from "antd";
 import ContentLayout from "components/ContentLayout";
 import { PlusOutlined } from "@ant-design/icons";
@@ -92,7 +93,18 @@ export default function SAdminDashboard() {
             Accept
           </Button>,
         ]}
-      ></Modal>
+      >
+        <Descriptions layout="vertical" title="User Info">
+          <Descriptions.Item label="Name">Mr. Nimal Perera</Descriptions.Item>
+          <Descriptions.Item label="Telephone">07014369453</Descriptions.Item>
+          <Descriptions.Item label="Email">nimal@gmail.com</Descriptions.Item>
+          <Descriptions.Item label="Gender">Male</Descriptions.Item>
+          <Descriptions.Item label="Address">
+            51/F,Ambagahathota road,Gonaduwa
+          </Descriptions.Item>
+        </Descriptions>
+        ,
+      </Modal>
 
       <Drawer
         title="Create a new account"

@@ -93,9 +93,9 @@ export default function TimeSlotManagePage() {
                   ]}
                 >
                   <Select placeholder="select grade" style={{ minWidth: 100 }}>
-                    <Option value="pri">Primary</Option>
-                    <Option value="ol">Ordinary Level</Option>
-                    <Option value="al">Advanced Level</Option>
+                    <Option value="pri">Primary Section</Option>
+                    <Option value="ol">6-11 Section</Option>
+                    <Option value="al">AL section</Option>
                   </Select>
                 </Form.Item>
 
@@ -154,7 +154,7 @@ export default function TimeSlotManagePage() {
                               block
                               icon={<PlusOutlined />}
                             >
-                              Add Subject
+                              Add new timeslot
                             </Button>
                           </Form.Item>
                         </Space>

@@ -18,11 +18,11 @@ const authenticationservice = {
   },
 };
 
-function login(username, password) {
+function login(email, password) {
   return new Promise((resolve, reject) => {
     axios
       .post(apiurl + "/login", {
-        username,
+        email,
         password,
       })
       .then((res) => {

@@ -124,7 +124,7 @@ export default function SectionManagePage() {
                   checked={isPrimary}
                   onChange={(e) => setIsPrimary(e.target.checked)}
                 >
-                  Primary
+                  Primary Section
                 </Checkbox>
               </Col>
               <Col xs={24} sm={8}>
@@ -132,7 +132,7 @@ export default function SectionManagePage() {
                   checked={isOL}
                   onChange={(e) => setIsOL(e.target.checked)}
                 >
-                  OL
+                  6-11 Section
                 </Checkbox>
               </Col>
               <Col xs={24} sm={8}>
@@ -140,13 +140,15 @@ export default function SectionManagePage() {
                   checked={isAL}
                   onChange={(e) => setIsAL(e.target.checked)}
                 >
-                  Al
+                  Al Section
                 </Checkbox>
               </Col>
             </Row>
-            {isPrimary && <GradeCard title="Primary" grades={grades.primary} />}
-            {isOL && <GradeCard title="OL" grades={grades.ol} />}
-            {isAL && <GradeCard title="Al" grades={grades.al} />}
+            {isPrimary && (
+              <GradeCard title="Primary Section" grades={grades.primary} />
+            )}
+            {isOL && <GradeCard title="6-11 Section" grades={grades.ol} />}
+            {isAL && <GradeCard title="Al Section" grades={grades.al} />}
             <Form.Item>
               <Button
                 loading={loading}
