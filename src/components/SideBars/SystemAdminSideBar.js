@@ -37,16 +37,16 @@ export default function SystemAdminSideBar() {
         </Menu.Item>
 
         <Menu.Item key="3" icon={<BorderOuterOutlined />}>
-          <Link to="/schoolMng">Schools</Link>
+          <Link to="/School">New School Requests</Link>
         </Menu.Item>
         <Menu.Item key="4" icon={<SolutionOutlined />}>
           <Link to="/eduProg">Education Programmes</Link>
         </Menu.Item>
         <Menu.Item key="5" icon={<ScheduleOutlined />}>
-          <Link to="/timeslots">TimeSlots</Link>
+          <Link to="/timeslots">Analysis</Link>
         </Menu.Item>
         <Menu.Item key="6" icon={<TableOutlined />}>
-          <Link to="/timetables">TimeTables</Link>
+          <Link to="/timetables">Tutor Managment</Link>
         </Menu.Item>
       </Menu>
     </Layout.Sider>
