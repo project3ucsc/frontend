@@ -1,0 +1,16 @@
+// .content{
+//     background-color: blue;
+// }
+// .site-layout-background{
+//     background-color:blue;
+// }
+
+.card-wrapper-home {
+  display: flex;
+  flex-wrap: wrap;
+  //justify-content: space-between;
+  .edu-card {
+    margin: 10px;
+    width: 350px;
+  }
+}

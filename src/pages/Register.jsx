@@ -87,8 +87,8 @@ const Register = ({ history }) => {
       });
   };
 
-  const onroleChange = (e) => {
-    setUserRole(e.target.value);
+  const onroleChange = (val) => {
+    setUserRole(val);
   };
 
   const prefixSelector = (
@@ -138,21 +138,17 @@ const Register = ({ history }) => {
                   },
                 ]}
               >
-                <Radio.Group value={userRole} onChange={onroleChange}>
-                  <Radio.Button value={Role.STUDENT}>
-                    {Role.STUDENT}
-                  </Radio.Button>
-                  <Radio.Button value={Role.TEACHER}>
-                    {Role.TEACHER}
-                  </Radio.Button>
-                  <Radio.Button value={Role.PRINCIPAl}>
-                    {Role.PRINCIPAl}
-                  </Radio.Button>
-                  <Radio.Button value={Role.SCHOOLADMIN}>
-                    {Role.SCHOOLADMIN}
-                  </Radio.Button>
-                  {/* <Radio.Button value={Role.ADMIN}>{Role.ADMIN}</Radio.Button> */}
-                </Radio.Group>
+                <Select
+                  value={userRole}
+                  onChange={onroleChange}
+                  placeholder="select user type"
+                >
+                  <Option value={Role.STUDENT}>{Role.STUDENT}</Option>
+                  <Option value={Role.TEACHER}>{Role.TEACHER}</Option>
+                  <Option value={Role.PRINCIPAl}>{Role.PRINCIPAl}</Option>
+                  <Option value={Role.SCHOOLADMIN}>{Role.SCHOOLADMIN}</Option>
+                  <Option value={Role.TUTOR}>{Role.TUTOR}</Option>
+                </Select>
               </Form.Item>
 
               <Form.Item
@@ -216,7 +212,7 @@ const Register = ({ history }) => {
 
               <Form.Item
                 name="username"
-                label="Username"
+                label="Name"
                 tooltip="What do you want others to call you?"
                 rules={[
                   {
@@ -250,16 +246,7 @@ const Register = ({ history }) => {
                   }}
                 />
               </Form.Item>
-              <Form.Item
-                name="gender"
-                label="Gender"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please select gender!",
-                  },
-                ]}
-              >
+              <Form.Item name="gender" label="Gender">
                 <Select placeholder="select your gender">
                   <Option value="male">Male</Option>
                   <Option value="female">Female</Option>
@@ -310,21 +297,6 @@ const Register = ({ history }) => {
                 </Form.Item>
               )}
 
-              <Form.Item
-                name="agreement"
-                valuePropName="checked"
-                rules={[
-                  {
-                    validator: (_, value) =>
-                      value
-                        ? Promise.resolve()
-                        : Promise.reject(new Error("Should accept agreement")),
-                  },
-                ]}
-                {...tailFormItemLayout}
-              >
-                <Checkbox>I have read the agreement</Checkbox>
-              </Form.Item>
               <Form.Item {...tailFormItemLayout}>
                 <Button loading={loading} type="primary" htmlType="submit">
                   Register

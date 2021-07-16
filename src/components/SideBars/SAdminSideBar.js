@@ -7,6 +7,7 @@ import {
   SolutionOutlined,
   ScheduleOutlined,
   HomeOutlined,
+  UserSwitchOutlined,
 } from "@ant-design/icons";
 
 import { Layout, Menu } from "antd";
@@ -47,6 +48,9 @@ export default function SAdminSideBar() {
         </Menu.Item>
         <Menu.Item key="6" icon={<TableOutlined />}>
           <Link to="/timetables">TimeTables</Link>
+        </Menu.Item>
+        <Menu.Item key="7" icon={<UserSwitchOutlined />}>
+          <Link to="/manageuser">Manage users</Link>
         </Menu.Item>
       </Menu>
     </Layout.Sider>
