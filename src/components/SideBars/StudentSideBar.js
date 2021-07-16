@@ -43,7 +43,7 @@ export default function StudentSideBar() {
           ))}
         </SubMenu>
         <Menu.Item key="3" icon={<DesktopOutlined />}>
-          Option 2
+          <Link to="/tvprogramme">TV Programmes</Link>
         </Menu.Item>
         <Menu.Item key="4" icon={<ContainerOutlined />}>
           Option 3
@@ -57,6 +57,11 @@ export default function StudentSideBar() {
             <Menu.Item key="12">Option 12</Menu.Item>
           </SubMenu>
         </SubMenu>
+
+        <Menu.Item key="13" icon={<HomeOutlined />}>
+          
+        </Menu.Item> 
+
       </Menu>
     </Layout.Sider>
   );
