@@ -156,7 +156,7 @@ export default function SectionManagePage() {
                 type="primary"
                 htmlType="submit"
               >
-                Crete classes
+                Create Classes
               </Button>
             </Form.Item>
           </Form>

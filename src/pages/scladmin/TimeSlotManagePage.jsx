@@ -70,9 +70,9 @@ export default function TimeSlotManagePage() {
         }}
       >
         <div className="container-back">
-          <Title level={4}>Enter number of classes in each grade</Title>
+          <Title level={4}>Configure periods(timeslots) for sections </Title>
           <Title type="secondary" level={5}>
-            If your school doesn't have particular sections uncheck them
+            Select particular section and enter time ranges
           </Title>
           <Row>
             <Col sm={24} xl={24}>

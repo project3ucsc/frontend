@@ -43,7 +43,16 @@ export default function StudentSideBar() {
             <Menu.Item key={"s" + index}>{subject}</Menu.Item>
           ))} */}
           <Menu.Item key="phy">
+            <Link to="/Physics">Com.Maths</Link>
+          </Menu.Item>
+          <Menu.Item key="ph">
             <Link to="/Physics">Physics</Link>
+          </Menu.Item>
+          <Menu.Item key="py">
+            <Link to="/Physics">Chemistry</Link>
+          </Menu.Item>
+          <Menu.Item key="hy">
+            <Link to="/Physics">Gen.English</Link>
           </Menu.Item>
         </SubMenu>
         <Menu.Item key="3" icon={<DesktopOutlined />}>

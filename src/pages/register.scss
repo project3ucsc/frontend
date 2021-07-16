@@ -35,7 +35,8 @@
   min-width: 200px;
 }
 .slide-img {
-  max-width: 600px;
+  width: fit-content;
+  max-width: 550px;
   min-width: 200px;
   object-fit: cover;
 }

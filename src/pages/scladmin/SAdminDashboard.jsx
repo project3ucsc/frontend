@@ -108,7 +108,7 @@ export default function SAdminDashboard() {
 
       <Drawer
         title="Create a new account"
-        width={720}
+        width={400}
         onClose={() => setDrawervisible(false)}
         visible={drawervisible}
         bodyStyle={{ paddingBottom: 80 }}
