@@ -39,19 +39,31 @@ export default function StudentSideBar() {
           <Link to="/Dashboard">Dashboard</Link>
         </Menu.Item>
         <SubMenu key="sub1" icon={<AppstoreOutlined />} title="Subjects">
-          {subjects.map((subject, index) => (
+          {/* {subjects.map((subject, index) => (
             <Menu.Item key={"s" + index}>{subject}</Menu.Item>
-          ))}
+          ))} */}
+          <Menu.Item key="phy">
+            <Link to="/Physics">Physics</Link>
+          </Menu.Item>
         </SubMenu>
         <Menu.Item key="3" icon={<DesktopOutlined />}>
-          Option 2
+          <Link to="/timetable">Time Table</Link>
         </Menu.Item>
-        <Menu.Item key="4" icon={<ContainerOutlined />}>
-          <Link to="/timetable">TimeTable</Link>
-        </Menu.Item>
-        <Menu.Item key="5" icon={<UserOutlined />}>
+        <Menu.Item key="4" icon={<UserOutlined />}>
           <Link to="/Profile">Profile</Link>
         </Menu.Item>
+        <Menu.Item key="5" icon={<ContainerOutlined />}>
+          Assessments
+        </Menu.Item>
+
+        {/* <SubMenu key="sub2" icon={<MailOutlined />} title="Navigation Two">
+          <Menu.Item key="9">Option 9</Menu.Item>
+          <Menu.Item key="10">Option 10</Menu.Item>
+          <SubMenu key="sub3" title="Submenu">
+            <Menu.Item key="11">Option 11</Menu.Item>
+            <Menu.Item key="12">Option 12</Menu.Item>
+          </SubMenu>
+        </SubMenu> */}
       </Menu>
     </Layout.Sider>
   );

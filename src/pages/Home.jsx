@@ -17,6 +17,7 @@ import {
   Space,
 } from "antd";
 //import ContentLayout from "components/ContentLayout";
+
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import "./Home.scss";
 import axios from "axios";
@@ -51,7 +52,7 @@ export default function Home() {
 
   const OperationsSlot = {
     //left: <Button className="tabs-extra-demo-button">Left Extra Action</Button>,
-    left: <label>Short By : </label>,
+    left: <label>Sort By : </label>,
     right: (
       <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
         expand <DownOutlined />
