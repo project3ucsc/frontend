@@ -15,7 +15,7 @@ import {
   Descriptions,
 } from "antd";
 import ContentLayout from "components/ContentLayout";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, BellTwoTone } from "@ant-design/icons";
 
 import "./dash.scss";
 const cstyle = {
@@ -192,7 +192,10 @@ export default function SAdminDashboard() {
                   <List.Item.Meta
                     style={{ marginLeft: 10 }}
                     avatar={
-                      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                      <Avatar
+                        style={{ backgroundColor: "white" }}
+                        src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                      />
                     }
                     title={
                       <a href="http://localhost:3000/dashboard">{item.title}</a>
@@ -224,7 +227,10 @@ export default function SAdminDashboard() {
                   <List.Item.Meta
                     style={{ marginLeft: 10 }}
                     avatar={
-                      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                      <Avatar
+                        style={{ backgroundColor: "white" }}
+                        icon={<BellTwoTone />}
+                      />
                     }
                     title={
                       <a href="http://localhost:3000/dashboard">{item.title}</a>

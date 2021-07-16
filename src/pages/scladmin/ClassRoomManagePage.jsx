@@ -21,7 +21,8 @@ const { Title } = Typography;
 
 const spacestyle = {
   display: "flex",
-  marginBottom: 8,
+  marginBottom: 0,
+  height: 51,
   justifyContent: "center",
 };
 
@@ -63,6 +64,9 @@ export default function ClassRoomManagePage() {
     const splitedgrade = val.grade.split(".");
     setGrade(splitedgrade[0]);
     setClassno(val.class);
+
+    setIsConfigured(true);
+
     try {
       let data = await classroomservice.getclassdetails(
         splitedgrade[0],
@@ -73,7 +77,7 @@ export default function ClassRoomManagePage() {
       console.log(data);
 
       if (data.allsubjectdetails.subject_detail.length === 0) {
-        setIsConfigured(false);
+        // setIsConfigured(false);
         let compulsorysubs = data.subjects.filter((sub) => {
           return sub.subjectgroup === "COMP";
         });
@@ -134,7 +138,7 @@ export default function ClassRoomManagePage() {
             Configuring subjects and teachers of each class
           </Title>
           <Title type="secondary" level={5}>
-            Select grade ans class name
+            Select grade and class name
           </Title>
           <Row>
             <Col sm={24} xl={24}>
@@ -191,7 +195,7 @@ export default function ClassRoomManagePage() {
                 </Form.Item>
                 <Form.Item>
                   <Button type="primary" htmlType="submit">
-                    Submit
+                    Select
                   </Button>
                 </Form.Item>
               </Form>
@@ -200,7 +204,7 @@ export default function ClassRoomManagePage() {
 
           <Row>
             <Col sm={24} xl={24}>
-              {!isConfigured && (
+              {isConfigured && (
                 <Form
                   form={subjectform}
                   initialValues={{
@@ -211,6 +215,9 @@ export default function ClassRoomManagePage() {
                   onFinish={onFinish}
                   autoComplete="off"
                 >
+                  <Title style={{ textAlign: "center" }} level={5}>
+                    Add subjects and teachers for the class
+                  </Title>
                   <Form.List name="subjects">
                     {(fields, { add, remove }) => {
                       // console.log(fields);
@@ -328,7 +335,7 @@ export default function ClassRoomManagePage() {
                   </Space>
                 </Form>
               )}
-              {isConfigured && (
+              {/* {isConfigured && (
                 <Form
                   form={subjectform}
                   initialValues={{
@@ -358,7 +365,7 @@ export default function ClassRoomManagePage() {
                     </Form.Item>
                   </Space>
                 </Form>
-              )}{" "}
+              )} */}
             </Col>
           </Row>
         </div>
