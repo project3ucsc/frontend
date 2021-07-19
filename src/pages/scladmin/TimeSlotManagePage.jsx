@@ -41,7 +41,8 @@ export default function TimeSlotManagePage() {
     setLevel(level);
     setTimeslots([
       { range: [moment("08:00", "HH:mm"), moment("09:20", "HH:mm")] },
-      { range: [moment("09:25", "HH:mm"), moment("10:40", "HH:mm")] },
+      { range: [moment("09:20", "HH:mm"), moment("10:30", "HH:mm")] },
+      { range: [moment("11.10", "HH:mm"), moment("12.10", "HH:mm")] },
     ]);
     console.log(level);
   };

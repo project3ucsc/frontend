@@ -45,7 +45,7 @@ export default function Dashboard() {
         }}
       >
         <Row>
-          <Col xs={24} xl={18}>
+          <Col xs={24} xl={24}>
             <div className="sysadmin-header">
               <h1>
                 Welcome Admin <img src={img1} alt="img1" />
@@ -91,7 +91,7 @@ export default function Dashboard() {
             </Card>
           </Col>
 
-          <Col xs={24} xl={6}>
+          {/* <Col xs={24} xl={6}>
             <>
               <Alert
                 message="Success Tips"
@@ -161,7 +161,7 @@ export default function Dashboard() {
             <Button type="primary" onClick={openNotification}>
               Open the notification box
             </Button>
-          </Col>
+          </Col> */}
         </Row>
       </Content>
     </ContentLayout>
