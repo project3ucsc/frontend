@@ -9,15 +9,16 @@ import logo from "img/logo.png";
 const Login = ({ history }) => {
   const [loading, setLoading] = useState(false);
 
-  const onFinish = ({ email, password }) => {
+  const onFinish = async ({ email, password }) => {
     setLoading(true);
-    auth
-      .login(email, password)
-      .then(() => history.push("/dashboard"))
-      .catch((err) => {
-        setLoading(false);
-        message.error(err.message);
-      });
+    try {
+      const data = await auth.login(email, password);
+      console.log(data);
+      history.push("/dashboard");
+    } catch (err) {
+      setLoading(false);
+      message.error(err.message);
+    }
   };
 
   return (

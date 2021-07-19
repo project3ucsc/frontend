@@ -18,61 +18,45 @@ const authenticationservice = {
   },
 };
 
-function login(email, password) {
-  return new Promise((resolve, reject) => {
-    axios
-      .post(apiurl + "/login", {
-        email,
-        password,
-      })
-      .then((res) => {
-        const data = JSON.stringify(res.data);
-        localStorage.setItem("user", data);
-        currentUserSubject.next(res.data);
-        resolve();
-      })
-      .catch((err) => {
-        if (err.response.status === 500)
-          reject(new Error("Usename or password incorrect"));
-        else if (err.response.status === 401)
-          reject(new Error("Authentication Failed"));
-        else reject(new Error("Unknown error occured"));
-        // console.log(err.response.data);
-      });
-  });
+async function login(email, password) {
+  try {
+    const res = await axios.post(apiurl + "/login", { email, password });
+    console.log(res);
+    const data = JSON.stringify(res.data);
+    localStorage.setItem("user", data);
+    currentUserSubject.next(res.data);
+    return res.data;
+  } catch (err) {
+    if (err.response.status === 500)
+      throw new Error("Usename or password incorrect");
+    else if (err.response.status === 401)
+      throw new Error("Authentication Failed");
+    else throw new Error("Unknown error occured");
+  }
+
+  // console.log(err.response.data);
 }
 
-function register(data) {
-  return new Promise((resolve, reject) => {
-    axios
-      .post(apiurl + "/login/register", data)
-      .then((res) => {
-        const data = JSON.stringify(res.data);
-        resolve(data);
-      })
-      .catch((err) => {
-        if (err.response.status === 500) {
-          console.log(err.response);
-          reject(new Error("Email already exists"));
-        } else if (err.response.status === 401)
-          reject(new Error("Authentication Failed"));
-        else reject(new Error("Unknown error occured"));
-        // console.log(err.response.data);
-      });
-  });
+async function register(data) {
+  try {
+    const res = await axios.post(apiurl + "/login/register", data);
+    const d = JSON.stringify(res.data);
+    return d;
+  } catch (err) {
+    if (err.response.status === 500) throw new Error("Email already exists");
+    else if (err.response.status === 401)
+      throw new Error("Authentication Failed");
+    else throw new Error("Unknown error occured");
+  }
 }
 
-function getschools() {
-  return new Promise((resolve, reject) => {
-    axios
-      .get(apiurl + "/login/register/school")
-      .then((res) => {
-        resolve(res.data);
-      })
-      .catch((err) => {
-        reject(new Error("Failed to load"));
-      });
-  });
+async function getschools() {
+  try {
+    const res = axios.get(apiurl + "/login/register/school");
+    return res.data;
+  } catch (err) {
+    throw new Error("Failed to load");
+  }
 }
 
 function logout() {

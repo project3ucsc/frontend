@@ -1,8 +1,6 @@
 import React from "react";
-import { Layout, Row, Col, Avatar, Modal, Button, Tabs, Table } from "antd";
+import { Layout, Row, Col, Table } from "antd";
 import ContentLayout from "components/ContentLayout";
-
-const { TabPane } = Tabs;
 
 export default function RegSchool() {
   const { Content } = Layout;
@@ -137,8 +135,6 @@ export default function RegSchool() {
           <Col xs={24} xl={24}>
             <Table columns={columns} dataSource={data} onChange={onChange} />
           </Col>
-
-          
         </Row>
       </Content>
     </ContentLayout>

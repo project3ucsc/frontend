@@ -1,16 +1,5 @@
 import React from "react";
-import {
-  Layout,
-  Row,
-  Col,
-  List,
-  Avatar,
-  Modal,
-  Button,
-  Switch,
-  Tabs,
-} from "antd";
-import { BankOutlined } from "@ant-design/icons";
+import { Layout, Row, Col, List, Avatar, Modal, Button, Switch } from "antd";
 import ContentLayout from "components/ContentLayout";
 import { useState } from "react";
 
@@ -32,7 +21,7 @@ const data = [
     dis: "Mr Saduni Gunathilaka",
   },
 ];
-const { TabPane } = Tabs;
+// const { TabPane } = Tabs;
 
 export default function School() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -54,10 +43,6 @@ export default function School() {
     console.log(`switch to ${checked}`);
   }
 
-  //Tab
-  function callback(key) {
-    console.log(key);
-  }
   const { Content } = Layout;
 
   return (

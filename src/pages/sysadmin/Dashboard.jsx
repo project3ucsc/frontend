@@ -1,37 +1,10 @@
 import React from "react";
-import {
-  Layout,
-  Row,
-  Col,
-  Space,
-  Card,
-  notification,
-  Button,
-  Statistic,
-  Alert,
-} from "antd";
+import { Layout, Row, Col, Card, notification, Button, Statistic } from "antd";
 import img1 from "../../img/sysadmin1.png";
 import ContentLayout from "components/ContentLayout";
 import "./sysadmin.scss";
 
-//notification
-const openNotification = () => {
-  notification.open({
-    message: "Notification Title",
-    description:
-      "This is the content of the notification <br>This is the content of the notification <br>This is the content of the notification.",
-    onClick: () => {
-      console.log("Notification Clicked!");
-    },
-  });
-};
-
 export default function Dashboard() {
-  function onPanelChange(value, mode) {
-    console.log(value, mode);
-    console.log(img1);
-  }
-
   const { Content } = Layout;
 
   return (

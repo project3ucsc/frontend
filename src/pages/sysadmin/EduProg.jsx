@@ -16,8 +16,7 @@ import moment from "moment";
 //upload file
 import { Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { List, Avatar, Space } from "antd";
-import { MessageOutlined, LikeOutlined, StarOutlined } from "@ant-design/icons";
+import { List, Avatar } from "antd";
 
 import ContentLayout from "components/ContentLayout";
 
@@ -102,12 +101,12 @@ export default function EduProg() {
   //   listData.push();
   // }
 
-  const IconText = ({ icon, text }) => (
-    <Space>
-      {React.createElement(icon)}
-      {text}
-    </Space>
-  );
+  // const IconText = ({ icon, text }) => (
+  //   <Space>
+  //     {React.createElement(icon)}
+  //     {text}
+  //   </Space>
+  // );
 
   // Use for upload file
   const props = {

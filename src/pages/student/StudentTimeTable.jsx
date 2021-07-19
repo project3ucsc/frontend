@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Layout, Row, Col, Card, Tabs } from "antd";
+import { Layout, Row, Col, Tabs } from "antd";
 import ContentLayout from "components/ContentLayout";
 import TimeTableBig from "components/TimeTableBig";
 import TimeTableSm from "components/TimeTableSm";
@@ -48,8 +48,6 @@ const data = [
 
 const { Content } = Layout;
 export default function StudentTimeTable() {
-  const [width, setwidth] = useState(window.innerWidth);
-
   return (
     <ContentLayout title="Timetable" paths={["Home", "Timetable"]}>
       <Content

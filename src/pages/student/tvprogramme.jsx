@@ -1,18 +1,8 @@
 import React from "react";
-import { Layout, Row, Col, Card } from "antd";
-import {
-  Form,
-  Input,
-  Button,
-  TimePicker,
-  Select,
-  Image,
-  Checkbox,
-  Radio,
-} from "antd";
+import { Layout, Row, Col } from "antd";
+import { Form, Input, Button, TimePicker, Select, Radio } from "antd";
 import { InputNumber } from "antd";
 import ContentLayout from "components/ContentLayout";
-import img1 from "../../img/tvsuggestion.png";
 
 export default function tvprogramme() {
   const { Content } = Layout;
@@ -26,7 +16,6 @@ export default function tvprogramme() {
   const { Option } = Select;
 
   const { TextArea } = Input;
-  const { RangePicker } = TimePicker;
   const tailLayout = {
     wrapperCol: {
       offset: 8,
