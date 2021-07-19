@@ -4,9 +4,9 @@ import { authHeader } from "utils/authheader";
 import { apiurl } from "utils/common";
 import authenticationservice from "./authentication.service";
 
-function CreateConfigureClasses(data) {
+async function CreateConfigureClasses(data) {
   try {
-    const res = axios.post(
+    const res = await axios.post(
       `${apiurl}/classes/addall/${authenticationservice.currentUserValue.school_id}`,
       data,
       authHeader()
@@ -16,9 +16,9 @@ function CreateConfigureClasses(data) {
     throw new Error("Somethingwent wrong");
   }
 }
-function getsection_and_no_classes() {
+async function getsection_and_no_classes() {
   try {
-    const res = axios.get(
+    const res = await axios.get(
       `${apiurl}/classes/num/${authenticationservice.currentUserValue.school_id}`,
       authHeader()
     );
@@ -28,9 +28,9 @@ function getsection_and_no_classes() {
   }
 }
 
-function getclassdetails(grade, name) {
+async function getclassdetails(grade, name) {
   try {
-    const res = axios.get(
+    const res = await axios.get(
       `${apiurl}/classes/getdetails/${authenticationservice.currentUserValue.school_id}/${grade}/${name}`,
       authHeader()
     );
