@@ -13,7 +13,7 @@ async function CreateConfigureClasses(data) {
     );
     return res.data;
   } catch (err) {
-    throw new Error("Somethingwent wrong");
+    throw new Error(err.response.data.message);
   }
 }
 async function getsection_and_no_classes() {
@@ -24,7 +24,7 @@ async function getsection_and_no_classes() {
     );
     return res.data.schoolsectiondetail;
   } catch (err) {
-    throw new Error("Somethingwent wrong");
+    throw new Error(err.response.data.message);
   }
 }
 
@@ -36,7 +36,7 @@ async function getclassdetails(grade, name) {
     );
     return res.data;
   } catch (err) {
-    throw new Error("Somethingwent wrong");
+    throw new Error(err.response.data.message);
   }
 }
 

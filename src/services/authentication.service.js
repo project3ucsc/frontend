@@ -27,11 +27,8 @@ async function login(email, password) {
     currentUserSubject.next(res.data);
     return res.data;
   } catch (err) {
-    if (err.response.status === 500)
-      throw new Error("Usename or password incorrect");
-    else if (err.response.status === 401)
-      throw new Error("Authentication Failed");
-    else throw new Error("Unknown error occured");
+    // console.log(err.response.data.message);
+    throw new Error(err.response.data.message);
   }
 
   // console.log(err.response.data);
@@ -43,19 +40,16 @@ async function register(data) {
     const d = JSON.stringify(res.data);
     return d;
   } catch (err) {
-    if (err.response.status === 500) throw new Error("Email already exists");
-    else if (err.response.status === 401)
-      throw new Error("Authentication Failed");
-    else throw new Error("Unknown error occured");
+    throw new Error(err.response.data.message);
   }
 }
 
 async function getschools() {
   try {
-    const res = axios.get(apiurl + "/login/register/school");
+    const res = await axios.get(apiurl + "/login/register/school");
     return res.data;
   } catch (err) {
-    throw new Error("Failed to load");
+    throw new Error(err.response.data.message);
   }
 }
 
