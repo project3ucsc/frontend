@@ -1,23 +1,11 @@
 import React from "react";
-import {
-  Layout,
-  Row,
-  Col,
-  Button,
-  Image,
-  Space,
-  Divider,
-  List,
-  Timeline,
-  Card,
-} from "antd";
+import { Row, Col, Button, Divider, List, Timeline, Card } from "antd";
 import ContentLayout from "components/ContentLayout";
 import { ClockCircleOutlined, FilePdfTwoTone } from "@ant-design/icons";
 
 import "./physics.scss";
 
 export default function Physics() {
-  const { Content } = Layout;
   const cstyle = {
     padding: 24,
     margin: 10,

@@ -3,7 +3,6 @@ import {
   Layout,
   Row,
   Col,
-  DatePicker,
   Form,
   Button,
   Input,
@@ -47,7 +46,7 @@ export default function Profile() {
         message.error("Something went wrong");
         console.log(e);
       });
-  }, []);
+  }, [form]);
 
   const onFinish = (values) => {
     setIsDisable(true);

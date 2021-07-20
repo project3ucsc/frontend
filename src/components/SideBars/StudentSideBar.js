@@ -5,7 +5,6 @@ import {
   PieChartOutlined,
   DesktopOutlined,
   ContainerOutlined,
-  MailOutlined,
   HomeOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -14,7 +13,8 @@ import { Layout, Menu } from "antd";
 
 export default function StudentSideBar() {
   const { SubMenu } = Menu;
-  const subjects = ["Maths", "Chemistry", "Physics", "English"];
+  // const subjects = ["Maths", "Chemistry", "Physics", "English"];
+
   return (
     <Layout.Sider
       width={200}

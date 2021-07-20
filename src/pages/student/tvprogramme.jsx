@@ -146,8 +146,9 @@ export default function tvprogramme() {
 
           <Col xs={24} xl={10}>
             <img
-            // width={500}
-            //src={img1}
+              alt="bla"
+              // width={500}
+              //src={img1}
             />
           </Col>
         </Row>

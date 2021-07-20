@@ -54,7 +54,7 @@ export default function TimeTableManagePage() {
   };
 
   const { Content } = Layout;
-  const [classroomid, setClassroomid] = useState(0);
+  // const [classroomid, setClassroomid] = useState(0);
   const onClassRoomSelect = (val) => {
     console.log(val);
   };

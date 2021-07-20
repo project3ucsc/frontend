@@ -35,8 +35,8 @@ export default function ClassRoomManagePage() {
   const [gradesnclasses, setGradesnclasses] = useState([]);
   const [gradecount, setGradecount] = useState([]);
 
-  const [grade, setGrade] = useState("");
-  const [classno, setClassno] = useState();
+  // const [grade, setGrade] = useState("");
+  // const [classno, setClassno] = useState();
 
   // states for down form
   const [subjectform] = Form.useForm();
@@ -62,8 +62,8 @@ export default function ClassRoomManagePage() {
 
   const onClassRoomSelect = async (val) => {
     const splitedgrade = val.grade.split(".");
-    setGrade(splitedgrade[0]);
-    setClassno(val.class);
+    // setGrade(splitedgrade[0]);
+    // setClassno(val.class);
 
     setIsConfigured(true);
 

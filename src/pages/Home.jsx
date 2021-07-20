@@ -9,7 +9,6 @@ import {
   Rate,
   PageHeader,
   Button,
-  Descriptions,
   Tabs,
   Row,
   Col,
@@ -18,7 +17,7 @@ import {
 } from "antd";
 //import ContentLayout from "components/ContentLayout";
 
-import { DownOutlined, UserOutlined } from "@ant-design/icons";
+import { DownOutlined } from "@ant-design/icons";
 import "./Home.scss";
 import axios from "axios";
 import { apiurl } from "utils/common";
@@ -54,9 +53,13 @@ export default function Home() {
     //left: <Button className="tabs-extra-demo-button">Left Extra Action</Button>,
     left: <label>Sort By : </label>,
     right: (
-      <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
+      <Button
+        type="link"
+        className="ant-dropdown-link"
+        onClick={(e) => e.preventDefault()}
+      >
         expand <DownOutlined />
-      </a>
+      </Button>
     ),
   };
 
@@ -69,90 +72,6 @@ export default function Home() {
   );
 
   //const subjects = ["Maths", "Chemistry", "Physics", "English"];
-
-  const tvPrograms = [
-    {
-      _id: "1",
-      name: "Gurugedara",
-      title: "Every Friday at 4.00pm on National Television",
-      rate: 3,
-      picture:
-        "https://lakfreedom.info/images/vthumbs/guru-gedara-geography-(a-l).jpg",
-    },
-    {
-      _id: "2",
-      name: "Gurugedara",
-      title: "Every Sunday at 4.00pm on National Television",
-      rate: 2.5,
-      picture:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIRHQHiKg52uwIG7yChx7lSxbqPIzydG1Lhw&usqp=CAU",
-    },
-    {
-      _id: "3",
-      tinametle: "E-thaksalawa",
-      title: "Every Friday at 6.00pm on ITN",
-      rate: 3,
-      picture:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSbUTbI0CRqQzdniUZmYDg2ffj757CRso5zvBM2MBoLgzHaBmv-HrlipECXlSXt5biI44&usqp=CAU",
-    },
-    {
-      _id: "4",
-      name: "BrainHub",
-      title: "Every Friday at 4.00pm on National Television",
-      rate: 4,
-      picture: "https://i.ytimg.com/vi/GC67h_ut7xU/hqdefault.jpg",
-    },
-    {
-      _id: "5",
-      name: "Math Class",
-      title: "Every Friday at 4.30am on EYE Channel",
-      rate: 3.5,
-      picture:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_0_y05PCYb3baWtWohc3tQWdXUotbENXhKDyPSYbWCkJcXx5hW5CQPiTFqk2QMe_z9Q&usqp=CAU",
-    },
-    {
-      _id: "6",
-      name: "Gurugedara",
-      title: "Every Monday at 4.00pm on National Television",
-      rate: 3.5,
-      picture:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLTB-PzoDz7eufXBKQMwhDBWm2yXVtErL07RuBX8Uz9Vsx2oJgl4rM55u0O-mRs6f_sA&usqp=CAU",
-    },
-    {
-      _id: "7",
-      name: "BrainHub",
-      title: "Every Friday at 4.30am on EYE Channel",
-      rate: 3,
-      picture:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRntsyo_9qRARQ0r_cMitrDJu_SGp26QZY95a6rcMDYLirlTWv1CwHmNap_b8j1cSkHdg&usqp=CAU",
-    },
-    {
-      _id: "8",
-      name: "BrainHub",
-      title: "Every Monday at 4.30am on EYE Channel",
-      rate: 4,
-      picture:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIRHQHiKg52uwIG7yChx7lSxbqPIzydG1Lhw&usqp=CAU",
-    },
-    {
-      _id: "9",
-      name: "BrainHub",
-      title: "Every Wendsday at 4.30am on EYE Channel",
-      rate: 2.5,
-      picture:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUnt_GT8kBnSXsHTvZY34yYJ28543ndfWqHyj5fHKaAyVbpyQ1JfxbIfjzkojvNZcKcjA&usqp=CAU",
-    },
-    {
-      _id: "10",
-      name: "ScienceHub",
-      title: "Every Sunday at 4.00pm on EYE Channel",
-      rate: 5,
-      picture:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQH85zmpMPHGgl2i8b1idBKWSWKaAb9v5tUI_hiDrQvgb5hMT2pCcQJWWhWdSar0Q_pHz4&usqp=CAU",
-    },
-  ];
-
-  //   //const [random, setRandom] = React.useState();
 
   function callback(key) {
     console.log(key);

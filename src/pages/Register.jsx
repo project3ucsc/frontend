@@ -4,18 +4,7 @@ import "./register.scss";
 import logo from "img/cbg2.png";
 import auth from "services/authentication.service";
 
-import {
-  Form,
-  Input,
-  Select,
-  Radio,
-  Checkbox,
-  Button,
-  Row,
-  Col,
-  Divider,
-  message,
-} from "antd";
+import { Form, Input, Select, Button, Row, Col, Divider, message } from "antd";
 const { Option } = Select;
 
 const formItemLayout = {

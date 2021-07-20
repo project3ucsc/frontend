@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Row, Col, Card, notification, Button, Statistic } from "antd";
+import { Layout, Row, Col, Card, Button, Statistic } from "antd";
 import img1 from "../../img/sysadmin1.png";
 import ContentLayout from "components/ContentLayout";
 import "./sysadmin.scss";
@@ -40,7 +40,11 @@ export default function Dashboard() {
             </Row>
             ,
             <Card title="Knowladge Hub School List">
-              <Card type="inner" title="School_A" extra={<a href="#">More</a>}>
+              <Card
+                type="inner"
+                title="School_A"
+                extra={<Button type="link">More</Button>}
+              >
                 Principle : ABC
               </Card>
 
@@ -48,7 +52,7 @@ export default function Dashboard() {
                 style={{ marginTop: 16 }}
                 type="inner"
                 title="School_B"
-                extra={<a href="#">More</a>}
+                extra={<Button type="link">More</Button>}
               >
                 Principle : Lakshan
               </Card>
@@ -57,7 +61,7 @@ export default function Dashboard() {
                 style={{ marginTop: 16 }}
                 type="inner"
                 title="School_C"
-                extra={<a href="#">More</a>}
+                extra={<Button type="link">More</Button>}
               >
                 Principle : Malaka
               </Card>
