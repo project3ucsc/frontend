@@ -6,7 +6,7 @@ import "./ContentLayout.scss";
 export default function ContentLayout(props) {
   const { Title } = Typography;
   return (
-    <Layout style={{ padding: "0 10px 10px" }}>
+    <Layout className="mainlayout" style={{ padding: "0 10px 10px" }}>
       <div className="site-layout-top">
         <Breadcrumb style={{ margin: "10px 0" }}>
           {props.paths.map((path, index) => {

@@ -85,8 +85,7 @@ export default function Profile() {
         }}
       >
         <Row>
-          <Col xs={24} lg={3}></Col>
-          <Col xs={24} lg={12}>
+          <Col xs={24} lg={24}>
             {/* <div className="card-wrapper"> */}
             <Form
               form={form}
@@ -175,12 +174,7 @@ export default function Profile() {
                 <Input disabled />
               </Form.Item>
 
-              <Form.Item
-                wrapperCol={{
-                  offset: 8,
-                  span: 16,
-                }}
-              >
+              <Form.Item style={{ float: "right" }}>
                 <Space>
                   {!isDisable && (
                     <Button
@@ -208,7 +202,6 @@ export default function Profile() {
             </Form>
             {/* </div> */}
           </Col>
-          <Col xs={24} lg={9}></Col>
 
           {/*<Col xs={24} lg={7}>
               <div className="card-wrapper">

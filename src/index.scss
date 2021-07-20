@@ -50,4 +50,36 @@
   .App {
     height: max-content;
   }
+
+  .ant-layout-sider {
+    position: fixed;
+    z-index: 5;
+  }
+  .mainlayout {
+    margin-left: 60px;
+  }
+}
+
+.sc-bar::-webkit-scrollbar {
+  width: 0.7rem;
+}
+
+.sc-bar::-webkit-scrollbar-track {
+  background: #dbdbdb;
+}
+
+.sc-bar::-webkit-scrollbar-thumb {
+  background: #1990fc;
+}
+
+body::-webkit-scrollbar {
+  width: 0.8rem;
+}
+
+body::-webkit-scrollbar-track {
+  background: #dbdbdb;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #1990fc;
 }

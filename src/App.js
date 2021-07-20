@@ -3,7 +3,7 @@ import { Router, Switch, Route } from "react-router-dom";
 import "antd/dist/antd.css";
 
 import "./index.scss";
-import { Layout, Button, Avatar } from "antd";
+import { Layout, Button, Avatar, Affix } from "antd";
 import { LogoutOutlined, LoginOutlined, UserOutlined } from "@ant-design/icons";
 
 import Login from "pages/Login";
@@ -37,35 +37,36 @@ function App() {
   return (
     <div className="App">
       <Layout className="MainLayout">
-        <Layout.Header className="header">
-          <div className="logo" onClick={() => history.push("/dashboard")}>
-            KNOWLEDGEHUB
-          </div>
+        <Affix>
+          <Layout.Header className="header">
+            <div className="logo" onClick={() => history.push("/dashboard")}>
+              KNOWLEDGEHUB
+            </div>
 
-          {currentUser ? (
-            <>
-              <Button type="default" className="logoutbtn" onClick={logout}>
-                <LogoutOutlined />
-              </Button>
-              <span className="logtext">
-                <Avatar size="small" icon={<UserOutlined />} />
-                {currentUser.username}
-              </span>
-            </>
-          ) : (
-            <>
-              <Button
-                type="default"
-                className="logoutbtn"
-                onClick={() => history.push("/login")}
-              >
-                <LoginOutlined />
-              </Button>{" "}
-              <span className="logtext"> You are not logged in</span>
-            </>
-          )}
-        </Layout.Header>
-
+            {currentUser ? (
+              <>
+                <Button type="default" className="logoutbtn" onClick={logout}>
+                  <LogoutOutlined />
+                </Button>
+                <span className="logtext">
+                  <Avatar size="small" icon={<UserOutlined />} />
+                  {currentUser.username}
+                </span>
+              </>
+            ) : (
+              <>
+                <Button
+                  type="default"
+                  className="logoutbtn"
+                  onClick={() => history.push("/login")}
+                >
+                  <LoginOutlined />
+                </Button>{" "}
+                <span className="logtext"> You are not logged in</span>
+              </>
+            )}
+          </Layout.Header>
+        </Affix>
         <Layout>
           <Router history={history}>
             <SideBar />

@@ -37,7 +37,7 @@ export default function tvprogramme() {
         }}
       >
         <Row>
-          <Col xs={24} xl={14}>
+          <Col xs={24} xl={24}>
             <Form
               name="basic"
               labelCol={{
@@ -133,8 +133,7 @@ export default function tvprogramme() {
               <Form.Item name="description" label="Description">
                 <TextArea rows={4} placeholder="Enter description here.." />
               </Form.Item>
-
-              <Form.Item {...tailLayout}>
+              <Form.Item style={{ float: "right" }}>
                 <Button htmlType="button">Cancel</Button>
 
                 <Button type="primary" htmlType="submit">
@@ -142,14 +141,6 @@ export default function tvprogramme() {
                 </Button>
               </Form.Item>
             </Form>
-          </Col>
-
-          <Col xs={24} xl={10}>
-            <img
-              alt="bla"
-              // width={500}
-              //src={img1}
-            />
           </Col>
         </Row>
       </Content>
