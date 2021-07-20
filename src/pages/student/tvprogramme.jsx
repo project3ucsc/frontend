@@ -16,12 +16,6 @@ export default function tvprogramme() {
   const { Option } = Select;
 
   const { TextArea } = Input;
-  const tailLayout = {
-    wrapperCol: {
-      offset: 8,
-      span: 16,
-    },
-  };
 
   return (
     <ContentLayout
