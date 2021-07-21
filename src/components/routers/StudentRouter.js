@@ -4,7 +4,7 @@ import Dashboard from "pages/student/Dashboard";
 import StudentTimeTable from "pages/student/StudentTimeTable";
 import Profile from "pages/student/Profile";
 import Physics from "pages/student/Physics";
-import Fp from "pages/ForgotPass";
+import Fp from "pages/student/FileUpload";
 import tvprogramme from "pages/student/tvprogramme";
 import NotFound404 from "pages/NotFound404";
 

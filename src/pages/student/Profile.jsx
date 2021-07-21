@@ -91,7 +91,7 @@ export default function Profile() {
               form={form}
               name="prof"
               labelCol={{
-                span: 8,
+                span: 4,
               }}
               wrapperCol={{
                 span: 16,

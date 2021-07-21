@@ -116,7 +116,7 @@ export default function Home() {
                       {freeProgs.map((item, i) => (
                         // <Card key={i}>{item.title},{item.name}</Card>
                         <Card className="edu-card" key={i} hoverable>
-                          <Image width={200} height={130} src={item.imgurl} />
+                          <Image width={230} height={130} src={item.imgurl} />
                           <Meta
                             title={item.title}
                             description={item.discription}
