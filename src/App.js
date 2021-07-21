@@ -3,8 +3,21 @@ import { Router, Switch, Route } from "react-router-dom";
 import "antd/dist/antd.css";
 
 import "./index.scss";
-import { Layout, Button, Avatar, Affix } from "antd";
-import { LogoutOutlined, LoginOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  Layout,
+  Button,
+  Avatar,
+  Drawer,
+  Affix,
+  Badge,
+  notification,
+} from "antd";
+import {
+  LogoutOutlined,
+  LoginOutlined,
+  UserOutlined,
+  BellOutlined,
+} from "@ant-design/icons";
 
 import Login from "pages/Login";
 import Register from "pages/Register";
@@ -19,6 +32,22 @@ import ForgotPass from "pages/ForgotPass";
 
 function App() {
   const [currentUser, setCurrentUser] = useState();
+  const [notifivisible, setNotifivisible] = useState(false);
+  const onNotiDrawerClose = () => {
+    setNotifivisible(false);
+  };
+
+  const onNotiDrawerShow = () => {
+    setNotifivisible(true);
+    const args = {
+      message: "Notification Title",
+      description:
+        "I will never close automatically. This is a purposely very very long description that has many many characters and words.",
+      duration: 0,
+      getContainer: () => document.querySelector("noti-con"),
+    };
+    notification.open(args);
+  };
 
   useEffect(() => {
     auth.currentuser.subscribe((v) => {
@@ -51,6 +80,11 @@ function App() {
                 <span className="logtext">
                   <Avatar size="small" icon={<UserOutlined />} />
                   {currentUser.username}
+                </span>
+                <span className="notification-bell" onClick={onNotiDrawerShow}>
+                  <Badge size="small" count={4}>
+                    <BellOutlined className="icon" />
+                  </Badge>
                 </span>
               </>
             ) : (
@@ -85,6 +119,20 @@ function App() {
             </Switch>
           </Router>
         </Layout>
+
+        <Drawer
+          width={350}
+          style={{ marginTop: 64 }}
+          className="noti-drawer"
+          title="Notifications"
+          placement="right"
+          closable={true}
+          onClose={onNotiDrawerClose}
+          visible={notifivisible}
+        >
+          <div className="noti-con"></div>
+          <p>Some contents...</p>
+        </Drawer>
       </Layout>
     </div>
   );
