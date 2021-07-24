@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Upload, Button, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
+import Path from "path";
 import uploadFileToBlob, {
   isStorageConfigured,
 } from "services/azureblob.service";
@@ -10,7 +11,7 @@ const storageConfigured = isStorageConfigured();
 
 const FileUpload = () => {
   // all blobs in container
-  // const [blobList, setBlobList] = useState([]);
+  const [blobList, setBlobList] = useState([]);
 
   // UI/form management
   const [uploading, setUploading] = useState(false);
@@ -25,7 +26,7 @@ const FileUpload = () => {
     const blobsInContainer = await uploadFileToBlob(fileList[0]);
 
     // prepare UI for results
-    // setBlobList(blobsInContainer);
+    setBlobList(blobsInContainer);
 
     // reset state/form
     setUploading(false);
@@ -66,7 +67,36 @@ const FileUpload = () => {
     </div>
   );
 
-  return <>{storageConfigured && DisplayForm()}</>;
+  // display file name and image
+  const DisplayImagesFromContainer = () => (
+    <div>
+      <h2>Container items</h2>
+      <ul>
+        {blobList.map((item) => {
+          return (
+            <li key={item}>
+              <div>
+                {Path.basename(item)}
+                <br />
+                <img src={item} alt={item} height="200" />
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+
+  return (
+    <div>
+      <h1>Upload file to Azure Blob Storage</h1>
+      {storageConfigured && DisplayForm()}
+
+      <hr />
+      {storageConfigured && blobList.length > 0 && DisplayImagesFromContainer()}
+      {!storageConfigured && <div>Storage is not configured.</div>}
+    </div>
+  );
 };
 
 export default FileUpload;
