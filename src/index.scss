@@ -59,10 +59,21 @@
     }
   }
 }
-
-// .noti-drawer {
-//   width: 700px;
-// }
+$noto-border-color: #c0c0c0;
+.noti-con {
+  border-bottom: 1px solid $noto-border-color;
+  border-top: 1px solid $noto-border-color;
+  .ant-list-item {
+    border-bottom: 1px solid $noto-border-color;
+    transition: all 0.2s ease-in;
+    &:hover {
+      background-color: #efefefbd;
+    }
+    .ant-list-item-action {
+      margin-left: 0;
+    }
+  }
+}
 .card-wrapper {
   display: flex;
   flex-wrap: wrap;

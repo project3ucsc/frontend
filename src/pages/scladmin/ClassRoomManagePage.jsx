@@ -9,11 +9,13 @@ import {
   Space,
   Typography,
   message,
-  Input,
+  Popconfirm,
+  Divider,
+  Empty,
 } from "antd";
 import ContentLayout from "components/ContentLayout";
 import "./ClassRoomManagePage.scss";
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import classroomservice from "services/classroom.service";
 
 const { Option } = Select;
@@ -25,25 +27,145 @@ const spacestyle = {
   height: 51,
   justifyContent: "center",
 };
+const searchpropsforSelect = {
+  showSearch: true,
+  optionFilterProp: "children",
+  filterOption: (input, option) =>
+    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0,
+};
+
+function SubTeacherListItem({ teachers, subjects, sd, remove }) {
+  const [disabled, setDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+
+  const showdeletePopconfirm = () => {
+    setVisible(true);
+  };
+
+  const handleOkdelete = () => {
+    setConfirmLoading(true);
+    setTimeout(() => {
+      setVisible(false);
+      setConfirmLoading(false);
+
+      // update ui
+      remove(sd.id);
+    }, 2000);
+  };
+
+  const handleCancel = () => {
+    console.log("Clicked cancel button");
+    setVisible(false);
+  };
+  const onFinish = async (val) => {
+    try {
+      if (!disabled) {
+        setLoading(true);
+        console.log(val);
+        await classroomservice.updateSubjectDetail(val, sd.id);
+        message.success("Subject detail upadted succesfully");
+        setLoading(false);
+      }
+    } catch (error) {
+      setLoading(false);
+      message.error(error.message);
+    }
+
+    setDisabled(!disabled);
+  };
+
+  return (
+    <Form
+      onFinish={onFinish}
+      initialValues={{
+        subject: sd.subjectid,
+        teacher: sd.teacher_id,
+      }}
+    >
+      <Space
+        // key={key}
+        align="baseline"
+        style={spacestyle}
+      >
+        <Form.Item
+          name="subject"
+          rules={[
+            {
+              required: true,
+              message: "Missing subject",
+            },
+          ]}
+        >
+          <Select
+            {...searchpropsforSelect}
+            disabled={disabled}
+            placeholder="select subject"
+            style={{ minWidth: 150 }}
+          >
+            {subjects.map((subject) => (
+              <Option key={subject.id} value={subject.id}>
+                {subject.name}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
+
+        <Form.Item
+          name="teacher"
+          rules={[
+            {
+              required: true,
+              message: "Missing teacher",
+            },
+          ]}
+        >
+          <Select
+            {...searchpropsforSelect}
+            placeholder="select teacher"
+            style={{ minWidth: 150 }}
+            disabled={disabled}
+          >
+            {teachers.map((teacher) => (
+              <Option key={teacher.id} value={teacher.id}>
+                {teacher.username}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
+        <Button htmlType="submit" loading={loading}>
+          {disabled ? "Edit" : "Save"}
+        </Button>
+        <Popconfirm
+          title="Are you sure to remove？"
+          visible={visible}
+          onConfirm={handleOkdelete}
+          okButtonProps={{ loading: confirmLoading }}
+          onCancel={handleCancel}
+        >
+          <Button danger onClick={showdeletePopconfirm}>
+            Remove
+          </Button>
+        </Popconfirm>
+      </Space>
+    </Form>
+  );
+}
 
 export default function ClassRoomManagePage() {
   const { Content } = Layout;
-  const [SubjectDetails, setSubjectDetails] = useState([]);
 
   // states for upper form
   const [gradeclassform] = Form.useForm();
   const [gradesnclasses, setGradesnclasses] = useState([]);
   const [gradecount, setGradecount] = useState([]);
 
-  // const [grade, setGrade] = useState("");
-  // const [classno, setClassno] = useState();
-
   // states for down form
-  const [subjectform] = Form.useForm();
   const [subjects, setSubjects] = useState([]);
   const [teachers, setTeachers] = useState([]);
-  const [isConfigured, setIsConfigured] = useState(false);
-
+  const [SubjectDetails, setSubjectDetails] = useState([]);
+  const [classroomid, setclassroomid] = useState(0);
   useEffect(() => {
     classroomservice
       .getsection_and_no_classes()
@@ -56,53 +178,21 @@ export default function ClassRoomManagePage() {
       });
   }, []);
 
-  useEffect(() => {
-    subjectform.setFieldsValue({ subjects: SubjectDetails });
-  }, [subjectform, SubjectDetails]);
-
   const onClassRoomSelect = async (val) => {
     const splitedgrade = val.grade.split(".");
-    // setGrade(splitedgrade[0]);
-    // setClassno(val.class);
-
-    setIsConfigured(true);
 
     try {
+      // get subjects and teachers and current subdetails for the class
       let data = await classroomservice.getclassdetails(
         splitedgrade[0],
         val.class
       );
       setSubjects(data.subjects);
       setTeachers(data.teachers);
-      console.log(data);
-
-      if (data.allsubjectdetails.subject_detail.length === 0) {
-        // setIsConfigured(false);
-        let compulsorysubs = data.subjects.filter((sub) => {
-          return sub.subjectgroup === "COMP";
-        });
-        // let mappedsubdetails = data.allsubjectdetails.subject_detail.map(
-        let mappedsubdetails = compulsorysubs.map((subject) => {
-          return {
-            subject: subject.id,
-            teacher: null,
-          };
-        });
-        setSubjectDetails(mappedsubdetails);
-      } else {
-        // setIsConfigured(true);
-
-        let mappedsubdetails = data.allsubjectdetails.subject_detail.map(
-          (subject_detail) => {
-            // let mappedsubdetails = compulsorysubs.map((subject) => {
-            return {
-              subject: subject_detail.subject.id,
-              teacher: subject_detail.teacher.id,
-            };
-          }
-        );
-        setSubjectDetails(mappedsubdetails);
-      }
+      setclassroomid(data.allsubjectdetails.id);
+      // console.log(data);
+      console.log(data.allsubjectdetails);
+      setSubjectDetails(data.allsubjectdetails.subject_detail);
 
       // console.log(mappedsubdetails);
     } catch (error) {
@@ -116,8 +206,35 @@ export default function ClassRoomManagePage() {
     gradeclassform.setFieldsValue({ class: null });
   };
 
-  const onFinish = (values) => {
-    console.log("Received values of form:", values);
+  const onAddSubjectDetail = async ({ subject, teacher }) => {
+    try {
+      // add new sd to database
+      const new_sd = await classroomservice.addSubjectDetail(
+        subject,
+        teacher,
+        classroomid
+      );
+      // update the ui
+      setSubjectDetails([
+        ...SubjectDetails,
+        { id: new_sd.id, subjectid: subject, teacher_id: teacher },
+      ]);
+      message.success("New subject detail added succesfully");
+    } catch (error) {
+      message.error(error.message);
+    }
+  };
+
+  const removeSubjectDetail = async (id) => {
+    try {
+      // remove sd from database
+      await classroomservice.removeSubjectDetail(id);
+      // update the ui
+      setSubjectDetails(SubjectDetails.filter((sd) => sd.id !== id));
+      message.success("The subject detail deleted succesfully");
+    } catch (error) {
+      message.error(error.message);
+    }
   };
 
   return (
@@ -160,6 +277,7 @@ export default function ClassRoomManagePage() {
                   ]}
                 >
                   <Select
+                    {...searchpropsforSelect}
                     placeholder="select grade"
                     style={{ minWidth: 100 }}
                     onChange={onGradeChange}
@@ -187,7 +305,11 @@ export default function ClassRoomManagePage() {
                     },
                   ]}
                 >
-                  <Select placeholder="select class" style={{ minWidth: 100 }}>
+                  <Select
+                    placeholder="select class"
+                    style={{ minWidth: 100 }}
+                    {...searchpropsforSelect}
+                  >
                     {[...Array(gradecount)].map((e, i) => (
                       <Option value={i + 1}>{i + 1}</Option>
                     ))}
@@ -201,171 +323,99 @@ export default function ClassRoomManagePage() {
               </Form>
             </Col>
           </Row>
+          <Divider />
 
           <Row>
             <Col sm={24} xl={24}>
-              {isConfigured && (
-                <Form
-                  form={subjectform}
-                  initialValues={{
-                    subjects: SubjectDetails,
-                  }}
-                  style={{ justifyContent: "center", marginTop: 30 }}
-                  name="dynamic_form_nest_item"
-                  onFinish={onFinish}
-                  autoComplete="off"
+              <Form
+                style={{ justifyContent: "center" }}
+                name="dynamic_form_nest_item"
+                onFinish={onAddSubjectDetail}
+                autoComplete="off"
+              >
+                <Title style={{ textAlign: "center" }} level={5}>
+                  Add subjects and teachers for the class
+                </Title>
+                <Space
+                  // key={key}
+                  align="baseline"
+                  style={spacestyle}
                 >
-                  <Title style={{ textAlign: "center" }} level={5}>
-                    Add subjects and teachers for the class
-                  </Title>
-                  <Form.List name="subjects">
-                    {(fields, { add, remove }) => {
-                      // console.log(fields);
+                  <Form.Item
+                    name="subject"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Missing subject",
+                      },
+                    ]}
+                  >
+                    <Select
+                      {...searchpropsforSelect}
+                      placeholder="select subject"
+                      style={{ minWidth: 150 }}
+                    >
+                      {subjects.map((subject) => (
+                        <Option key={subject.id} value={subject.id}>
+                          {subject.name}
+                        </Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
 
-                      return (
-                        <>
-                          {fields.map(
-                            ({ key, name, fieldKey, ...restField }) => (
-                              <Space
-                                key={key}
-                                align="baseline"
-                                style={spacestyle}
-                              >
-                                <Form.Item
-                                  {...restField}
-                                  name={[name, "sdid"]}
-                                  fieldKey={[fieldKey, "sdid"]}
-                                >
-                                  <Input defaultValue="null" hidden />
-                                </Form.Item>
+                  <Form.Item
+                    name="teacher"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Missing teacher",
+                      },
+                    ]}
+                  >
+                    <Select
+                      {...searchpropsforSelect}
+                      placeholder="select teacher"
+                      style={{ minWidth: 150 }}
+                    >
+                      {teachers.map((teacher) => (
+                        <Option key={teacher.id} value={teacher.id}>
+                          {teacher.username}
+                        </Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                </Space>
+                <Space align="baseline" style={spacestyle}>
+                  <Form.Item>
+                    <Button
+                      style={{ width: 330, minWidth: 260 }}
+                      type="dashed"
+                      htmlType="submit"
+                      block
+                      icon={<PlusOutlined />}
+                    >
+                      Add Subject and Teacher
+                    </Button>
+                  </Form.Item>
+                </Space>
+              </Form>
 
-                                <Form.Item
-                                  {...restField}
-                                  name={[name, "subject"]}
-                                  fieldKey={[fieldKey, "subject"]}
-                                  rules={[
-                                    {
-                                      required: true,
-                                      message: "Missing subject",
-                                    },
-                                  ]}
-                                >
-                                  <Select
-                                    placeholder="select subject"
-                                    style={{ minWidth: 150 }}
-                                  >
-                                    {subjects.map((subject) => (
-                                      <Option
-                                        key={subject.id}
-                                        value={subject.id}
-                                      >
-                                        {subject.name}
-                                      </Option>
-                                    ))}
-                                  </Select>
-                                </Form.Item>
-                                <Form.Item
-                                  {...restField}
-                                  name={[name, "teacher"]}
-                                  fieldKey={[fieldKey, "teacher"]}
-                                  rules={[
-                                    {
-                                      required: true,
-                                      message: "Missing teacher",
-                                    },
-                                  ]}
-                                >
-                                  <Select
-                                    placeholder="select teacher"
-                                    style={{ minWidth: 150 }}
-                                  >
-                                    {teachers.map((teacher) => (
-                                      <Option
-                                        key={teacher.id}
-                                        value={teacher.id}
-                                      >
-                                        {teacher.username}
-                                      </Option>
-                                    ))}
-                                  </Select>
-                                </Form.Item>
-                                <MinusCircleOutlined
-                                  onClick={() => {
-                                    remove(name);
-                                    console.log(fieldKey);
-                                  }}
-                                />
-                              </Space>
-                            )
-                          )}
-                          <Space align="baseline" style={spacestyle}>
-                            <Form.Item>
-                              <Button
-                                style={{ width: 330, minWidth: 260 }}
-                                type="dashed"
-                                onClick={() => add()}
-                                block
-                                icon={<PlusOutlined />}
-                              >
-                                Add Subject
-                              </Button>
-                            </Form.Item>
-                          </Space>
-                        </>
-                      );
-                    }}
-                  </Form.List>
-                  <Space align="baseline" style={spacestyle}>
-                    <Form.Item>
-                      <Button
-                        style={{ marginRight: 25 }}
-                        type="default"
-                        htmlType="button"
-                      >
-                        Cancel
-                      </Button>
-                      <Button
-                        style={{ marginLeft: 25 }}
-                        type="primary"
-                        htmlType="submit"
-                      >
-                        Save
-                      </Button>
-                    </Form.Item>
-                  </Space>
-                </Form>
-              )}
-              {/* {isConfigured && (
-                <Form
-                  form={subjectform}
-                  initialValues={{
-                    subjects: SubjectDetails,
-                  }}
-                  style={{ justifyContent: "center", marginTop: 30 }}
-                  name="dynamic_form_nest_item"
-                  onFinish={onFinish}
-                  autoComplete="off"
-                >
-                  <Space align="baseline" style={spacestyle}>
-                    <Form.Item>
-                      <Button
-                        style={{ marginRight: 25 }}
-                        type="default"
-                        htmlType="button"
-                      >
-                        Cancel
-                      </Button>
-                      <Button
-                        style={{ marginLeft: 25 }}
-                        type="primary"
-                        htmlType="submit"
-                      >
-                        Save
-                      </Button>
-                    </Form.Item>
-                  </Space>
-                </Form>
-              )} */}
+              <Divider />
+              <Title style={{ textAlign: "center" }} level={5}>
+                Current subjects and teachers in the class
+              </Title>
+
+              {SubjectDetails.length === 0 && <Empty />}
+              {SubjectDetails.map((sd) => (
+                <SubTeacherListItem
+                  classid={classroomid}
+                  key={sd.id}
+                  sd={sd}
+                  teachers={teachers}
+                  subjects={subjects}
+                  remove={removeSubjectDetail}
+                />
+              ))}
             </Col>
           </Row>
         </div>

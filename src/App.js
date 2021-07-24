@@ -3,15 +3,7 @@ import { Router, Switch, Route } from "react-router-dom";
 import "antd/dist/antd.css";
 
 import "./index.scss";
-import {
-  Layout,
-  Button,
-  Avatar,
-  Drawer,
-  Affix,
-  Badge,
-  notification,
-} from "antd";
+import { Layout, Button, Avatar, Drawer, Affix, Badge } from "antd";
 import {
   LogoutOutlined,
   LoginOutlined,
@@ -29,24 +21,19 @@ import auth from "services/authentication.service";
 import SideBar from "components/SideBars";
 import PublicRoute from "utils/PublicRoute";
 import ForgotPass from "pages/ForgotPass";
+import NotificationComponent from "components/NotificationComponent";
 
 function App() {
   const [currentUser, setCurrentUser] = useState();
+
   const [notifivisible, setNotifivisible] = useState(false);
+  const [notifiCount, setNotifiCount] = useState(4);
   const onNotiDrawerClose = () => {
     setNotifivisible(false);
   };
 
   const onNotiDrawerShow = () => {
-    setNotifivisible(true);
-    const args = {
-      message: "Notification Title",
-      description:
-        "I will never close automatically. This is a purposely very very long description that has many many characters and words.",
-      duration: 0,
-      getContainer: () => document.querySelector("noti-con"),
-    };
-    notification.open(args);
+    setNotifivisible(!notifivisible);
   };
 
   useEffect(() => {
@@ -82,7 +69,7 @@ function App() {
                   {currentUser.username}
                 </span>
                 <span className="notification-bell" onClick={onNotiDrawerShow}>
-                  <Badge size="small" count={4}>
+                  <Badge size="small" count={notifiCount}>
                     <BellOutlined className="icon" />
                   </Badge>
                 </span>
@@ -103,7 +90,9 @@ function App() {
         </Affix>
         <Layout>
           <Router history={history}>
-            <SideBar />
+            <Affix offsetTop={64}>
+              <SideBar />
+            </Affix>
 
             <Switch>
               <Route exact path="/" render={(props) => <Home {...props} />} />
@@ -130,8 +119,7 @@ function App() {
           onClose={onNotiDrawerClose}
           visible={notifivisible}
         >
-          <div className="noti-con"></div>
-          <p>Some contents...</p>
+          <NotificationComponent setNotifiCount={setNotifiCount} />
         </Drawer>
       </Layout>
     </div>
