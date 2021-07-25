@@ -28,6 +28,10 @@ const subjects = [
   { id: 3, name: "Chemistry" },
   { id: 4, name: "Gen. English" },
 ];
+const str =
+  '{"classdetail":{"id":23,"subject_detail":[{"id":1,"teacher_id":4,"subject":{"name":"Combined Mathematics"}},{"id":2,"teacher_id":11,"subject":{"name":"Physics"}},{"id":3,"teacher_id":13,"subject":{"name":"Chemistry"}},{"id":9,"teacher_id":7,"subject":{"name":"General English"}}]},"timeslotdata":[{"period":{"id":4,"starttime":"1970-01-01T02:30:00.000Z","endtime":"1970-01-01T03:40:00.000Z"},"timeslots":[{"id":1,"teacher_id":4,"sdid":1,"weekday":1},{"id":2,"teacher_id":4,"sdid":1,"weekday":2},{"id":3,"teacher_id":4,"sdid":1,"weekday":3},{"id":4,"teacher_id":4,"sdid":1,"weekday":5}]},{"period":{"id":5,"starttime":"1970-01-01T03:40:00.000Z","endtime":"1970-01-01T05:00:00.000Z"},"timeslots":[{"id":5,"teacher_id":13,"sdid":3,"weekday":1}]},{"period":{"id":6,"starttime":"1970-01-01T05:20:00.000Z","endtime":"1970-01-01T06:40:00.000Z"},"timeslots":[]},{"period":{"id":7,"starttime":"1970-01-01T06:40:00.000Z","endtime":"1970-01-01T08:00:00.000Z"},"timeslots":[{"id":6,"teacher_id":13,"sdid":3,"weekday":2}]}]}';
+
+const timedata = JSON.parse(str);
 
 export default function TimeTableManagePage() {
   const [gradeclassform] = Form.useForm();
@@ -55,8 +59,10 @@ export default function TimeTableManagePage() {
 
   const { Content } = Layout;
   // const [classroomid, setClassroomid] = useState(0);
-  const onClassRoomSelect = (val) => {
-    console.log(val);
+  const onClassRoomSelect = ({ grade, classname }) => {
+    const gradesplt = grade.split(".")[0];
+    // console.log(gradesplt, classname);
+    console.log(timedata);
   };
   return (
     <ContentLayout
@@ -114,7 +120,7 @@ export default function TimeTableManagePage() {
                 </Select>
               </Form.Item>
               <Form.Item
-                name="class"
+                name="classname"
                 label="Class"
                 rules={[
                   {
@@ -141,7 +147,7 @@ export default function TimeTableManagePage() {
         </Row>
         <Row style={{ justifyContent: "center" }}>
           <Col>
-            <TimeTableManager data={data} subs={subjects} />
+            <TimeTableManager {...timedata} />
           </Col>
         </Row>
       </Content>
