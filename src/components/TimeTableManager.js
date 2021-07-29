@@ -1,12 +1,13 @@
 import "./Timetable.scss";
 import React, { useState } from "react";
 
-import { Form, Select, Button, Row, message } from "antd";
+import { Select, Button, Row, message } from "antd";
 import {
   CheckCircleOutlined,
   CloseCircleOutlined,
   ExclamationCircleOutlined,
 } from "@ant-design/icons";
+import timeslotservice from "services/timeslot.service";
 
 const { Option } = Select;
 
@@ -15,7 +16,10 @@ const st = {
   success: "s",
   err: "e",
 };
+
 function SelectSub({ subdetail, periodid, classid, weekday, timeslotdata }) {
+  var currnttsid = timeslotdata.id;
+
   const [val, setval] = useState(
     timeslotdata.sdid + "." + timeslotdata.teacher_id
   );
@@ -25,11 +29,29 @@ function SelectSub({ subdetail, periodid, classid, weekday, timeslotdata }) {
   );
   const onBtnClick = async () => {
     setloading(true);
+    const [sdid, teacherid] = val.split(".");
     try {
-      // await setTimslot(val);
-      setloading(false);
-      setBtnstate(st.success);
-      message.success("Success");
+      const data = {
+        period_id: periodid,
+        teacher_id: parseInt(teacherid),
+        class_id: classid,
+        sd_id: parseInt(sdid),
+        weekday: weekday,
+      };
+      if (currnttsid === -1) {
+        const ts = await timeslotservice.addTimeslot(data);
+        currnttsid = ts.id;
+        // await setTimslot(val);
+        setloading(false);
+        setBtnstate(st.success);
+        message.success("Success");
+      } else {
+        await timeslotservice.updateTimeslot(data, currnttsid);
+        // await setTimslot(val);
+        setloading(false);
+        setBtnstate(st.success);
+        message.success("Success");
+      }
     } catch (error) {
       setloading(false);
       setBtnstate(st.err);

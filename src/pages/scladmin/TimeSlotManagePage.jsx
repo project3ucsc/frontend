@@ -16,7 +16,7 @@ import {
 import { PlusOutlined } from "@ant-design/icons";
 import moment from "moment";
 import ContentLayout from "components/ContentLayout";
-import timeslotservice from "services/timeslot.service";
+import periodservice from "services/period.service";
 
 const { Option } = Select;
 
@@ -47,7 +47,7 @@ export default function TimeSlotManagePage() {
   const LevelChange = async (val) => {
     try {
       setLevel(val.level);
-      const data = await timeslotservice.getPeriodSlots(val.level);
+      const data = await periodservice.getPeriodSlots(val.level);
       const mappeddata = data.map((item) => {
         return {
           id: item.id,
@@ -71,7 +71,7 @@ export default function TimeSlotManagePage() {
         endtime: range[1],
         section: level,
       };
-      const res = await timeslotservice.addPeriodSlot(data);
+      const res = await periodservice.addPeriodSlot(data);
       // update ui
       setTimeslots([
         ...timeslots,
@@ -213,7 +213,7 @@ function TimeSlotListItem({ ts, remove }) {
     setConfirmLoading(true);
     try {
       // add new sd to database
-      await timeslotservice.deletePeriodSlot(ts.id);
+      await periodservice.deletePeriodSlot(ts.id);
       // update the ui
       remove(ts.id);
       message.success("Timeslot deleted successfully");
@@ -239,7 +239,7 @@ function TimeSlotListItem({ ts, remove }) {
           starttime: range[0],
           endtime: range[1],
         };
-        const res = await timeslotservice.updatePeriodSlot(data, ts.id);
+        const res = await periodservice.updatePeriodSlot(data, ts.id);
         console.log(res);
         setLoading(false);
         message.success("Timeslot updated successfully");
