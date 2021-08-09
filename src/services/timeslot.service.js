@@ -42,9 +42,19 @@ async function updateTimeslot(data, tsid) {
   }
 }
 
+async function deleteTimeslot(tsid) {
+  try {
+    const res = await axios.delete(`${apiurl}/timeslot/${tsid}`, authHeader());
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+}
+
 const timeslotservice = {
   getTimeslotsSclAdmin,
   addTimeslot,
   updateTimeslot,
+  deleteTimeslot,
 };
 export default timeslotservice;

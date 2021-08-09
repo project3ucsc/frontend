@@ -18,55 +18,82 @@ const st = {
 };
 
 function SelectSub({ subdetail, periodid, classid, weekday, timeslotdata }) {
-  var currnttsid = timeslotdata.id;
+  const initTslots = timeslotdata.map((ts) => ts.sdid + "." + ts.teacher_id);
 
-  const [val, setval] = useState(
-    timeslotdata.sdid + "." + timeslotdata.teacher_id
+  const [currentTimeslots, setCurrentTimeslots] = useState(
+    timeslotdata.map((ts) => {
+      return { id: ts.id, val: ts.sdid + "." + ts.teacher_id };
+    })
   );
+
+  const [val, setval] = useState(timeslotdata[0].id !== -1 ? initTslots : []);
   const [loading, setloading] = useState(false);
   const [btnstate, setBtnstate] = useState(
-    timeslotdata.id !== -1 ? st.success : st.dirty
+    timeslotdata[0].id !== -1 ? st.success : st.dirty
   );
   const onBtnClick = async () => {
     setloading(true);
-    const [sdid, teacherid] = val.split(".");
-    try {
-      const data = {
-        period_id: periodid,
-        teacher_id: parseInt(teacherid),
-        class_id: classid,
-        sd_id: parseInt(sdid),
-        weekday: weekday,
-      };
-      if (currnttsid === -1) {
-        const ts = await timeslotservice.addTimeslot(data);
-        currnttsid = ts.id;
-        // await setTimslot(val);
+
+    val.forEach(async (v) => {
+      try {
+        const [sdid, teacherid] = v.split(".");
+        // console.log("init:" + initTimeslots);
+
+        const data = {
+          period_id: periodid,
+          teacher_id: parseInt(teacherid),
+          class_id: classid,
+          sd_id: parseInt(sdid),
+          weekday: weekday,
+        };
+        if (!currentTimeslots.some((ts) => ts.val === v)) {
+          const ts = await timeslotservice.addTimeslot(data);
+          setCurrentTimeslots([...currentTimeslots, { id: ts.id, val: v }]);
+          // currnttsid = ts.id;
+          // await setTimslot(val);
+          setloading(false);
+          setBtnstate(st.success);
+          message.success("Success");
+        } else {
+          setloading(false);
+          setBtnstate(st.success);
+          // message.info("");
+        }
+      } catch (error) {
         setloading(false);
-        setBtnstate(st.success);
-        message.success("Success");
-      } else {
-        await timeslotservice.updateTimeslot(data, currnttsid);
-        // await setTimslot(val);
-        setloading(false);
-        setBtnstate(st.success);
-        message.success("Success");
+        setBtnstate(st.err);
+        message.error(error.message);
       }
-    } catch (error) {
-      setloading(false);
-      setBtnstate(st.err);
-      message.error(error.message);
-    }
+    });
   };
   const onChange = (value) => {
+    console.log(value);
     setval(value);
     setBtnstate(st.dirty);
   };
+  const onItemClear = async (value) => {
+    console.log("cleared : " + value);
+    const ts = currentTimeslots.find((t) => t.val === value);
+    try {
+      if (ts) {
+        await timeslotservice.deleteTimeslot(ts.id);
+        setCurrentTimeslots(currentTimeslots.filter((t) => t.val !== value));
+        message.info("Timeslot cleared");
+      }
+    } catch (error) {
+      message.error(error.message);
+    }
+  };
+
   return (
     <Row>
       <Select
+        mode="multiple"
+        allowClear
+        onDeselect={onItemClear}
         className="table-select"
-        value={val}
+        defaultValue={val}
+        // value={val}
         onChange={onChange}
         placeholder="select subject"
         style={{ minWidth: 50 }}
@@ -144,9 +171,9 @@ export default function TimeTableManager({ timeslotdata, classdetail }) {
                     </td>
 
                     {days.map((day) => {
-                      let ts = row.timeslots.find((ts) => ts.weekday === day);
-                      if (!ts)
-                        ts = { id: -1, teacher_id: "", sdid: "select subject" };
+                      let ts = row.timeslots.filter((ts) => ts.weekday === day);
+                      if (ts.length === 0)
+                        ts = [{ id: -1, teacher_id: "", sdid: "" }];
 
                       const selectprops = {
                         periodid: row.period.id,
