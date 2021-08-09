@@ -29,7 +29,7 @@ const FileUpload = () => {
 
     // reset state/form
     setUploading(false);
-    // console.log(blobsInContainer);
+    console.log(blobsInContainer);
 
     setFileList([]);
     setUploading(false);

@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Row, Col, Card,Calendar,PageHeader,  List} from "antd";
+import { Row, Col, Card, Calendar, PageHeader, List } from "antd";
 import ContentLayout from "components/ContentLayout";
 //import { PlusOutlined } from "@ant-design/icons";
 import "./dashboard.scss";
@@ -14,10 +14,6 @@ const cstyle = {
 function onPanelChange(value, mode) {
   console.log(value, mode);
 }
-
-
-
-
 
 var adata = [
   {
@@ -58,15 +54,19 @@ export default function Dashboard() {
   //const { Content } = Layout;
   const { Meta } = Card;
 
-
-  const subjects=[
-    {_id:"1",name:"Com. Maths",teacher:"Mr. M.T. Premarathna",rate:3}, 
-    {_id:"2",name:"Physics",teacher:"Mr. Nimal Perea",rate:2.5},
-    {_id:"3",name:"Chemistry",teacher:"E-thaksalawa",title:"Mrs. Nimali Sandamini",rate:3}, 
-    {_id:"4",name:"General English",teacher:"Mis. Amali Perea",rate:4}, 
-    {_id:"5",name:"GIT",teacher:"Mr. Kasun Liyanage",rate:3.5},      
-                                                                                                
-  ]
+  const subjects = [
+    { _id: "1", name: "Com. Maths", teacher: "Mr. M.T. Premarathna", rate: 3 },
+    { _id: "2", name: "Physics", teacher: "Mr. Nimal Perea", rate: 2.5 },
+    {
+      _id: "3",
+      name: "Chemistry",
+      teacher: "E-thaksalawa",
+      title: "Mrs. Nimali Sandamini",
+      rate: 3,
+    },
+    { _id: "4", name: "General English", teacher: "Mis. Amali Perea", rate: 4 },
+    { _id: "5", name: "GIT", teacher: "Mr. Kasun Liyanage", rate: 3.5 },
+  ];
   return (
     <ContentLayout title="DashBoard" paths={["Home", "Dashboard"]}>
       {/* <Content
@@ -78,123 +78,111 @@ export default function Dashboard() {
           backgroundColor:"#ffffff",
         }}
       > */}
-          <div className="site-page-header-ghost-wrapper">
-      <PageHeader className="page-header-1" style={{ height: 70}}
-        //ghost={false}
+      <div className="site-page-header-ghost-wrapper">
+        <PageHeader
+          className="page-header-1"
+          style={{ height: 70 }}
+          //ghost={false}
 
-        title="Good Afternoon Lakshan! Today will be a busy day for you..."
-     >
-        <br />
+          title="Good Afternoon Lakshan! Today will be a busy day for you..."
+        >
+          <br />
+        </PageHeader>
+      </div>
 
-      </PageHeader>
-    </div>
-
-
-
-
-
-        <Row>
-          <Col xs={24} xl={18}>
-            
-            <div className="card-wrapper-student-dash">
+      <Row>
+        <Col xs={24} xl={18}>
+          <div className="card-wrapper-student-dash">
             {subjects.map((item, i) => (
-            
-              
-              <Card key={i} hoverable style={{ width: 300 }} >
-                
+              <Card key={i} hoverable style={{ width: 300 }}>
                 <Meta title={item.name} description={item.teacher} />
-                
-                
               </Card>
-            
-            ))}        
-            </div>
+            ))}
+          </div>
 
-            <div className="site-card-border-less-wrapper-2">
-         
+          <div className="site-card-border-less-wrapper-2">
             <Card
-            title="Announcements"
-            // extra={
-            //   <Button type="primary">
-            //     <PlusOutlined />
-            //     Add New
-            //   </Button>
-            // }
-            className="anncard"
-            style={cstyle}
-          >
-
-            <List
-              itemLayout="horizontal"
-              dataSource={adata}
-              renderItem={(item) => (
-                <List.Item>
-                  <List.Item.Meta
-                    style={{ marginLeft: 10 }}
-                    // avatar={
-                    //   <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                    // }
-                    title={
-                      <a href="http://localhost:3000/dashboard">{item.title}</a>
-                    }
-                    description={item.dis}     
-                  />
-                </List.Item>
-              )}
-
-            />
-          </Card>
+              title="Announcements"
+              // extra={
+              //   <Button type="primary">
+              //     <PlusOutlined />
+              //     Add New
+              //   </Button>
+              // }
+              className="anncard"
+              style={cstyle}
+            >
+              <List
+                itemLayout="horizontal"
+                dataSource={adata}
+                renderItem={(item) => (
+                  <List.Item>
+                    <List.Item.Meta
+                      style={{ marginLeft: 10 }}
+                      // avatar={
+                      //   <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                      // }
+                      title={
+                        <a href="http://localhost:3000/dashboard">
+                          {item.title}
+                        </a>
+                      }
+                      description={item.dis}
+                    />
+                  </List.Item>
+                )}
+              />
+            </Card>
           </div>
+        </Col>
 
-          </Col>
-
-          <br/>
-          <Col xs={24} xl={6} >
-
+        <br />
+        <Col xs={24} xl={6}>
           <div className="site-card-border-less-wrapper">
-          <Card   style={{ width: 370 ,height:450}}>
-            <p>Card content</p>
+            <Card style={{ width: 370, height: 450 }}>
+              <p>Card content</p>
 
-            <div className="site-calendar-demo-card">
-              <Calendar fullscreen={false} onPanelChange={onPanelChange} style={{ width: 300 ,height:300}}/>
-            </div>
-
-          </Card>
+              <div className="site-calendar-demo-card">
+                <Calendar
+                  fullscreen={false}
+                  onPanelChange={onPanelChange}
+                  style={{ width: 300, height: 300 }}
+                />
+              </div>
+            </Card>
           </div>
 
-          <br/>
+          <br />
           <div className="site-card-border-less-wrapper-2-right">
-         
-          <Card
-            title="Upcoming Events"
-            className="teachercard"
-            style={cstyle}
-          >
-            <List
-              itemLayout="horizontal"
-              dataSource={tdata}
-              renderItem={(item) => (
-                <List.Item>
-                  <List.Item.Meta
-                    style={{ marginLeft: 10 }}
-                    // avatar={
-                    //   <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                    // }
-                    title={
-                      <a href="http://localhost:3000/dashboard">{item.title}</a>
-                    }
-                    description={item.dis}
-                  />
-                </List.Item>
-              )}
-            />
-          </Card>
+            <Card
+              title="Upcoming Events"
+              className="teachercard"
+              style={cstyle}
+            >
+              <List
+                itemLayout="horizontal"
+                dataSource={tdata}
+                renderItem={(item) => (
+                  <List.Item>
+                    <List.Item.Meta
+                      style={{ marginLeft: 10 }}
+                      // avatar={
+                      //   <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                      // }
+                      title={
+                        <a href="http://localhost:3000/dashboard">
+                          {item.title}
+                        </a>
+                      }
+                      description={item.dis}
+                    />
+                  </List.Item>
+                )}
+              />
+            </Card>
           </div>
-
-            
-            
-          </Col>
-        </Row>
+        </Col>
+      </Row>
       {/* </Content> */}
     </ContentLayout>
   );

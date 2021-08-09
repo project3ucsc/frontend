@@ -8,32 +8,25 @@ import {
   Button,
   Typography,
   message,
+  Skeleton,
+  Spin,
 } from "antd";
+import "./timetablepage.scss";
 import ContentLayout from "components/ContentLayout";
 import TimeTableManager from "components/TimeTableManager";
 import classroomservice from "services/classroom.service";
+import timeslotservice from "services/timeslot.service";
 const { Option } = Select;
 const { Title } = Typography;
-
-const data = [
-  { key: 1, time: "08.00-09.10", mon: 1, tue: 1, wed: 1, thu: 1, fri: 1 },
-  { key: 2, time: "09.10-10.30", mon: 1, tue: 2, wed: 1, thu: 1, fri: 1 },
-  { key: 3, time: "11.10-12.10", mon: 1, tue: 1, wed: 1, thu: 1, fri: 1 },
-  { key: 4, time: "12.10-13.30", mon: 1, tue: 1, wed: 1, thu: 1, fri: 1 },
-];
-
-const subjects = [
-  { id: 1, name: "Maths" },
-  { id: 2, name: "Physics" },
-  { id: 3, name: "Chemistry" },
-  { id: 4, name: "Gen. English" },
-];
 
 export default function TimeTableManagePage() {
   const [gradeclassform] = Form.useForm();
 
   const [gradesnclasses, setGradesnclasses] = useState([]);
   const [gradecount, setGradecount] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const [timedata, setTimedata] = useState([]);
 
   useEffect(() => {
     classroomservice
@@ -54,9 +47,24 @@ export default function TimeTableManagePage() {
   };
 
   const { Content } = Layout;
-  // const [classroomid, setClassroomid] = useState(0);
-  const onClassRoomSelect = (val) => {
-    console.log(val);
+
+  const onClassRoomSelect = async ({ grade, classname }) => {
+    const gradesplt = grade.split(".")[0];
+
+    try {
+      setLoading(true);
+      const data = await timeslotservice.getTimeslotsSclAdmin(
+        gradesplt,
+        classname
+      );
+      setTimedata(data);
+      setLoading(false);
+
+      console.log(data);
+    } catch (error) {
+      setLoading(false);
+      message.error(error.message);
+    }
   };
   return (
     <ContentLayout
@@ -114,7 +122,7 @@ export default function TimeTableManagePage() {
                 </Select>
               </Form.Item>
               <Form.Item
-                name="class"
+                name="classname"
                 label="Class"
                 rules={[
                   {
@@ -141,7 +149,13 @@ export default function TimeTableManagePage() {
         </Row>
         <Row style={{ justifyContent: "center" }}>
           <Col>
-            <TimeTableManager data={data} subs={subjects} />
+            {timedata.length !== 0 && !loading && (
+              <TimeTableManager {...timedata} />
+            )}
+            {timedata.length === 0 && !loading && (
+              <Skeleton title paragraph={{ rows: 4 }} />
+            )}
+            {loading && <Spin size="large" style={{ marginTop: 50 }} />}
           </Col>
         </Row>
       </Content>

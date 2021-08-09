@@ -5,10 +5,10 @@ import { apiurl } from "utils/common";
 import authenticationservice from "./authentication.service";
 const schoolid = authenticationservice.currentUserValue.school_id;
 
-async function getTimeslotsSclAdmin(grade, classname) {
+async function getPeriodSlots(level) {
   try {
     const res = await axios.get(
-      `${apiurl}/timeslot/${schoolid}/${grade}/${classname}`,
+      `${apiurl}/period/${schoolid}/${level}`,
       authHeader()
     );
     return res.data;
@@ -17,11 +17,11 @@ async function getTimeslotsSclAdmin(grade, classname) {
     throw new Error(err.response.data.message);
   }
 }
-async function addTimeslot(data) {
+async function addPeriodSlot(data) {
   try {
     const res = await axios.post(
-      `${apiurl}/timeslot/${schoolid}`,
-      data,
+      `${apiurl}/period`,
+      { ...data, school_id: schoolid },
       authHeader()
     );
     return res.data;
@@ -29,10 +29,11 @@ async function addTimeslot(data) {
     throw new Error(err.response.data.message);
   }
 }
-async function updateTimeslot(data, tsid) {
+
+async function updatePeriodSlot(data, psid) {
   try {
     const res = await axios.patch(
-      `${apiurl}/timeslot/${schoolid}/${tsid}`,
+      `${apiurl}/period/${psid}`,
       data,
       authHeader()
     );
@@ -42,19 +43,19 @@ async function updateTimeslot(data, tsid) {
   }
 }
 
-async function deleteTimeslot(tsid) {
+async function deletePeriodSlot(psid) {
   try {
-    const res = await axios.delete(`${apiurl}/timeslot/${tsid}`, authHeader());
+    const res = await axios.delete(`${apiurl}/period/${psid}`, authHeader());
     return res.data;
   } catch (err) {
     throw new Error(err.response.data.message);
   }
 }
 
-const timeslotservice = {
-  getTimeslotsSclAdmin,
-  addTimeslot,
-  updateTimeslot,
-  deleteTimeslot,
+const periodservice = {
+  getPeriodSlots,
+  addPeriodSlot,
+  updatePeriodSlot,
+  deletePeriodSlot,
 };
-export default timeslotservice;
+export default periodservice;
