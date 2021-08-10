@@ -1,0 +1,47 @@
+.lessoncard {
+  .ant-card-body {
+    height: calc(100vh - 230px);
+
+    overflow-y: scroll;
+
+    .ant-list-item {
+      padding-right: 10px;
+      padding-left: 15px;
+      background-color: aliceblue;
+      margin-bottom: 5px;
+      justify-content: space-between;
+      // margin: 5px;
+      &:hover {
+        background-color: rgb(211, 234, 255);
+      }
+    }
+  }
+
+  .linkspan {
+    cursor: pointer;
+    font-weight: 500;
+    color: #1890ff;
+
+    .anticon-file-pdf {
+      margin-right: 7px;
+    }
+    &:hover {
+      color: #27323b;
+    }
+  }
+}
+.timelinecard {
+  .ant-card-body {
+    height: 350px;
+    overflow-y: scroll;
+
+    .ant-list-item {
+      background-color: #00bcd438;
+      margin-bottom: 5px;
+
+      &:hover {
+        background-color: #00bbd456;
+      }
+    }
+  }
+}

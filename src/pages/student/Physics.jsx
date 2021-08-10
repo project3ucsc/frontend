@@ -1,32 +1,52 @@
-import React from "react";
-import { Row, Col, Button, Divider, List, Timeline, Card } from "antd";
+import React, { useState } from "react";
+import { Row, Col, Button, List, Timeline, Card } from "antd";
 import ContentLayout from "components/ContentLayout";
-import { ClockCircleOutlined, FilePdfTwoTone } from "@ant-design/icons";
-
+import {
+  ClockCircleOutlined,
+  FilePdfTwoTone,
+  EyeOutlined,
+  EyeInvisibleOutlined,
+  EditOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
 import "./physics.scss";
 
+const cstyle = {
+  marginBottom: 0,
+  marginRight: 10,
+  minHeight: 280,
+};
+
+const data1 = [
+  "Zoom link for upcoming lesson  -  2020/07/19 - 9.10AM to 10.30AM",
+];
+
+const data2 = [
+  {
+    name: "Motion in the same direction.pdf",
+    link: "http://localhost:3000/subject",
+  },
+  {
+    name: "Motion in the opposite direction.pdf",
+    link: "http://localhost:3000/subject",
+  },
+  { name: "Motion video lesson", link: "http://localhost:3000/subject" },
+];
+
+const data3 = [
+  { name: "Expansions of solid.pdf", link: "http://localhost:3000/subject" },
+  {
+    name: "Relationship between linear, area and volume expansivities.pdf",
+    link: "http://localhost:3000/subject",
+  },
+  {
+    name: "Volume expansion of liquids video lesson",
+    link: "http://localhost:3000/subject",
+  },
+];
+
 export default function Physics() {
-  const cstyle = {
-    marginBottom: 0,
-    marginRight: 10,
-    minHeight: 280,
-  };
-
-  const data1 = [
-    "Zoom link for upcoming lesson  -  2020/07/19 - 9.10AM to 10.30AM",
-  ];
-
-  const data2 = [
-    "Motion in the same direction.pdf",
-    "Motion in the opposite direction.pdf",
-    "Motion video lesson",
-  ];
-
-  const data3 = [
-    "Expansions of solid.pdf",
-    "Relationship between linear, area and volume expansivities.pdf",
-    "Volume expansion of liquids video lesson",
-  ];
+  const [learnMats, setLearnMats] = useState([data2, data3]);
 
   return (
     <ContentLayout title="Physics" paths={["Home", "Physics"]}>
@@ -54,34 +74,25 @@ export default function Physics() {
               )}
             />
             <br />
-            <List
-              style={{ textAlign: "left" }}
-              header={<div>Mechanics</div>}
-              bordered
-              dataSource={data2}
-              renderItem={(item) => (
-                <List.Item>
-                  <span className="linkspan">
-                    <FilePdfTwoTone twoToneColor="#cf1322" /> {item}
-                  </span>
-                </List.Item>
-              )}
-            />
 
-            <br />
-            <List
-              style={{ textAlign: "left" }}
-              header={<div>Thermal physics</div>}
-              bordered
-              dataSource={data3}
-              renderItem={(item) => (
-                <List.Item>
-                  <span className="linkspan">
-                    <FilePdfTwoTone twoToneColor="#cf1322" /> {item}
-                  </span>
-                </List.Item>
-              )}
-            />
+            {learnMats.map((learnmat, i) => {
+              return (
+                <List
+                  key={i}
+                  style={{ textAlign: "left" }}
+                  header={<div>Mechanics</div>}
+                  bordered
+                  dataSource={learnmat}
+                  renderItem={(item) => (
+                    <List.Item>
+                      <a href={item.link} className="linkspan">
+                        <FilePdfTwoTone twoToneColor="#cf1322" /> {item.name}
+                      </a>
+                    </List.Item>
+                  )}
+                />
+              );
+            })}
           </Card>
         </Col>
 
