@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 import { Row, Col, Button, List, Timeline, Card } from "antd";
 import ContentLayout from "components/ContentLayout";
-import {
-  ClockCircleOutlined,
-  FilePdfTwoTone,
-  EyeOutlined,
-  EyeInvisibleOutlined,
-  EditOutlined,
-  DeleteOutlined,
-} from "@ant-design/icons";
+import { ClockCircleOutlined, FilePdfTwoTone } from "@ant-design/icons";
 import "./physics.scss";
 
 const cstyle = {
