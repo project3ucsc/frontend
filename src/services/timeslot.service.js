@@ -4,6 +4,7 @@ import { authHeader } from "utils/authheader";
 import { apiurl } from "utils/common";
 import authenticationservice from "./authentication.service";
 const schoolid = authenticationservice.currentUserValue.school_id;
+const userid = authenticationservice.currentUserValue.id;
 
 async function getTimeslotsSclAdmin(grade, classname) {
   try {
@@ -17,6 +18,21 @@ async function getTimeslotsSclAdmin(grade, classname) {
     throw new Error(err.response.data.message);
   }
 }
+
+async function getTimeSlotsForStudent() {
+  try {
+    console.log(userid);
+    const res = await axios.get(
+      `${apiurl}/timeslot/${schoolid}/${userid}`,
+      authHeader()
+    );
+    return res.data;
+  } catch (err) {
+    console.log(err.response.data.message);
+    throw new Error(err.response.data.message);
+  }
+}
+
 async function addTimeslot(data) {
   try {
     const res = await axios.post(
@@ -53,6 +69,7 @@ async function deleteTimeslot(tsid) {
 
 const timeslotservice = {
   getTimeslotsSclAdmin,
+  getTimeSlotsForStudent,
   addTimeslot,
   updateTimeslot,
   deleteTimeslot,
