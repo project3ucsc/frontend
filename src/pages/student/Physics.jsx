@@ -7,9 +7,8 @@ import "./physics.scss";
 
 export default function Physics() {
   const cstyle = {
-    padding: 24,
-    margin: 10,
     marginBottom: 0,
+    marginRight: 10,
     minHeight: 280,
   };
 
@@ -42,7 +41,7 @@ export default function Physics() {
 
       <Row>
         <Col xs={24} xl={16}>
-          <Card title="My Lessons" className="teachercard1" style={cstyle}>
+          <Card title="My Lessons" className="lessoncard" style={cstyle}>
             <List
               header={<div>Upcoming lesson</div>}
               // footer={<div>Footer</div>}
@@ -50,13 +49,11 @@ export default function Physics() {
               dataSource={data1}
               renderItem={(item) => (
                 <List.Item>
-                  <Button type="link" size={"large"}>
-                    {item}
-                  </Button>
+                  <span className="linkspan">{item}</span>
                 </List.Item>
               )}
             />
-            <Divider dashed />
+            <br />
             <List
               style={{ textAlign: "left" }}
               header={<div>Mechanics</div>}
@@ -64,16 +61,14 @@ export default function Physics() {
               dataSource={data2}
               renderItem={(item) => (
                 <List.Item>
-                  <Button type="link">
-                    <FilePdfTwoTone twoToneColor="#cf1322" />
-                    {item}
-                  </Button>
+                  <span className="linkspan">
+                    <FilePdfTwoTone twoToneColor="#cf1322" /> {item}
+                  </span>
                 </List.Item>
               )}
             />
 
-            <Divider dashed />
-
+            <br />
             <List
               style={{ textAlign: "left" }}
               header={<div>Thermal physics</div>}
@@ -81,10 +76,9 @@ export default function Physics() {
               dataSource={data3}
               renderItem={(item) => (
                 <List.Item>
-                  <Button type="link">
-                    <FilePdfTwoTone twoToneColor="#cf1322" />
-                    {item}
-                  </Button>
+                  <span className="linkspan">
+                    <FilePdfTwoTone twoToneColor="#cf1322" /> {item}
+                  </span>
                 </List.Item>
               )}
             />
@@ -94,7 +88,7 @@ export default function Physics() {
         {/* <Col xl={1}></Col> */}
 
         <Col xs={24} xl={8}>
-          <Card title="Timeline" className="anncard1" style={cstyle}>
+          <Card title="Timeline" className="timelinecard" style={cstyle}>
             {/* <Content
                     className="site-layout-background"
                     style={{
