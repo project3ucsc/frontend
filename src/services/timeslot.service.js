@@ -3,10 +3,10 @@ import axios from "axios";
 import { authHeader } from "utils/authheader";
 import { apiurl } from "utils/common";
 import authenticationservice from "./authentication.service";
-const schoolid = authenticationservice.currentUserValue.school_id;
-const userid = authenticationservice.currentUserValue.id;
 
 async function getTimeslotsSclAdmin(grade, classname) {
+  const schoolid = authenticationservice.currentUserValue.school_id;
+
   try {
     const res = await axios.get(
       `${apiurl}/timeslot/${schoolid}/${grade}/${classname}`,
@@ -20,6 +20,9 @@ async function getTimeslotsSclAdmin(grade, classname) {
 }
 
 async function getTimeSlotsForStudent() {
+  const schoolid = authenticationservice.currentUserValue.school_id;
+  const userid = authenticationservice.currentUserValue.id;
+
   try {
     console.log(userid);
     const res = await axios.get(
@@ -34,6 +37,8 @@ async function getTimeSlotsForStudent() {
 }
 
 async function addTimeslot(data) {
+  const schoolid = authenticationservice.currentUserValue.school_id;
+
   try {
     const res = await axios.post(
       `${apiurl}/timeslot/${schoolid}`,
@@ -46,6 +51,8 @@ async function addTimeslot(data) {
   }
 }
 async function updateTimeslot(data, tsid) {
+  const schoolid = authenticationservice.currentUserValue.school_id;
+
   try {
     const res = await axios.patch(
       `${apiurl}/timeslot/${schoolid}/${tsid}`,

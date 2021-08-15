@@ -3,9 +3,10 @@ import axios from "axios";
 import { authHeader } from "utils/authheader";
 import { apiurl } from "utils/common";
 import authenticationservice from "./authentication.service";
-const schoolid = authenticationservice.currentUserValue.school_id;
 
 async function getPeriodSlots(level) {
+  const schoolid = authenticationservice.currentUserValue.school_id;
+
   try {
     const res = await axios.get(
       `${apiurl}/period/${schoolid}/${level}`,
@@ -18,6 +19,8 @@ async function getPeriodSlots(level) {
   }
 }
 async function addPeriodSlot(data) {
+  const schoolid = authenticationservice.currentUserValue.school_id;
+
   try {
     const res = await axios.post(
       `${apiurl}/period`,

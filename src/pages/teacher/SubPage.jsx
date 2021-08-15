@@ -3,14 +3,13 @@ import { Row, Col, Button, List, Menu, Dropdown, Card } from "antd";
 import ContentLayout from "components/ContentLayout";
 import {
   DownOutlined,
-  FilePdfTwoTone,
-  EyeOutlined,
   EyeInvisibleOutlined,
   EditOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
 
 import "./subpage.scss";
+import LearnMatSection from "components/teacher/LearnMatSection";
 
 const menu = (
   <Menu>
@@ -41,23 +40,31 @@ const data1 = [
 
 const data2 = [
   {
+    id: 1,
     name: "Motion in the same direction.pdf",
     link: "http://localhost:3000/subject",
   },
   {
+    id: 2,
     name: "Motion in the opposite direction.pdf",
     link: "http://localhost:3000/subject",
   },
-  { name: "Motion video lesson", link: "http://localhost:3000/subject" },
+  { id: 3, name: "Motion video lesson", link: "http://localhost:3000/subject" },
 ];
 
 const data3 = [
-  { name: "Expansions of solid.pdf", link: "http://localhost:3000/subject" },
   {
+    id: 1,
+    name: "Expansions of solid.pdf",
+    link: "http://localhost:3000/subject",
+  },
+  {
+    id: 2,
     name: "Relationship between linear, area and volume expansivities.pdf",
     link: "http://localhost:3000/subject",
   },
   {
+    id: 3,
     name: "Volume expansion of liquids video lesson",
     link: "http://localhost:3000/subject",
   },
@@ -100,55 +107,7 @@ export default function SubPage() {
             <br />
 
             {learnMats.map((learnmat, i) => {
-              return (
-                <List
-                  key={i}
-                  style={{ textAlign: "left" }}
-                  header={<div>Mechanics</div>}
-                  bordered
-                  dataSource={learnmat}
-                  renderItem={(item) => (
-                    <List.Item>
-                      <a href={item.link} className="linkspan">
-                        <FilePdfTwoTone twoToneColor="#cf1322" /> {item.name}
-                      </a>
-                      <span>
-                        <Button
-                          size="small"
-                          type="primary"
-                          onClick={(e) => console.log(e)}
-                        >
-                          <EditOutlined />
-                        </Button>
-
-                        <Button
-                          size="small"
-                          type="default"
-                          onClick={() => console.log("sdvsdv")}
-                        >
-                          <EyeInvisibleOutlined />
-                        </Button>
-                        <Button
-                          size="small"
-                          type="primary"
-                          disabled
-                          onClick={() => console.log("sdvsdv")}
-                        >
-                          <EyeOutlined />
-                        </Button>
-                        <Button
-                          size="small"
-                          type="primary"
-                          danger
-                          onClick={() => console.log("sdvsdv")}
-                        >
-                          <DeleteOutlined />
-                        </Button>
-                      </span>
-                    </List.Item>
-                  )}
-                />
-              );
+              return <LearnMatSection key={i} data={learnmat} />;
             })}
 
             {/* <List
