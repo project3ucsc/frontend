@@ -1,6 +1,7 @@
 import "./Timetable.scss";
 import "./Timetablebig.scss";
 import { Card } from "antd";
+import { getDateTxt } from "utils/common";
 
 function Timecard({ name, time }) {
   return (
@@ -11,6 +12,24 @@ function Timecard({ name, time }) {
 }
 
 export default function TimeTableSm({ data, day }) {
+  var newdata = [];
+  data.forEach((row) => {
+    const datetime = getDateTxt(row.period.starttime, row.period.endtime);
+
+    const ts = row.timeslots.filter((ts) => ts.weekday === day);
+    let subname = "";
+
+    if (ts.length === 0) subname = "None";
+    if (ts.length === 1) subname = ts[0].subject_detail.subject.name;
+
+    if (ts.length > 1)
+      subname = ts.reduce(
+        (a, b) =>
+          a.subject_detail.subject.name + "/" + b.subject_detail.subject.name
+      );
+    newdata.push({ datetime, subname });
+  });
+
   return (
     <div className="ant-table ant-table-bordered">
       <div className="ant-table-container">
@@ -23,28 +42,11 @@ export default function TimeTableSm({ data, day }) {
               </tr>
             </thead> */}
             <tbody className="ant-table-tbody">
-              {data.map((row) => {
+              {newdata.map((row, i) => {
                 return (
-                  <tr
-                    key={row.key}
-                    className="ant-table-row ant-table-row-level-0"
-                  >
+                  <tr key={i} className="ant-table-row ant-table-row-level-0">
                     <td className="ant-table-cell">
-                      {day === "mon" && (
-                        <Timecard time={row.time} name={row.mon} />
-                      )}
-                      {day === "tue" && (
-                        <Timecard time={row.time} name={row.tue} />
-                      )}
-                      {day === "wed" && (
-                        <Timecard time={row.time} name={row.wed} />
-                      )}
-                      {day === "thu" && (
-                        <Timecard time={row.time} name={row.thu} />
-                      )}
-                      {day === "fri" && (
-                        <Timecard time={row.time} name={row.fri} />
-                      )}
+                      <Timecard time={row.datetime} name={row.subname} />
                     </td>
                   </tr>
                 );

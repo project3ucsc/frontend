@@ -13,24 +13,25 @@ export const isStorageConfigured = () => {
 };
 
 // return list of blobs in container to display
-const getBlobsInContainer = async (containerClient) => {
-  const returnedBlobUrls = [];
+// const getBlobsInContainer = async (containerClient) => {
+//   const returnedBlobUrls = [];
 
-  // get list of blobs in container
-  // eslint-disable-next-line
-  for await (const blob of containerClient.listBlobsFlat()) {
-    // if image is public, just construct URL
-    returnedBlobUrls.push(
-      `https://${storageAccountName}.blob.core.windows.net/${containerName}/${blob.name}`
-    );
-  }
+//   // get list of blobs in container
+//   // eslint-disable-next-line
+//   for await (const blob of containerClient.listBlobsFlat()) {
+//     // if image is public, just construct URL
+//     returnedBlobUrls.push(
+//       `https://${storageAccountName}.blob.core.windows.net/${containerName}/${blob.name}`
+//     );
+//   }
 
-  return returnedBlobUrls;
-};
+//   return returnedBlobUrls;
+// };
 
 const createBlobInContainer = async (containerClient, file) => {
   // create blobClient for container
-  const blobClient = containerClient.getBlockBlobClient(file.name);
+  const filename = file.uid + "-" + file.name;
+  const blobClient = containerClient.getBlockBlobClient(filename);
 
   // set mimetype as determined from browser with file upload control
   const options = { blobHTTPHeaders: { blobContentType: file.type } };
@@ -38,6 +39,7 @@ const createBlobInContainer = async (containerClient, file) => {
   // upload file
   await blobClient.uploadBrowserData(file, options);
   await blobClient.setMetadata({ UserName: "lakshan" });
+  return filename;
 };
 
 const uploadFileToBlob = async (file) => {
@@ -51,10 +53,12 @@ const uploadFileToBlob = async (file) => {
   const containerClient = blobService.getContainerClient(containerName);
 
   // upload file
-  const somthing = await createBlobInContainer(containerClient, file);
-  console.log(somthing);
+  const filename = await createBlobInContainer(containerClient, file);
+  // console.log(filename);
+
+  return filename;
   // get list of blobs in container
-  return getBlobsInContainer(containerClient);
+  // return getBlobsInContainer(containerClient);
 };
 // </snippet_uploadFileToBlob>
 

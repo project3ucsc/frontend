@@ -2,15 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import {
   TableOutlined,
-  BorderOuterOutlined,
   DesktopOutlined,
+  AppstoreOutlined,
   SolutionOutlined,
   ScheduleOutlined,
   HomeOutlined,
-  AuditOutlined
+  AuditOutlined,
 } from "@ant-design/icons";
 
 import { Layout, Menu } from "antd";
+const { SubMenu } = Menu;
 
 export default function TeacherSideBar() {
   return (
@@ -37,9 +38,24 @@ export default function TeacherSideBar() {
           <Link to="/dashboard">Dashboard</Link>
         </Menu.Item>
 
-        <Menu.Item key="3" icon={<BorderOuterOutlined />}>
-          <Link to="/managesections">Sections</Link>
-        </Menu.Item>
+        <SubMenu key="sub1" icon={<AppstoreOutlined />} title="Subjects">
+          {/* {subjects.map((subject, index) => (
+            <Menu.Item key={"s" + index}>{subject}</Menu.Item>
+          ))} */}
+          <Menu.Item key="phy">
+            <Link to="/Physics">Com.Maths</Link>
+          </Menu.Item>
+          <Menu.Item key="ph">
+            <Link to="/subject">Physics</Link>
+          </Menu.Item>
+          <Menu.Item key="py">
+            <Link to="/Physics">Chemistry</Link>
+          </Menu.Item>
+          <Menu.Item key="hy">
+            <Link to="/Physics">Gen.English</Link>
+          </Menu.Item>
+        </SubMenu>
+
         <Menu.Item key="4" icon={<SolutionOutlined />}>
           <Link to="/manageclasses">ClassRooms</Link>
         </Menu.Item>

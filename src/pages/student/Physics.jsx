@@ -1,33 +1,45 @@
-import React from "react";
-import { Row, Col, Button, Divider, List, Timeline, Card } from "antd";
+import React, { useState } from "react";
+import { Row, Col, Button, List, Timeline, Card } from "antd";
 import ContentLayout from "components/ContentLayout";
 import { ClockCircleOutlined, FilePdfTwoTone } from "@ant-design/icons";
-
 import "./physics.scss";
 
+const cstyle = {
+  marginBottom: 0,
+  marginRight: 10,
+  minHeight: 280,
+};
+
+const data1 = [
+  "Zoom link for upcoming lesson  -  2020/07/19 - 9.10AM to 10.30AM",
+];
+
+const data2 = [
+  {
+    name: "Motion in the same direction.pdf",
+    link: "http://localhost:3000/subject",
+  },
+  {
+    name: "Motion in the opposite direction.pdf",
+    link: "http://localhost:3000/subject",
+  },
+  { name: "Motion video lesson", link: "http://localhost:3000/subject" },
+];
+
+const data3 = [
+  { name: "Expansions of solid.pdf", link: "http://localhost:3000/subject" },
+  {
+    name: "Relationship between linear, area and volume expansivities.pdf",
+    link: "http://localhost:3000/subject",
+  },
+  {
+    name: "Volume expansion of liquids video lesson",
+    link: "http://localhost:3000/subject",
+  },
+];
+
 export default function Physics() {
-  const cstyle = {
-    padding: 24,
-    margin: 10,
-    marginBottom: 0,
-    minHeight: 280,
-  };
-
-  const data1 = [
-    "Zoom link for upcoming lesson  -  2020/07/19 - 9.10AM to 10.30AM",
-  ];
-
-  const data2 = [
-    "Motion in the same direction.pdf",
-    "Motion in the opposite direction.pdf",
-    "Motion video lesson",
-  ];
-
-  const data3 = [
-    "Expansions of solid.pdf",
-    "Relationship between linear, area and volume expansivities.pdf",
-    "Volume expansion of liquids video lesson",
-  ];
+  const [learnMats, setLearnMats] = useState([data2, data3]);
 
   return (
     <ContentLayout title="Physics" paths={["Home", "Physics"]}>
@@ -42,7 +54,7 @@ export default function Physics() {
 
       <Row>
         <Col xs={24} xl={16}>
-          <Card title="My Lessons" className="teachercard1" style={cstyle}>
+          <Card title="My Lessons" className="lessoncard" style={cstyle}>
             <List
               header={<div>Upcoming lesson</div>}
               // footer={<div>Footer</div>}
@@ -50,51 +62,37 @@ export default function Physics() {
               dataSource={data1}
               renderItem={(item) => (
                 <List.Item>
-                  <Button type="link" size={"large"}>
-                    {item}
-                  </Button>
+                  <span className="linkspan">{item}</span>
                 </List.Item>
               )}
             />
-            <Divider dashed />
-            <List
-              style={{ textAlign: "left" }}
-              header={<div>Mechanics</div>}
-              bordered
-              dataSource={data2}
-              renderItem={(item) => (
-                <List.Item>
-                  <Button type="link">
-                    <FilePdfTwoTone twoToneColor="#cf1322" />
-                    {item}
-                  </Button>
-                </List.Item>
-              )}
-            />
+            <br />
 
-            <Divider dashed />
-
-            <List
-              style={{ textAlign: "left" }}
-              header={<div>Thermal physics</div>}
-              bordered
-              dataSource={data3}
-              renderItem={(item) => (
-                <List.Item>
-                  <Button type="link">
-                    <FilePdfTwoTone twoToneColor="#cf1322" />
-                    {item}
-                  </Button>
-                </List.Item>
-              )}
-            />
+            {learnMats.map((learnmat, i) => {
+              return (
+                <List
+                  key={i}
+                  style={{ textAlign: "left" }}
+                  header={<div>Mechanics</div>}
+                  bordered
+                  dataSource={learnmat}
+                  renderItem={(item) => (
+                    <List.Item>
+                      <a href={item.link} className="linkspan">
+                        <FilePdfTwoTone twoToneColor="#cf1322" /> {item.name}
+                      </a>
+                    </List.Item>
+                  )}
+                />
+              );
+            })}
           </Card>
         </Col>
 
         {/* <Col xl={1}></Col> */}
 
         <Col xs={24} xl={8}>
-          <Card title="Timeline" className="anncard1" style={cstyle}>
+          <Card title="Timeline" className="timelinecard" style={cstyle}>
             {/* <Content
                     className="site-layout-background"
                     style={{

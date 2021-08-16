@@ -1,6 +1,7 @@
 import "./Timetable.scss";
 import "./Timetablebig.scss";
 import { Card } from "antd";
+import { getDateTxt } from "utils/common";
 
 function Timecard({ name, time }) {
   return (
@@ -27,27 +28,45 @@ export default function TimeTableBig({ data }) {
               </tr>
             </thead>
             <tbody className="ant-table-tbody">
-              {data.map((row) => {
+              {data.map((row, index) => {
+                const datestr = getDateTxt(
+                  row.period.starttime,
+                  row.period.endtime
+                );
+                const days = [1, 2, 3, 4, 5];
                 return (
                   <tr
-                    key={row.key}
+                    key={index}
                     className="ant-table-row ant-table-row-level-0"
                   >
-                    <td className="ant-table-cell">
-                      <Timecard key={row.key} time={row.time} name={row.mon} />
-                    </td>
-                    <td className="ant-table-cell">
-                      <Timecard key={row.key} time={row.time} name={row.tue} />
-                    </td>
-                    <td className="ant-table-cell">
-                      <Timecard key={row.key} time={row.time} name={row.wed} />
-                    </td>
-                    <td className="ant-table-cell">
-                      <Timecard key={row.key} time={row.time} name={row.thu} />
-                    </td>
-                    <td className="ant-table-cell">
-                      <Timecard key={row.key} time={row.time} name={row.fri} />
-                    </td>
+                    {days.map((day, i) => {
+                      const ts = row.timeslots.filter(
+                        (ts) => ts.weekday === day
+                      );
+                      let subname = "";
+                      if (ts.length === 0) {
+                        subname = "None";
+                      }
+
+                      if (ts.length === 1) {
+                        subname = ts[0].subject_detail.subject.name;
+                      }
+
+                      if (ts.length > 1) {
+                        subname = ts.reduce(
+                          (a, b) =>
+                            a.subject_detail.subject.name +
+                            "/" +
+                            b.subject_detail.subject.name
+                        );
+                      }
+
+                      return (
+                        <td key={i} className="ant-table-cell">
+                          <Timecard time={datestr} name={subname} />
+                        </td>
+                      );
+                    })}
                   </tr>
                 );
               })}

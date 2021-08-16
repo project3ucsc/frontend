@@ -3,9 +3,10 @@ import axios from "axios";
 import { authHeader } from "utils/authheader";
 import { apiurl } from "utils/common";
 import authenticationservice from "./authentication.service";
-const schoolid = authenticationservice.currentUserValue.school_id;
 
 async function CreateConfigureClasses(data) {
+  const schoolid = authenticationservice.currentUserValue.school_id;
+
   try {
     const res = await axios.post(
       `${apiurl}/classes/addall/${schoolid}`,
@@ -18,6 +19,8 @@ async function CreateConfigureClasses(data) {
   }
 }
 async function getsection_and_no_classes() {
+  const schoolid = authenticationservice.currentUserValue.school_id;
+
   try {
     const res = await axios.get(
       `${apiurl}/classes/num/${schoolid}`,
@@ -30,6 +33,8 @@ async function getsection_and_no_classes() {
 }
 
 async function getclassdetails(grade, name) {
+  const schoolid = authenticationservice.currentUserValue.school_id;
+
   try {
     const res = await axios.get(
       `${apiurl}/classes/getdetails/${schoolid}/${grade}/${name}`,
