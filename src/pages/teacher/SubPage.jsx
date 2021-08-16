@@ -1,5 +1,15 @@
 import React, { useState } from "react";
-import { Row, Col, Button, List, Menu, Dropdown, Card } from "antd";
+import {
+  Row,
+  Col,
+  Button,
+  List,
+  Menu,
+  Dropdown,
+  Card,
+  Form,
+  Input,
+} from "antd";
 import ContentLayout from "components/ContentLayout";
 import {
   DownOutlined,
@@ -76,18 +86,23 @@ const data = [
   { id: 3, title: "Test", data: data2 },
 ];
 export default function SubPage() {
-  const [sections, setSections] = useState(data.map((d) => d.id));
-  const datamap = new Map();
-  data.forEach((d) => {
-    datamap.set(d.id, { title: d.title, data: d.data });
-  });
+  const [sections, setSections] = useState(data);
 
-  const deleteSection = (id) => {
+  const deleteSection = async (id) => {
     console.log(id);
+
     //delete call to backend
 
-    // update
-    setSections(sections.filter((sec) => sec !== id));
+    // update ui
+    setSections(sections.filter((sec) => sec.id !== id));
+  };
+
+  const addSection = ({ title }) => {
+    //add call to backend
+
+    const secid = Math.floor(Math.random() * 100 + 4);
+    // update ui
+    setSections([...sections, { id: secid, title: title, data: [] }]);
   };
   return (
     <ContentLayout title="Physics" paths={["Home", "Physics"]}>
@@ -102,7 +117,7 @@ export default function SubPage() {
 
       <Row>
         <Col xs={24}>
-          <Card title="My Lessons" className="lessoncard" style={cstyle}>
+          <Card title="My Lessons" style={cstyle}>
             <List
               header={<div>Upcoming lesson</div>}
               // footer={<div>Footer</div>}
@@ -125,33 +140,26 @@ export default function SubPage() {
             {sections.map((sec, i) => {
               return (
                 <LearnMatSection
-                  key={i}
-                  sectionid={sec}
+                  key={sec.id}
+                  // sectionid={sec}
                   deleteSection={deleteSection}
-                  data={datamap.get(sec)}
+                  data={sec}
                 />
               );
             })}
 
-            {/* <List
-              style={{ textAlign: "left" }}
-              header={<div>Thermal physics</div>}
-              bordered
-              dataSource={data3}
-              renderItem={(item) => (
-                <List.Item>
-                  <span className="linkspan">
-                    <FilePdfTwoTone twoToneColor="#cf1322" /> {item}
-                  </span>
-                  <Dropdown overlay={menu} placement="bottomCenter" arrow>
-                    <Button type="link">
-                      Options
-                      <DownOutlined />
-                    </Button>
-                  </Dropdown>
-                </List.Item>
-              )}
-            /> */}
+            <Card title="Add new section">
+              <Form onFinish={addSection} layout="inline">
+                <Form.Item name="title" label="Section Title">
+                  <Input style={{ width: "auto" }} placeholder="Enter title" />
+                </Form.Item>
+                <Form.Item>
+                  <Button type="primary" htmlType="submit">
+                    Add
+                  </Button>
+                </Form.Item>
+              </Form>
+            </Card>
           </Card>
         </Col>
       </Row>

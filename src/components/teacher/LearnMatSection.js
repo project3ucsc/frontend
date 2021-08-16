@@ -11,6 +11,7 @@ import {
   Radio,
   Input,
   message,
+  Popconfirm,
 } from "antd";
 import {
   PlusOutlined,
@@ -25,7 +26,14 @@ import FileUpload from "components/FileUpload";
 
 const { Panel } = Collapse;
 
-export default function LearnMatSection({ sectionid, deleteSection, data }) {
+export default function LearnMatSection({ deleteSection, data }) {
+  // for delete popup
+  const [deleteconfirmvisible, setDeleteconfirmvisible] = useState(false);
+  //   const [confirmLoading, setConfirmLoading] = useState(false);
+  const showPopconfirm = () => {
+    setDeleteconfirmvisible(true);
+  };
+
   const [learnmat, setLearnmat] = useState(data.data);
 
   const handleEdit = (e) => {
@@ -93,10 +101,21 @@ export default function LearnMatSection({ sectionid, deleteSection, data }) {
     <Col>
       <Row className="section-header">
         <span>{data.title}</span>
-        <Button danger onClick={() => deleteSection(sectionid)}>
-          Remove
-          <DeleteOutlined />
-        </Button>
+        <Popconfirm
+          visible={deleteconfirmvisible}
+          title="Are you sure to delete this section?"
+          onConfirm={() => {
+            setDeleteconfirmvisible(false);
+            deleteSection(data.id);
+          }}
+          onCancel={() => setDeleteconfirmvisible(false)}
+          okText="Yes"
+          cancelText="No"
+        >
+          <Button danger onClick={showPopconfirm}>
+            <DeleteOutlined />
+          </Button>
+        </Popconfirm>
       </Row>
       <Divider />
       <Collapse expandIconPosition="right">
