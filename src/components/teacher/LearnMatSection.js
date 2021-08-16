@@ -1,6 +1,17 @@
 import "./LearnMatSection.scss";
 import React, { useState } from "react";
-import { Button, List, Collapse, Row, Col, Divider } from "antd";
+import {
+  Button,
+  List,
+  Collapse,
+  Row,
+  Col,
+  Divider,
+  Form,
+  Radio,
+  Input,
+  message,
+} from "antd";
 import {
   PlusOutlined,
   FilePdfTwoTone,
@@ -10,15 +21,13 @@ import {
   DeleteOutlined,
 } from "@ant-design/icons";
 
+import FileUpload from "components/FileUpload";
+
 const { Panel } = Collapse;
 
-export default function LearnMatSection({ data }) {
-  const [learnmat, setLearnmat] = useState(data);
+export default function LearnMatSection({ sectionid, deleteSection, data }) {
+  const [learnmat, setLearnmat] = useState(data.data);
 
-  const handleAdd = (e) => {
-    const id = e.currentTarget.id;
-    console.log(id);
-  };
   const handleEdit = (e) => {
     const id = e.currentTarget.id;
     console.log(id);
@@ -29,11 +38,62 @@ export default function LearnMatSection({ data }) {
     setLearnmat(learnmat.filter((l) => l.id !== id));
   };
 
+  const AddForm = () => {
+    const [filetype, setFiletype] = useState("img");
+    const [filename, setFilename] = useState("");
+
+    const handleAdd = (values) => {
+      console.log(values);
+      console.log(filename);
+      if (filename === "") {
+        message.error("First select and upload a file");
+        return;
+      }
+      console.log("filename");
+    };
+
+    return (
+      <>
+        <Form layout="vertical" onFinish={handleAdd}>
+          <Form.Item on label="Resource type" name="type">
+            <Radio.Group
+              onChange={(e) => setFiletype(e.target.value)}
+              value={filetype}
+            >
+              <Radio.Button value="link">Link</Radio.Button>
+              <Radio.Button value="img">Image</Radio.Button>
+              <Radio.Button value="doc">Document</Radio.Button>
+              <Radio.Button value="vid">Video</Radio.Button>
+            </Radio.Group>
+          </Form.Item>
+
+          <Form.Item name="name" label="Resource Name">
+            <Input placeholder="Enter name" />
+          </Form.Item>
+
+          {filetype !== "link" ? (
+            <FileUpload setFilename={setFilename} sectionid={4} />
+          ) : (
+            <>
+              <Form.Item name="link" label="Resource URL">
+                <Input placeholder="Enter url" />
+              </Form.Item>
+            </>
+          )}
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
+      </>
+    );
+  };
   const headerCollapse = (
     <Col>
       <Row className="section-header">
-        <span>Mechnics</span>
-        <Button danger>
+        <span>{data.title}</span>
+        <Button danger onClick={() => deleteSection(sectionid)}>
           Remove
           <DeleteOutlined />
         </Button>
@@ -49,7 +109,7 @@ export default function LearnMatSection({ data }) {
           }
           key="1"
         >
-          <p>dvfasdva</p>
+          <AddForm />
         </Panel>
       </Collapse>
     </Col>

@@ -70,9 +70,25 @@ const data3 = [
   },
 ];
 
+const data = [
+  { id: 1, title: "Mechanics", data: data2 },
+  { id: 2, title: "Themals", data: data3 },
+  { id: 3, title: "Test", data: data2 },
+];
 export default function SubPage() {
-  const [learnMats, setLearnMats] = useState([data2, data3]);
+  const [sections, setSections] = useState(data.map((d) => d.id));
+  const datamap = new Map();
+  data.forEach((d) => {
+    datamap.set(d.id, { title: d.title, data: d.data });
+  });
 
+  const deleteSection = (id) => {
+    console.log(id);
+    //delete call to backend
+
+    // update
+    setSections(sections.filter((sec) => sec !== id));
+  };
   return (
     <ContentLayout title="Physics" paths={["Home", "Physics"]}>
       {/* <Content
@@ -106,8 +122,15 @@ export default function SubPage() {
             />
             <br />
 
-            {learnMats.map((learnmat, i) => {
-              return <LearnMatSection key={i} data={learnmat} />;
+            {sections.map((sec, i) => {
+              return (
+                <LearnMatSection
+                  key={i}
+                  sectionid={sec}
+                  deleteSection={deleteSection}
+                  data={datamap.get(sec)}
+                />
+              );
             })}
 
             {/* <List

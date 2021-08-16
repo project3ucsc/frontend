@@ -8,7 +8,7 @@ import uploadFileToBlob, {
 
 const storageConfigured = isStorageConfigured();
 
-const FileUpload = () => {
+const FileUpload = ({ setFilename }) => {
   // all blobs in container
   // const [blobList, setBlobList] = useState([]);
 
@@ -22,26 +22,25 @@ const FileUpload = () => {
     console.log(fileList);
 
     // *** UPLOAD TO AZURE STORAGE ***
-    const blobsInContainer = await uploadFileToBlob(fileList[0]);
-
+    const filename = await uploadFileToBlob(fileList[0]);
+    setFilename(filename);
     // prepare UI for results
     // setBlobList(blobsInContainer);
 
     // reset state/form
     setUploading(false);
-    console.log(blobsInContainer);
-
     setFileList([]);
-    setUploading(false);
     message.success("File uploaded successfully");
   };
 
   const uploadprops = {
     onRemove: (file) => {
+      console.log(file);
       setFileList([]);
     },
     beforeUpload: (file) => {
       setFileList([file]);
+
       return false;
     },
 
