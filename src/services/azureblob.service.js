@@ -12,6 +12,10 @@ export const isStorageConfigured = () => {
   return !(!storageAccountName || !sasToken);
 };
 
+export const getLearnMatUrl = (filename) => {
+  return `https://${storageAccountName}.blob.core.windows.net/${containerName}/${filename}`;
+};
+
 // return list of blobs in container to display
 // const getBlobsInContainer = async (containerClient) => {
 //   const returnedBlobUrls = [];
@@ -38,6 +42,7 @@ const createBlobInContainer = async (containerClient, file) => {
 
   // upload file
   await blobClient.uploadBrowserData(file, options);
+
   await blobClient.setMetadata({ UserName: "lakshan" });
   return filename;
 };
@@ -61,5 +66,21 @@ const uploadFileToBlob = async (file) => {
   // return getBlobsInContainer(containerClient);
 };
 // </snippet_uploadFileToBlob>
+
+export const deleteBlobFiile = async (filename) => {
+  // if (!file) return [];
+
+  // get BlobService = notice `?` is pulled out of sasToken - if created in Azure portal
+  const blobService = new BlobServiceClient(
+    `https://${storageAccountName}.blob.core.windows.net/?${sasToken}`
+  );
+  // get Container - full public read access
+  const containerClient = blobService.getContainerClient(containerName);
+  // delete file
+  const delteData = await containerClient.deleteBlob(filename);
+  // console.log(filename);
+
+  return delteData;
+};
 
 export default uploadFileToBlob;

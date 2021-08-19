@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Row,
   Col,
@@ -9,6 +9,7 @@ import {
   Card,
   Form,
   Input,
+  message,
 } from "antd";
 import ContentLayout from "components/ContentLayout";
 import {
@@ -20,6 +21,8 @@ import {
 
 import "./subpage.scss";
 import LearnMatSection from "components/teacher/LearnMatSection";
+import { useParams } from "react-router-dom";
+import subjectdetailservice from "services/subjectdetail.service";
 
 const menu = (
   <Menu>
@@ -80,44 +83,54 @@ const data3 = [
   },
 ];
 
-const data = [
-  { id: 1, title: "Mechanics", data: data2 },
-  { id: 2, title: "Themals", data: data3 },
-  { id: 3, title: "Test", data: data2 },
-];
 export default function SubPage() {
-  const [sections, setSections] = useState(data);
+  const [sections, setSections] = useState([]);
+  const [title, setTitle] = useState("");
+  let { sdid } = useParams();
+  useEffect(() => {
+    subjectdetailservice
+      .getSubDetailAllDataforTeacher(sdid)
+      .then((data) => {
+        setTitle(
+          `${data.classroom.grade}-${data.classroom.name} ${data.subject.name}`
+        );
+        setSections(data.resource_section);
+        console.log(data);
+      })
+      .catch((e) => {
+        message.error(e.message);
+      });
+  }, [sdid]);
 
   const deleteSection = async (id) => {
-    console.log(id);
-
     //delete call to backend
-
+    await subjectdetailservice.deleteResouceSection(id);
     // update ui
     setSections(sections.filter((sec) => sec.id !== id));
   };
-
-  const addSection = ({ title }) => {
-    //add call to backend
-
-    const secid = Math.floor(Math.random() * 100 + 4);
-    // update ui
-    setSections([...sections, { id: secid, title: title, data: [] }]);
+  const addSection = async ({ title }) => {
+    try {
+      //add call to backend
+      const newsection = await subjectdetailservice.addResouceSection(
+        sdid,
+        title
+      );
+      const secid = newsection.id;
+      // update ui
+      setSections([
+        ...sections,
+        { id: secid, name: title, resource_details: [] },
+      ]);
+    } catch (error) {
+      message.error(error.message);
+    }
   };
-  return (
-    <ContentLayout title="Physics" paths={["Home", "Physics"]}>
-      {/* <Content
-          className="site-layout-background"
-          style={{
-            padding: 24,
-            margin: 0,
-            minHeight: 700,
-          }}
-        > */}
 
+  return (
+    <ContentLayout title={title} paths={["Home", title]}>
       <Row>
         <Col xs={24}>
-          <Card title="My Lessons" style={cstyle}>
+          <Card title="My Lessons" className="lesson-card" style={cstyle}>
             <List
               header={<div>Upcoming lesson</div>}
               // footer={<div>Footer</div>}
@@ -143,7 +156,7 @@ export default function SubPage() {
                   key={sec.id}
                   // sectionid={sec}
                   deleteSection={deleteSection}
-                  data={sec}
+                  section={sec}
                 />
               );
             })}

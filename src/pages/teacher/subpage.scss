@@ -5,11 +5,11 @@
   border: #1990fc85 1px solid;
 }
 
-.lessoncard {
+.lesson-card {
   .ant-card-body {
-    height: calc(100vh - 230px);
+    // height: calc(100vh - 230px);
 
-    overflow-y: scroll;
+    // overflow-y: scroll;
 
     .ant-list-item {
       padding-right: 10px;
