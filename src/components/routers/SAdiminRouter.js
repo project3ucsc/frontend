@@ -5,6 +5,7 @@ import ClassRoomManagePage from "pages/scladmin/ClassRoomManagePage";
 import SectionManagePage from "pages/scladmin/SectionManagePage";
 import TimeSlotManagePage from "pages/scladmin/TimeSlotManagePage";
 import TimeTableManagePage from "pages/scladmin/TimeTableManagePage";
+import ViewTutorRequestPage from "pages/scladmin/ViewTutorRequestPage";
 
 import NotFound404 from "pages/NotFound404";
 
@@ -19,6 +20,7 @@ export default function SAdiminRouter() {
         <Route exact path="/manageclasses" component={ClassRoomManagePage} />
         <Route exact path="/timeslots" component={TimeSlotManagePage} />
         <Route exact path="/timetables" component={TimeTableManagePage} />
+        <Route exact path="/tutorrequests" component={ViewTutorRequestPage} />
 
         <Route component={NotFound404} />
       </Switch>
