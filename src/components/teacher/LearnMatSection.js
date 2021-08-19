@@ -15,7 +15,8 @@ import {
 } from "antd";
 import {
   PlusOutlined,
-  FilePdfTwoTone,
+  CheckOutlined,
+  CloseOutlined,
   EyeOutlined,
   EyeInvisibleOutlined,
   EditOutlined,
@@ -23,10 +24,13 @@ import {
 } from "@ant-design/icons";
 
 import FileUpload from "components/FileUpload";
+import subjectdetailservice from "services/subjectdetail.service";
+import { deleteBlobFiile, getLearnMatUrl } from "services/azureblob.service";
+import { getResourceIcon } from "components/Resources";
 
 const { Panel } = Collapse;
 
-export default function LearnMatSection({ deleteSection, data }) {
+export default function LearnMatSection({ deleteSection, section }) {
   // for delete popup
   const [deleteconfirmvisible, setDeleteconfirmvisible] = useState(false);
   //   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -34,36 +38,74 @@ export default function LearnMatSection({ deleteSection, data }) {
     setDeleteconfirmvisible(true);
   };
 
-  const [learnmat, setLearnmat] = useState(data.data);
+  const [learnmat, setLearnmat] = useState(section.resource_details);
 
-  const handleEdit = (e) => {
-    const id = e.currentTarget.id;
-    console.log(id);
-  };
-  const handleDelete = (e) => {
-    const id = parseInt(e.currentTarget.id);
-    console.log(id);
-    setLearnmat(learnmat.filter((l) => l.id !== id));
+  const handleDelete = async (e) => {
+    try {
+      const id = parseInt(e.currentTarget.id);
+      console.log(id);
+      const mat = learnmat.find((l) => l.id === id);
+      if (mat.type !== "link") {
+        // delete in azure blob
+        const deletedFile = await deleteBlobFiile(mat.filename);
+        console.log(deletedFile);
+      }
+      // delete in db
+      const delrecord = await subjectdetailservice.deleteResouce(id);
+      console.log(delrecord);
+      // update ui
+      setLearnmat(learnmat.filter((l) => l.id !== id));
+      message.success("deleted ");
+    } catch (error) {
+      message.error(error.message);
+    }
   };
 
   const AddForm = () => {
     const [filetype, setFiletype] = useState("img");
     const [filename, setFilename] = useState("");
 
-    const handleAdd = (values) => {
+    const handleAdd = async (values) => {
       console.log(values);
       console.log(filename);
-      if (filename === "") {
+
+      if (values.type !== "link" && filename === "") {
         message.error("First select and upload a file");
         return;
       }
-      console.log("filename");
+
+      try {
+        let secid = section.id;
+        // add to db
+        const newres = await subjectdetailservice.addResouce({
+          ...values,
+          filename,
+          secid,
+        });
+
+        // updateui
+        setLearnmat([...learnmat, newres]);
+
+        setFilename("");
+      } catch (error) {
+        message.error(error.message);
+      }
     };
 
     return (
       <>
         <Form layout="vertical" onFinish={handleAdd}>
-          <Form.Item on label="Resource type" name="type">
+          <Form.Item
+            on
+            label="Resource type"
+            name="type"
+            rules={[
+              {
+                required: true,
+                message: "Please select type",
+              },
+            ]}
+          >
             <Radio.Group
               onChange={(e) => setFiletype(e.target.value)}
               value={filetype}
@@ -75,7 +117,16 @@ export default function LearnMatSection({ deleteSection, data }) {
             </Radio.Group>
           </Form.Item>
 
-          <Form.Item name="name" label="Resource Name">
+          <Form.Item
+            name="name"
+            label="Resource Name"
+            rules={[
+              {
+                required: true,
+                message: "Please input name",
+              },
+            ]}
+          >
             <Input placeholder="Enter name" />
           </Form.Item>
 
@@ -83,7 +134,16 @@ export default function LearnMatSection({ deleteSection, data }) {
             <FileUpload setFilename={setFilename} sectionid={4} />
           ) : (
             <>
-              <Form.Item name="link" label="Resource URL">
+              <Form.Item
+                name="link"
+                label="Resource URL"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input URL",
+                  },
+                ]}
+              >
                 <Input placeholder="Enter url" />
               </Form.Item>
             </>
@@ -100,13 +160,13 @@ export default function LearnMatSection({ deleteSection, data }) {
   const headerCollapse = (
     <Col>
       <Row className="section-header">
-        <span>{data.title}</span>
+        <span>{section.name}</span>
         <Popconfirm
           visible={deleteconfirmvisible}
           title="Are you sure to delete this section?"
           onConfirm={() => {
             setDeleteconfirmvisible(false);
-            deleteSection(data.id);
+            deleteSection(section.id);
           }}
           onCancel={() => setDeleteconfirmvisible(false)}
           okText="Yes"
@@ -134,60 +194,119 @@ export default function LearnMatSection({ deleteSection, data }) {
     </Col>
   );
 
+  const Resource = ({ item }) => {
+    const [isEditing, setIsEditing] = useState(false);
+    const [newName, setNewName] = useState(item.name);
+    const [name, setName] = useState(item.name);
+
+    const handleEdit = async () => {
+      if (isEditing) {
+        if (newName === "") {
+          message.error("Name is empty");
+          return;
+        }
+        try {
+          // update db
+          await subjectdetailservice.updateResouceName({
+            id: item.id,
+            name: newName,
+          });
+          setName(newName);
+          setIsEditing(false);
+          message.success("Name updated Successfully");
+          return;
+        } catch (error) {
+          message.error(error.message);
+        }
+      }
+      setIsEditing(true);
+    };
+
+    return (
+      <List.Item>
+        {!isEditing ? (
+          <a
+            href={
+              item.type !== "link"
+                ? getLearnMatUrl(item.filename)
+                : item.filename
+            }
+            className="linkspan"
+          >
+            {getResourceIcon(item.type)} {name}
+          </a>
+        ) : (
+          <>
+            New name :
+            <Input
+              style={{ width: "60%" }}
+              label="Enter new name"
+              placeholder="Enter new name"
+              value={newName}
+              onChange={(e) => setNewName(e.target.value)}
+            />
+          </>
+        )}
+
+        <span>
+          {/* edit */}
+          <Button size="small" type="primary" id={item.id} onClick={handleEdit}>
+            {!isEditing ? <EditOutlined /> : <CheckOutlined />}
+          </Button>
+          {isEditing && (
+            <Button
+              style={{ marginRight: 10 }}
+              size="small"
+              type="default"
+              danger
+              onClick={() => setIsEditing(false)}
+            >
+              <CloseOutlined />
+            </Button>
+          )}
+
+          {/* hide */}
+          <Button
+            id={item.id}
+            size="small"
+            type="default"
+            onClick={() => console.log("sdvsdv")}
+          >
+            <EyeInvisibleOutlined />
+          </Button>
+          {/* show */}
+          <Button
+            id={item.id}
+            size="small"
+            type="primary"
+            disabled
+            onClick={() => console.log("sdvsdv")}
+          >
+            <EyeOutlined />
+          </Button>
+
+          {/* delete */}
+          <Button
+            id={item.id}
+            size="small"
+            type="primary"
+            danger
+            onClick={handleDelete}
+          >
+            <DeleteOutlined />
+          </Button>
+        </span>
+      </List.Item>
+    );
+  };
+
   return (
     <List
       style={{ textAlign: "left", marginBottom: 20 }}
       header={headerCollapse}
       bordered
       dataSource={learnmat}
-      renderItem={(item) => (
-        <List.Item>
-          <a href={item.link} className="linkspan">
-            <FilePdfTwoTone twoToneColor="#cf1322" /> {item.name}
-          </a>
-          <span>
-            {/* edit */}
-            <Button
-              size="small"
-              type="primary"
-              id={item.id}
-              onClick={handleEdit}
-            >
-              <EditOutlined />
-            </Button>
-            {/* hide */}
-            <Button
-              id={item.id}
-              size="small"
-              type="default"
-              onClick={() => console.log("sdvsdv")}
-            >
-              <EyeInvisibleOutlined />
-            </Button>
-            {/* show */}
-            <Button
-              id={item.id}
-              size="small"
-              type="primary"
-              disabled
-              onClick={() => console.log("sdvsdv")}
-            >
-              <EyeOutlined />
-            </Button>
-
-            {/* delete */}
-            <Button
-              id={item.id}
-              size="small"
-              type="primary"
-              danger
-              onClick={handleDelete}
-            >
-              <DeleteOutlined />
-            </Button>
-          </span>
-        </List.Item>
-      )}
+      renderItem={(item) => <Resource item={item} />}
     />
   );
 }
