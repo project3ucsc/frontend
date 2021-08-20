@@ -51,37 +51,37 @@ const data1 = [
   "Zoom link for upcoming lesson  -  2020/07/19 - 9.10AM to 10.30AM",
 ];
 
-const data2 = [
-  {
-    id: 1,
-    name: "Motion in the same direction.pdf",
-    link: "http://localhost:3000/subject",
-  },
-  {
-    id: 2,
-    name: "Motion in the opposite direction.pdf",
-    link: "http://localhost:3000/subject",
-  },
-  { id: 3, name: "Motion video lesson", link: "http://localhost:3000/subject" },
-];
+// const data2 = [
+//   {
+//     id: 1,
+//     name: "Motion in the same direction.pdf",
+//     link: "http://localhost:3000/subject",
+//   },
+//   {
+//     id: 2,
+//     name: "Motion in the opposite direction.pdf",
+//     link: "http://localhost:3000/subject",
+//   },
+//   { id: 3, name: "Motion video lesson", link: "http://localhost:3000/subject" },
+// ];
 
-const data3 = [
-  {
-    id: 1,
-    name: "Expansions of solid.pdf",
-    link: "http://localhost:3000/subject",
-  },
-  {
-    id: 2,
-    name: "Relationship between linear, area and volume expansivities.pdf",
-    link: "http://localhost:3000/subject",
-  },
-  {
-    id: 3,
-    name: "Volume expansion of liquids video lesson",
-    link: "http://localhost:3000/subject",
-  },
-];
+// const data3 = [
+//   {
+//     id: 1,
+//     name: "Expansions of solid.pdf",
+//     link: "http://localhost:3000/subject",
+//   },
+//   {
+//     id: 2,
+//     name: "Relationship between linear, area and volume expansivities.pdf",
+//     link: "http://localhost:3000/subject",
+//   },
+//   {
+//     id: 3,
+//     name: "Volume expansion of liquids video lesson",
+//     link: "http://localhost:3000/subject",
+//   },
+// ];
 
 export default function SubPage() {
   const [sections, setSections] = useState([]);

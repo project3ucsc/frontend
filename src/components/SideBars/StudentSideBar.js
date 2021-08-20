@@ -44,13 +44,13 @@ export default function StudentSideBar() {
             <Menu.Item key={"s" + index}>{subject}</Menu.Item>
           ))} */}
           <Menu.Item key="phy">
-            <Link to="/Physics">Com.Maths</Link>
+            <Link to="/subject/2">Com.Maths</Link>
           </Menu.Item>
           <Menu.Item key="ph">
-            <Link to="/Physics">Physics</Link>
+            <Link to="/subject/3">Physics</Link>
           </Menu.Item>
           <Menu.Item key="py">
-            <Link to="/Physics">Chemistry</Link>
+            <Link to="/subject/4">Chemistry</Link>
           </Menu.Item>
           <Menu.Item key="hy">
             <Link to="/Physics">Gen.English</Link>

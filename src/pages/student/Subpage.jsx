@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Button, List, Timeline, Card } from "antd";
 import ContentLayout from "components/ContentLayout";
 import { ClockCircleOutlined, FilePdfTwoTone } from "@ant-design/icons";
 import "./physics.scss";
+import { useParams } from "react-router-dom";
 
 const cstyle = {
   marginBottom: 0,
@@ -38,11 +39,27 @@ const data3 = [
   },
 ];
 
-export default function Physics() {
+export default function Subpage() {
   const [learnMats, setLearnMats] = useState([data2, data3]);
-
+  const [title, setTitle] = useState("");
+  let { sdid } = useParams();
+  useEffect(() => {
+    // subjectdetailservice
+    // .getSubDetailAllDataforTeacher(sdid)
+    // .then((data) => {
+    //   setTitle(
+    //     `${data.classroom.grade}-${data.classroom.name} ${data.subject.name}`
+    //   );
+    //   setLearnMats(data.resource_section);
+    //   console.log(data);
+    // })
+    // .catch((e) => {
+    //   message.error(e.message);
+    // });
+  }, [sdid]);
+  console.log(sdid);
   return (
-    <ContentLayout title="Physics" paths={["Home", "Physics"]}>
+    <ContentLayout title={title} paths={["Home", title]}>
       {/* <Content
           className="site-layout-background"
           style={{
