@@ -18,6 +18,20 @@ async function getSubDetailAllDataforTeacher(sdid) {
   }
 }
 
+async function getSubDetailAllDataforStudent(sdid) {
+  const userid = authenticationservice.currentUserValue.id;
+
+  try {
+    const res = await axios.get(
+      `${apiurl}/subjectdetail/student/${sdid}/${userid}`,
+      authHeader()
+    );
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+}
+
 async function addResouceSection(sdid, title) {
   try {
     const res = await axios.post(
@@ -82,6 +96,7 @@ async function updateResouceName(data) {
 
 const subjectdetailservice = {
   getSubDetailAllDataforTeacher,
+  getSubDetailAllDataforStudent,
   addResouceSection,
   deleteResouceSection,
   addResouce,

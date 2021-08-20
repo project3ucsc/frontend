@@ -59,6 +59,19 @@ async function getSubDetailsforTeacher() {
     throw new Error(err.response.data.message);
   }
 }
+async function getSubDetailsforStudent() {
+  const userid = authenticationservice.currentUserValue.id;
+
+  try {
+    const res = await axios.get(
+      `${apiurl}/classes/getSubDetailsforStudent/${userid}`,
+      authHeader()
+    );
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+}
 
 async function addSubjectDetail(subject, teacher, classroomid) {
   try {
@@ -101,6 +114,7 @@ async function updateSubjectDetail(data, sdid) {
 const classroomservice = {
   CreateConfigureClasses,
   getSubDetailsforTeacher,
+  getSubDetailsforStudent,
   getsection_and_no_classes,
   getclassdetails,
   addSubjectDetail,

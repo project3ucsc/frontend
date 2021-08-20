@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   AppstoreOutlined,
@@ -10,11 +10,24 @@ import {
 } from "@ant-design/icons";
 
 import { Layout, Menu } from "antd";
+import classroomservice from "services/classroom.service";
 
 export default function StudentSideBar() {
   const { SubMenu } = Menu;
   // const subjects = ["Maths", "Chemistry", "Physics", "English"];
+  const [subLinks, setSubLinks] = useState([]);
 
+  useEffect(() => {
+    classroomservice
+      .getSubDetailsforStudent()
+      .then((data) => {
+        setSubLinks(data);
+        console.log(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
   return (
     <Layout.Sider
       width={200}
@@ -40,21 +53,11 @@ export default function StudentSideBar() {
         </Menu.Item>
 
         <SubMenu key="sub1" icon={<AppstoreOutlined />} title="Subjects">
-          {/* {subjects.map((subject, index) => (
-            <Menu.Item key={"s" + index}>{subject}</Menu.Item>
-          ))} */}
-          <Menu.Item key="phy">
-            <Link to="/subject/2">Com.Maths</Link>
-          </Menu.Item>
-          <Menu.Item key="ph">
-            <Link to="/subject/3">Physics</Link>
-          </Menu.Item>
-          <Menu.Item key="py">
-            <Link to="/subject/4">Chemistry</Link>
-          </Menu.Item>
-          <Menu.Item key="hy">
-            <Link to="/Physics">Gen.English</Link>
-          </Menu.Item>
+          {subLinks.map((item) => (
+            <Menu.Item key={"s" + item.id}>
+              <Link to={"/subject/" + item.id}>{item.subject.name}</Link>
+            </Menu.Item>
+          ))}
         </SubMenu>
         <Menu.Item key="3" icon={<DesktopOutlined />}>
           <Link to="/timetable">Time Table</Link>
