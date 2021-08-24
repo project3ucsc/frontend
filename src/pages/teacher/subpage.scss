@@ -21,6 +21,10 @@
       &:hover {
         background-color: rgb(211, 234, 255);
       }
+
+      .ant-ribbon-wrapper {
+        width: -webkit-fill-available;
+      }
     }
   }
 
@@ -51,4 +55,10 @@
       }
     }
   }
+}
+
+.meetingUrlcol {
+  padding: 8px;
+  // border: #00000085 1px solid;
+  // background-color: rgb(167, 170, 173);
 }

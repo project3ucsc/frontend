@@ -13,7 +13,7 @@
     padding: 0 15px;
     .logo {
       float: left;
-      width: 125px;
+      width: 35px;
       height: 31px;
       margin: 16px 24px 16px 0;
       background: rgba(255, 255, 255, 0.3);
@@ -82,6 +82,10 @@ $noto-border-color: #c0c0c0;
 @media only screen and (max-width: 575px) {
   .App {
     height: max-content;
+  }
+
+  .ant-card-body {
+    padding: 10px;
   }
 
   .ant-layout-sider {
