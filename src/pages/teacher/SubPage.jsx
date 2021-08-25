@@ -14,15 +14,13 @@ const cstyle = {
   minHeight: 280,
 };
 
-const data1 = [
-  "Zoom link for upcoming lesson  -  2020/07/19 - 9.10AM to 10.30AM",
-];
-
 export default function SubPage() {
   const [sections, setSections] = useState([]);
   const [title, setTitle] = useState("");
+  const [loading, setLoading] = useState(false);
   let { sdid } = useParams();
   useEffect(() => {
+    setLoading(true);
     subjectdetailservice
       .getSubDetailAllDataforTeacher(sdid)
       .then((data) => {
@@ -30,10 +28,13 @@ export default function SubPage() {
           `${data.classroom.grade}-${data.classroom.name} ${data.subject.name}`
         );
         setSections(data.resource_section);
-        console.log(data);
+        setLoading(false);
+
+        // console.log(data);
       })
       .catch((e) => {
         message.error(e.message);
+        setLoading(false);
       });
   }, [sdid]);
 
@@ -65,7 +66,7 @@ export default function SubPage() {
     <ContentLayout title={title} paths={["Home", title]}>
       <Row>
         <Col xs={24}>
-          <MeetingUrlEditor />
+          {!loading && <MeetingUrlEditor sdid={sdid} />}
 
           <Card title="My Lessons" className="lesson-card" style={cstyle}>
             {/* <List

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   Row,
@@ -11,14 +11,20 @@ import {
   Select,
   Badge,
   Modal,
+  Input,
+  DatePicker,
+  TimePicker,
+  message,
 } from "antd";
-import ContentLayout from "components/ContentLayout";
+import moment from "moment";
+// import ContentLayout from "components/ContentLayout";
 import {
   DownOutlined,
   EditOutlined,
   FieldTimeOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
+import subjectdetailservice from "services/subjectdetail.service";
 
 const meetingcardstyle = {
   marginBottom: 10,
@@ -29,9 +35,46 @@ const meetingcardstyle = {
 
 const { Option } = Select;
 
-export default function MeetingUrlEditor() {
+const config = {
+  rules: [
+    {
+      type: "object",
+      required: true,
+      message: "Please select time!",
+    },
+  ],
+};
+const rangeConfig = {
+  rules: [
+    {
+      type: "array",
+      required: true,
+      message: "Please select time!",
+    },
+  ],
+};
+
+export default function MeetingUrlEditor({ sdid }) {
   const today = new Date();
   const [day, setDay] = useState(today.getDay());
+  const [meetingData, setMeetingData] = useState(null);
+  const [meetingArr, setMeetingArr] = useState([]);
+  useEffect(() => {
+    subjectdetailservice
+      .getMeetingDetails(sdid, day)
+      .then((data) => {
+        console.log(data);
+        if (day !== 6) {
+          setMeetingData(data);
+        } else {
+          setMeetingArr(data);
+        }
+      })
+      .catch((e) => {
+        message.error(e.message);
+      });
+  }, [day]);
+
   function handleDayChange(value) {
     console.log(`selected ${value}`);
     setDay(value);
@@ -61,7 +104,11 @@ export default function MeetingUrlEditor() {
       }
     >
       <ul class="ant-list-items">
-        <MeetingUrl day={day} />
+        {day !== 6 && <MeetingUrl data={meetingData} day={day} />}
+        {day === 6 &&
+          meetingArr.map((data, i) => (
+            <MeetingUrl key={i} data={data} day={i + 1} />
+          ))}
       </ul>
     </Card>
   );
@@ -70,17 +117,39 @@ export default function MeetingUrlEditor() {
 export function MeetingUrl() {
   const [modalvisible, setModalvisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
+  const [modalTyp, setModalTyp] = useState("editl");
+
+  const [modalform] = Form.useForm();
 
   const showModal = () => {
     setModalvisible(true);
   };
 
   const handleOk = () => {
-    setConfirmLoading(true);
-    setTimeout(() => {
-      setModalvisible(false);
-      setConfirmLoading(false);
-    }, 2000);
+    modalform.validateFields().then((val) => {
+      // setConfirmLoading(true);
+      console.log(val);
+
+      if (modalTyp === "editl") {
+      }
+
+      if (modalTyp === "chgtime") {
+        const thedate = val.date.format("YYYY-MM-DD");
+        console.log(thedate);
+
+        const st = val.timerange[0].format("HH:mm");
+        const en = val.timerange[1].format("HH:mm");
+
+        const sttime = moment(thedate + " " + st);
+        const endtime = moment(thedate + " " + en);
+      }
+      //   setModalvisible(false);
+      //   setConfirmLoading(false);
+    });
+
+    // setTimeout(() => {
+
+    // }, 2000);
   };
 
   const handleCancel = () => {
@@ -90,10 +159,20 @@ export function MeetingUrl() {
 
   const menu = (
     <Menu>
-      <Menu.Item onClick={showModal}>
+      <Menu.Item
+        onClick={() => {
+          setModalTyp("editl");
+          showModal();
+        }}
+      >
         <EditOutlined /> Edit meeting URL
       </Menu.Item>
-      <Menu.Item onClick={() => console.log("sdvsdv")}>
+      <Menu.Item
+        onClick={() => {
+          setModalTyp("chgtime");
+          showModal();
+        }}
+      >
         <FieldTimeOutlined /> Change the time
       </Menu.Item>
     </Menu>
@@ -135,7 +214,30 @@ export function MeetingUrl() {
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
       >
-        <p>dfbdf</p>
+        <Form form={modalform} name="control-hooks">
+          {modalTyp === "chgtime" ? (
+            <>
+              <Form.Item name="date" label="Select Date" {...config}>
+                <DatePicker />
+              </Form.Item>
+              <Form.Item
+                name="timerange"
+                label="Select time range"
+                {...rangeConfig}
+              >
+                <TimePicker.RangePicker format="HH:mm" />
+              </Form.Item>
+            </>
+          ) : (
+            <Form.Item
+              name="url"
+              label="Enter meeting URL"
+              rules={[{ required: true }]}
+            >
+              <Input />
+            </Form.Item>
+          )}
+        </Form>
       </Modal>
     </li>
   );

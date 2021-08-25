@@ -275,7 +275,7 @@ export default function LearnMatSection({ deleteSection, section }) {
             <EyeInvisibleOutlined />
           </Button>
           {/* show */}
-          <Button
+          {/* <Button
             id={item.id}
             size="small"
             type="primary"
@@ -283,7 +283,7 @@ export default function LearnMatSection({ deleteSection, section }) {
             onClick={() => console.log("sdvsdv")}
           >
             <EyeOutlined />
-          </Button>
+          </Button> */}
 
           {/* delete */}
           <Button
