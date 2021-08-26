@@ -14,7 +14,11 @@ function Timecard({ name, time }) {
 export default function TimeTableSm({ data, day }) {
   var newdata = [];
   data.forEach((row) => {
-    const datetime = getDateTxt(row.period.starttime, row.period.endtime);
+    const datetime = getDateTxt(
+      row.period.starttime,
+      row.period.endtime,
+      "h23"
+    );
 
     const ts = row.timeslots.filter((ts) => ts.weekday === day);
     let subname = "";

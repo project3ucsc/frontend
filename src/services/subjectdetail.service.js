@@ -106,6 +106,19 @@ async function getMeetingDetails(sdid, day) {
   }
 }
 
+async function editMeetingUrl(tsid, url) {
+  try {
+    const res = await axios.patch(
+      `${apiurl}/subjectdetail/editMeetingUrl`,
+      { tsid, url },
+      authHeader()
+    );
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+}
+
 const subjectdetailservice = {
   getSubDetailAllDataforTeacher,
   getSubDetailAllDataforStudent,
@@ -115,5 +128,6 @@ const subjectdetailservice = {
   deleteResouce,
   updateResouceName,
   getMeetingDetails,
+  editMeetingUrl,
 };
 export default subjectdetailservice;

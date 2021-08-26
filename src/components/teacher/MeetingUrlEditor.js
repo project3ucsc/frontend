@@ -25,6 +25,7 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import subjectdetailservice from "services/subjectdetail.service";
+import { getDateTxt, getDaybyNumber } from "utils/common";
 
 const meetingcardstyle = {
   marginBottom: 10,
@@ -59,16 +60,20 @@ export default function MeetingUrlEditor({ sdid }) {
   const [day, setDay] = useState(today.getDay());
   const [meetingData, setMeetingData] = useState(null);
   const [meetingArr, setMeetingArr] = useState([]);
+
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     subjectdetailservice
       .getMeetingDetails(sdid, day)
       .then((data) => {
         console.log(data);
+
         if (day !== 6) {
           setMeetingData(data);
         } else {
           setMeetingArr(data);
         }
+        setLoading(false);
       })
       .catch((e) => {
         message.error(e.message);
@@ -104,20 +109,20 @@ export default function MeetingUrlEditor({ sdid }) {
       }
     >
       <ul class="ant-list-items">
-        {day !== 6 && <MeetingUrl data={meetingData} day={day} />}
-        {day === 6 &&
-          meetingArr.map((data, i) => (
-            <MeetingUrl key={i} data={data} day={i + 1} />
-          ))}
+        {!loading && day !== 6 && <MeetingUrl data={meetingData} />}
+        {!loading &&
+          day === 6 &&
+          meetingArr.map((data, i) => <MeetingUrl key={i} data={data} />)}
       </ul>
     </Card>
   );
 }
 
-export function MeetingUrl() {
+export function MeetingUrl({ data }) {
   const [modalvisible, setModalvisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalTyp, setModalTyp] = useState("editl");
+  const [mdata, setMdata] = useState(data);
 
   const [modalform] = Form.useForm();
 
@@ -126,11 +131,25 @@ export function MeetingUrl() {
   };
 
   const handleOk = () => {
-    modalform.validateFields().then((val) => {
+    modalform.validateFields().then(async (val) => {
       // setConfirmLoading(true);
       console.log(val);
 
       if (modalTyp === "editl") {
+        try {
+          setConfirmLoading(true);
+          const upmeet = await subjectdetailservice.editMeetingUrl(
+            mdata.id,
+            val.url
+          );
+          setMdata({ ...mdata, ...upmeet });
+          setConfirmLoading(false);
+          setModalvisible(false);
+          message.success("Meeting url updated succussfuly");
+        } catch (error) {
+          setConfirmLoading(false);
+          message.error(error.message);
+        }
       }
 
       if (modalTyp === "chgtime") {
@@ -178,23 +197,28 @@ export function MeetingUrl() {
     </Menu>
   );
 
+  const lastupdated = new Date(mdata.lastupdated);
   return (
     <li class="ant-list-item" style={{ padding: 0 }}>
-      <Badge.Ribbon text="Monday 11.30am - 12.30pm" placement="start">
+      <Badge.Ribbon
+        text={`${getDaybyNumber(mdata.weekday)} ${getDateTxt(
+          mdata.period_time.starttime,
+          mdata.period_time.endtime,
+          "h12"
+        )}`}
+        placement="start"
+      >
         <Col xs={24} className="meetingUrlcol">
           <Row style={{ marginBottom: 30 }}></Row>
           <Row>
             <Col sm={12}>
-              <a
-                href="https://khub.blob.core.windows.net/matierials/rc-upload-1629305869887-14-thermal-physics-1-638.jpg"
-                class="linkspan"
-              >
+              <a href={mdata.meetingurl} class="linkspan">
                 Go to Link
               </a>
             </Col>
             <Col sm={12}>
               <p style={{ float: "right" }}>
-                Last updated : {new Date().toLocaleDateString()}
+                Last updated : {lastupdated.toLocaleDateString()}
               </p>
             </Col>
           </Row>

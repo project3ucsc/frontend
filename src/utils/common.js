@@ -15,9 +15,9 @@ export const Role = {
   ADMIN: "ADMIN",
 };
 
-export function getDateTxt(starttime, endtime) {
+export function getDateTxt(starttime, endtime, hourCycle) {
   const timeoptions = {
-    hourCycle: "h23",
+    hourCycle: hourCycle,
     hour: "2-digit",
     minute: "2-digit",
   };
@@ -27,4 +27,15 @@ export function getDateTxt(starttime, endtime) {
     [],
     timeoptions
   )}`;
+}
+
+var datemap = new Map();
+datemap.set(1, "Monday");
+datemap.set(2, "Tuesday");
+datemap.set(3, "Wednesday");
+datemap.set(4, "Thursday");
+datemap.set(5, "Friday");
+
+export function getDaybyNumber(day) {
+  return datemap.get(day);
 }
