@@ -14,9 +14,7 @@ import {
 import ContentLayout from "components/ContentLayout";
 import "./ViewTutorRequestPage.scss";
 
-export default function ViewTutorRequestPage() {
-
-    
+export default function ViewTutorRequestPage() {  
 
     const { Content } = Layout;
     const [ popupvisible,setpopvisible] = useState(false);
@@ -48,22 +46,27 @@ export default function ViewTutorRequestPage() {
         {
             title : "Ms. Sandali Liyanage",
             discrip : "sandali.liyanage@gmail.com",
+            status : "Accepted"
         },
         {
             title : "Mr. Kapila Weerasinghe",
-            discrip : "kapila.weerasinghe@gmail.com"
+            discrip : "kapila.weerasinghe@gmail.com",
+            status : "Rejected"
         },
         {
             title : "Mr. Deepal Perera",
-            discrip : "deepal.perera@gmail.com"
+            discrip : "deepal.perera@gmail.com",
+            status : "Accepted"
         },
         {
             title : "Mrs. Deepani Kumari",
-            discrip : "deepani.kumari@gmail.com"
+            discrip : "deepani.kumari@gmail.com",
+            status : "Rejected"
         },
         {
             title : "Mr. Lakshan Perera",
-            discrip : "lakshan.perera@gmail.com"
+            discrip : "lakshan.perera@gmail.com",
+            status : "Accepted"
         },
     ];
 
@@ -139,7 +142,7 @@ export default function ViewTutorRequestPage() {
                                             title = {item.title}
                                             description = {item.discrip}
                                         />
-                                        <div>rejected</div>
+                                        <div>{item.status}</div>
                                     </List.Item>
                                 )}
                             />,
