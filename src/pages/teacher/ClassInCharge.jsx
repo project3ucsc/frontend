@@ -16,30 +16,30 @@ import "./ClassInCharge.scss";
 const newStudentList = [
     {
         title : "Sahan Sandaruwan",
-        descrip : "sahan.sanda@gmail.com"
+        descrip : "0101"
     },
     {
         title : "Hiruni Jayawardhana",
-        descrip : "hiruni.jayawar@gmail.com"
+        descrip : "0102"
     },
     {
         title : "Chethika Gamlath",
-        descrip : "chethix.gam@gmail.com"
+        descrip : "0103"
     },
 ];
 
 const approvedStudentList = [
     {
         title : "Tharkana Silva",
-        descrip : "tharkana.s@gmail.com",
+        descrip : "0001",
     },
     {
         title : "Sanduni Pabasara",
-        descrip : "pabasara.sandu@gmail.com",
+        descrip : "0002",
     },
     {
         title : "Sadheera Indumini",
-        descrip : "indumini.sadhee@gmail.com",
+        descrip : "0003",
     },
 ];
 
@@ -49,11 +49,13 @@ export default function ClassInCharge(){
 
     const {Content} = Layout;
     const [popupvisible,setpopupvisible] = useState(false);
+    //const handleCancel = () => setpopupvisible(false);
     
     return(
         <ContentLayout title="Class In Charge" paths={["teacher","ClassInCharge"]}>
             <Modal 
                 visible={popupvisible}
+                onCancel={() => setpopupvisible(false)}
                 title="Student Details"
                 footer={[
                     <Button key="back" onClick={ () => setpopupvisible(false) }>
@@ -92,7 +94,7 @@ export default function ClassInCharge(){
                     <TabPane tab="Approved Students" key="1">
                     {/* <Col xs={24} xl={24}> */}
                     <Card 
-                        title="Approved Students"
+                        title="Student List"
                         className="teachercard"
                     >
                         <List 
@@ -114,9 +116,9 @@ export default function ClassInCharge(){
                     
                     </TabPane>
 
-                    <TabPane tab="New Student Rquests" key="2">
+                    <TabPane tab="New Student Requests" key="2">
                     <Card 
-                        title="New Student Requests"
+                        title="Pending Requests"
                         className="teachercard"
                     >
                         <List 
