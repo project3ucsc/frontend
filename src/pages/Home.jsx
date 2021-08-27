@@ -22,11 +22,29 @@ import "./Home.scss";
 import axios from "axios";
 import { apiurl } from "utils/common";
 import ContentLayout from "components/ContentLayout";
+import { Slide } from 'react-slideshow-image';
+
+
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
 const { Search } = Input;
 const { Meta } = Card;
+const slideImages = [
+  'https://www.potential.com/wp-content/uploads/2017/11/Untitled-3.png',
+  'https://elearningindustry.com/wp-content/uploads/2014/12/shutterstock_225907201.jpg',
+  'https://track2traininginstitute.files.wordpress.com/2021/07/1_qdesohhtwektbqnl5hm2pg.png'
+];
+
+const properties = {
+  duration: 5000,
+  transitionDuration: 500,
+  infinite: true,
+  indicators: true,
+  arrows: true
+}
+
+
 
 export default function Home() {
   const [freeProgs, setFreeProgs] = useState([]);
@@ -60,8 +78,15 @@ export default function Home() {
   }
 
   return (
+
     <ContentLayout title="Free Educational Programs" paths={["Home"]}>
+
+
+
+
       <div className="site-page-header-ghost-wrapper">
+
+
         <Tabs
           className="site-layout-background"
           defaultActiveKey="3"
@@ -82,6 +107,50 @@ export default function Home() {
                 backgroundColor: "#dfe6eb",
               }}
             >
+
+
+
+
+      <Content
+        className="site-layout-background"
+        style={{
+          padding: 24,
+          margin: 0,
+          //width:200,
+          Height: 300,
+        }}
+      >
+        
+        <div className="slider-home"
+        style={{
+          padding: 24,
+          margin: 0,
+          //width:1000,
+          //Height: 3500,
+        }}
+        >
+      <Slide {...properties} >
+      {/* style={{'width':5000, 'height':200, }} */}
+        <div className="each-slide" style={{'width':5000, 'height':200, }}>
+          <div style={{'backgroundImage': `url(${slideImages[0]})`, width:8000, height:200}}>
+            <span>Slide 1</span>
+          </div>
+        </div>
+        <div className="each-slide">
+          <div style={{'backgroundImage': `url(${slideImages[1]})` , width:5000, height:200}}>
+            <span>Slide 2</span>
+          </div>
+        </div>
+        <div className="each-slide">
+          <div style={{'backgroundImage': `url(${slideImages[2]})` , width:5000, height:200}}>
+            <span>Slide 3</span>
+          </div>
+        </div>
+      </Slide>
+      </div>
+      </Content>
+              
+
               <div className="site-page-header-ghost-wrapper-2">
                 <PageHeader className="page-header-2" ghost={false}>
                   <Space direction="horizontal">

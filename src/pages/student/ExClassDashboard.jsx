@@ -1,8 +1,8 @@
 import React from "react";
-import { Row, Col, Card, Calendar, PageHeader, List, Timeline,Button } from "antd";
+import { Row, Col, Card, Calendar, PageHeader, List,Timeline,Button } from "antd";
 import ContentLayout from "components/ContentLayout";
 import { ClockCircleOutlined } from "@ant-design/icons";
-import "./dashboard.scss";
+import "./exclassdashboard.scss";
 
 const cstyle = {
   padding: 24,
@@ -48,7 +48,7 @@ const tdata = [
   },
 ];
 
-export default function Dashboard() {
+export default function ExClassDashboard() {
   //const subjects = ["Maths", "Chemistry", "Physics", "English"];
 
   //const { Content } = Layout;
@@ -64,11 +64,9 @@ export default function Dashboard() {
       title: "Mrs. Nimali Sandamini",
       rate: 3,
     },
-    { _id: "4", name: "General English", teacher: "Mis. Amali Perea", rate: 4 },
-    { _id: "5", name: "GIT", teacher: "Mr. Kasun Liyanage", rate: 3.5 },
   ];
   return (
-    <ContentLayout title="DashBoard" paths={["Home", "Dashboard", "schoolDashboard"]}>
+    <ContentLayout title="DashBoard" paths={["Home", "Dashboard", "Extra-Classes Dashboard"]}>
       {/* <Content
         className="site-layout-background"
         style={{
@@ -123,7 +121,7 @@ export default function Dashboard() {
                       //   <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                       // }
                       title={
-                        <a href="http://localhost:3000/dashboard">
+                        <a href="http://localhost:3000/exclassdashboard">
                           {item.title}
                         </a>
                       }
@@ -138,17 +136,19 @@ export default function Dashboard() {
 
         <br />
         <Col xs={24} xl={8}>
-          {/* <div className="site-card-border-less-wrapper"> */}
+          <div className="site-card-border-less-wrapper">
+            {/* <Card style={{ width: 370, height: 450 }}>
+              <p>Card content</p>
+
+              <div className="site-calendar-demo-card">
+                <Calendar
+                  fullscreen={false}
+                  onPanelChange={onPanelChange}
+                  style={{ width: 300, height: 300 }}
+                />
+              </div>
+            </Card> */}
             <Card title="Timeline" className="timelinecard" style={cstyle}>
-            {/* <Content
-                    className="site-layout-background"
-                    style={{
-                        padding: 24,
-                        margin: 0,
-                        minHeight: 280,
-                        backgroundColor: "#ffffff",
-                    }} 
-                >*/}
             <Timeline>
               <Timeline.Item>
                 <Button type="link">Thermal physics lesson 7</Button> 2021-09-01
@@ -167,10 +167,10 @@ export default function Dashboard() {
               </Timeline.Item>
             </Timeline>
           </Card>
-          {/* </div> */}
+          </div>
 
           <br />
-          <div className="site-card-border-less-wrapper-2-right">
+          {/* <div className="site-card-border-less-wrapper-2-right">
             <Card
               title="Upcoming Events"
               className="teachercard"
@@ -187,7 +187,7 @@ export default function Dashboard() {
                       //   <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                       // }
                       title={
-                        <a href="http://localhost:3000/dashboard">
+                        <a href="http://localhost:3000/exclassdashboard">
                           {item.title}
                         </a>
                       }
@@ -197,10 +197,11 @@ export default function Dashboard() {
                 )}
               />
             </Card>
-          </div>
+          </div> */}
         </Col>
       </Row>
       {/* </Content> */}
     </ContentLayout>
   );
 }
+

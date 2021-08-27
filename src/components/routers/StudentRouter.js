@@ -1,6 +1,7 @@
 // import PrivateRoute from "utils/PrivateRoute";
 import { Route, Switch } from "react-router-dom";
 import Dashboard from "pages/student/Dashboard";
+import ExClassDashboard from "pages/student/ExClassDashboard";
 import StudentTimeTable from "pages/student/StudentTimeTable";
 import Profile from "pages/student/Profile";
 import Physics from "pages/student/Physics";
@@ -15,6 +16,7 @@ export default function StudentRouter() {
     <>
       <Switch>
         <Route exact path="/dashboard" component={Dashboard} />
+        <Route exact path="/exclassdashboard" component={ExClassDashboard} />
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/timetable" component={StudentTimeTable} />
         <Route exact path="/physics" component={Physics} />

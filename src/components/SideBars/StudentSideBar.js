@@ -35,9 +35,22 @@ export default function StudentSideBar() {
         <Menu.Item key="1" icon={<HomeOutlined />}>
           <Link to="/">Home</Link>
         </Menu.Item>
-        <Menu.Item key="2" icon={<PieChartOutlined />}>
+        {/* <Menu.Item key="2" icon={<PieChartOutlined />}>
           <Link to="/Dashboard">Dashboard</Link>
-        </Menu.Item>
+        </Menu.Item> */}
+
+        <SubMenu key="2" icon={<PieChartOutlined />} title="Dashboard">
+          {/* {subjects.map((subject, index) => (
+            <Menu.Item key={"s" + index}>{subject}</Menu.Item>
+          ))} */}
+          <Menu.Item key="sch">
+            <Link to="/Dashboard">School Dashboard</Link>
+          </Menu.Item>
+          <Menu.Item key="tut">
+            <Link to="/ExClassDashboard">External Classes Dashboard</Link>
+          </Menu.Item>
+          
+        </SubMenu>
 
         <SubMenu key="sub1" icon={<AppstoreOutlined />} title="Subjects">
           {/* {subjects.map((subject, index) => (
