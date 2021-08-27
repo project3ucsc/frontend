@@ -3,15 +3,15 @@ import {
     Layout,
     Modal,
     Button,
-    Row,
-    Col,
     Descriptions,
     Card,
     List,
     Avatar,
+    Tabs,
 } from "antd";
 
 import ContentLayout from "components/ContentLayout";
+import "./ClassInCharge.scss";
 
 const newStudentList = [
     {
@@ -31,7 +31,7 @@ const newStudentList = [
 const approvedStudentList = [
     {
         title : "Tharkana Silva",
-        descrip : "tharkana.silva@gmail.com",
+        descrip : "tharkana.s@gmail.com",
     },
     {
         title : "Sanduni Pabasara",
@@ -42,6 +42,8 @@ const approvedStudentList = [
         descrip : "indumini.sadhee@gmail.com",
     },
 ];
+
+const {TabPane} = Tabs;
 
 export default function ClassInCharge(){
 
@@ -66,13 +68,75 @@ export default function ClassInCharge(){
                 ]}
             >
                 <Descriptions title="Student Details" layout="vertical">
-                    <Descriptions.Item label="Student name">Sahan Sandaruwan</Descriptions.Item>
-                    <Descriptions.Item label="Student email">sahan.sanda@gmail.com</Descriptions.Item>
+                    <Descriptions.Item label="Student ID">1001</Descriptions.Item>
+                    <Descriptions.Item label="Student name" span={2}>Tharkana Silva</Descriptions.Item>
+                    <Descriptions.Item label="Phone Number">0776193492</Descriptions.Item>
+                    <Descriptions.Item label="Student email" span={2}>tharkana.s@gmail.com</Descriptions.Item>
+                    <Descriptions.Item label="Address" span={3}>76/16A, Sunethradevi Rd, Nugegoda</Descriptions.Item>
+                    <Descriptions.Item label="Father/Mother/Guardian" span={2}>Sarath Weerasekara</Descriptions.Item>
+                    <Descriptions.Item label="Guardian's Tel number">0719463040</Descriptions.Item>
+                    <Descriptions.Item label="Optional subject 1">Geography</Descriptions.Item>
+                    <Descriptions.Item label="Optional subject 2">Music</Descriptions.Item>
+                    <Descriptions.Item label="Optional subject 3">Information Technology</Descriptions.Item>
                 </Descriptions>
             </Modal>
-            <Content>
-                <Row gutter={16}>
-                    <Col xs={24} lg={12}>
+            <Content
+              style={{
+                padding: 24,
+                margin: 0,
+                minHeight: 280,
+              }} 
+            >
+                {/* <Row gutter={16}> */}
+                <Tabs type="card" defaultActiveKey="1">
+                    <TabPane tab="Approved Students" key="1">
+                    {/* <Col xs={24} xl={24}> */}
+                    <Card 
+                        title="Approved Students"
+                        className="teachercard"
+                    >
+                        <List 
+                            itemLayout = "horizontal"
+                            dataSource = {approvedStudentList}
+                            renderItem = { item => ( 
+                                <List.Item onClick={ () => setpopupvisible(true)}>
+                                    <List.Item.Meta 
+                                        avatar = { <Avatar style={{margin:10}} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>}
+                                        title = {item.title}
+                                        description = {item.descrip}
+                                    />
+                                    <div>Approved</div>
+                                </List.Item>
+                            )}
+                        />
+                    </Card>
+                    {/* </Col> */}
+                    
+                    </TabPane>
+
+                    <TabPane tab="New Student Rquests" key="2">
+                    <Card 
+                        title="New Student Requests"
+                        className="teachercard"
+                    >
+                        <List 
+                            itemLayout = "horizontal"
+                            dataSource = {newStudentList}
+                            renderItem = { item => ( 
+                                <List.Item onClick={ () => setpopupvisible(true)}>
+                                    <List.Item.Meta 
+                                        avatar = { <Avatar style={{margin:10}} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>}
+                                        title = {item.title}
+                                        description = {item.descrip}
+                                    />
+                                </List.Item>
+                            )}
+                        />
+
+                    </Card>
+                    </TabPane>
+                </Tabs>
+                    {/* <Col xs={24} lg={24}>
                         <Card 
                             title="New Student Requests"
                             
@@ -116,8 +180,8 @@ export default function ClassInCharge(){
 
                             </List>
                         </Card>
-                    </Col>
-                </Row>
+                    </Col> */}
+                {/* </Row> */}
             </Content>
         </ContentLayout>
     );
