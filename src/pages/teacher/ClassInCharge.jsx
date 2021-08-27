@@ -7,6 +7,8 @@ import {
     Col,
     Descriptions,
     Card,
+    List,
+    Avatar,
 } from "antd";
 
 import ContentLayout from "components/ContentLayout";
@@ -29,15 +31,15 @@ const newStudentList = [
 const approvedStudentList = [
     {
         title : "Tharkana Silva",
-        descrip : "tharkana.silva@gmail.com"
+        descrip : "tharkana.silva@gmail.com",
     },
     {
         title : "Sanduni Pabasara",
-        descrip : "pabasara.sandu@gmail.com"
+        descrip : "pabasara.sandu@gmail.com",
     },
     {
         title : "Sadheera Indumini",
-        descrip : "indumini.sadhee@gmail.com"
+        descrip : "indumini.sadhee@gmail.com",
     },
 ];
 
@@ -75,6 +77,20 @@ export default function ClassInCharge(){
                             title="New Student Requests"
                             
                         >
+                            <List 
+                                itemLayout = "horizontal"
+                                dataSource = {newStudentList}
+                                renderItem = { item => (
+                                    <List.Item onClick = { () => setpopupvisible(true)}>
+                                        <List.Item.Meta 
+                                            avatar = {<Avatar style={{margin : 10}} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" /> }
+                                            title = {item.title}
+                                            description = {item.descrip}
+                                        />
+                                    </List.Item>
+                                )}
+                            />
+
 
                         </Card>
                     </Col>
@@ -83,7 +99,22 @@ export default function ClassInCharge(){
                             title="Approved Student Requests"
                             
                         >
+                            <List 
+                                itemLayout = "horizontal"
+                                dataSource = {approvedStudentList}
+                                renderItem = { item => ( 
+                                    <List.Item onClick={ () => setpopupvisible(true)}>
+                                        <List.Item.Meta 
+                                            avatar = { <Avatar style={{margin:10}} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>}
+                                            title = {item.title}
+                                            description = {item.descrip}
+                                        />
+                                        <div>Approved</div>
+                                    </List.Item>
+                                )}
+                            >
 
+                            </List>
                         </Card>
                     </Col>
                 </Row>
