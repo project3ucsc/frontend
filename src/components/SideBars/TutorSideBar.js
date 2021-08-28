@@ -7,6 +7,7 @@ import { Layout, Menu } from "antd";
 import {
     HomeOutlined,
     DesktopOutlined,
+    DollarOutlined,
 } from "@ant-design/icons";
 
 export default function TutorSideBar() {
@@ -19,8 +20,8 @@ export default function TutorSideBar() {
           collapsible
         >
             <Menu 
-               defaultSelectedKeys={["2"]}
-            //    defaultOpenKeys={["class1"]}
+                defaultSelectedKeys={["2"]}
+                mode="inline"
             >
                 <Menu.Item key="1" icon={<HomeOutlined />}>
                     <Link to="">Home</Link>
@@ -28,8 +29,8 @@ export default function TutorSideBar() {
                 <Menu.Item key="2" icon={<DesktopOutlined />}>
                     <Link to="/dashboard">Dashboard</Link>
                 </Menu.Item>
-                <Menu.Item key="6" icon={<DesktopOutlined />}>
-                    <Link to="paymentslipcheck">Payments</Link>
+                <Menu.Item key="7" icon={<DollarOutlined />}>
+                    <Link to="/paymentslipcheck">Payments</Link>
                 </Menu.Item>
                 {/* <SubMenu></SubMenu> */}
             </Menu>

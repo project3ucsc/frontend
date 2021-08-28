@@ -7,7 +7,7 @@ import SAdminSideBar from "./SAdminSideBar";
 import StudentSideBar from "./StudentSideBar";
 import TeacherSideBar from "./TeacherSideBar";
 import PrincipalSideBar from "./PrincipalSideBar";
-import TutorSidebar from "./TutorSideBar";
+import TutorSideBar from "./TutorSideBar";
 
 export default function SideBar() {
   if (auth.currentUserValue) {
@@ -29,7 +29,7 @@ export default function SideBar() {
       return <SystemAdminSideBar />;
     }
     if (currentrole === Role.TUTOR) {
-      return <TutorSidebar />;
+      return <TutorSideBar />;
     }
   }
 

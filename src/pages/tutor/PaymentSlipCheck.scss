@@ -1,0 +1,15 @@
+.paymentcard {
+    .ant-card-body {
+        height: calc( 100vh - 300px );
+        overflow-y: scroll;
+
+        .ant-list-item {
+            background-color: #d8e7d6;
+            margin-bottom: 5px;
+
+            &:hover {
+                background-color: rgb(211, 234, 255);;
+            }
+        }
+    }
+}
