@@ -14,18 +14,22 @@ import classroomservice from "services/classroom.service";
 
 export default function StudentSideBar() {
   const { SubMenu } = Menu;
-  // const subjects = ["Maths", "Chemistry", "Physics", "English"];
   const [subLinks, setSubLinks] = useState([]);
+  const [loadingSubs, setLoadingSubs] = useState(true);
 
   useEffect(() => {
     classroomservice
       .getSubDetailsforStudent()
       .then((data) => {
+        setLoadingSubs(false);
         setSubLinks(data);
         console.log(data);
       })
       .catch((e) => {
-        console.log(e);
+        console.log(e.message);
+        if (e.message === "notenrolled") {
+          setLoadingSubs(false);
+        }
       });
   }, []);
   return (
@@ -51,14 +55,22 @@ export default function StudentSideBar() {
         <Menu.Item key="2" icon={<PieChartOutlined />}>
           <Link to="/Dashboard">Dashboard</Link>
         </Menu.Item>
+        {!loadingSubs && subLinks.length !== 0 && (
+          <SubMenu key="sub1" icon={<AppstoreOutlined />} title="Subjects">
+            {subLinks.map((item) => (
+              <Menu.Item key={"s" + item.id}>
+                <Link to={"/subject/" + item.id}>{item.subject.name}</Link>
+              </Menu.Item>
+            ))}
+          </SubMenu>
+        )}
 
-        <SubMenu key="sub1" icon={<AppstoreOutlined />} title="Subjects">
-          {subLinks.map((item) => (
-            <Menu.Item key={"s" + item.id}>
-              <Link to={"/subject/" + item.id}>{item.subject.name}</Link>
-            </Menu.Item>
-          ))}
-        </SubMenu>
+        {!loadingSubs && subLinks.length === 0 && (
+          <Menu.Item key="en" icon={<AppstoreOutlined />}>
+            <Link to="/subject">Subjects</Link>
+          </Menu.Item>
+        )}
+
         <Menu.Item key="3" icon={<DesktopOutlined />}>
           <Link to="/timetable">Time Table</Link>
         </Menu.Item>

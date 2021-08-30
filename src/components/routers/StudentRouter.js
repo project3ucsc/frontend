@@ -6,6 +6,7 @@ import Profile from "pages/student/Profile";
 import Subpage from "pages/student/Subpage";
 import tvprogramme from "pages/student/tvprogramme";
 import NotFound404 from "pages/NotFound404";
+import EnrollPage from "pages/student/EnrollPage";
 
 // import { Role } from "utils/common";
 
@@ -15,6 +16,7 @@ export default function StudentRouter() {
       <Switch>
         <Route exact path="/dashboard" component={Dashboard} />
         <Route exact path="/profile" component={Profile} />
+        <Route exact path="/subject" component={EnrollPage} />
         <Route exact path="/subject/:sdid" component={Subpage} />
         <Route exact path="/timetable" component={StudentTimeTable} />
         <Route exact path="/tvprogramme" component={tvprogramme} />
