@@ -56,7 +56,7 @@ function App() {
         <Affix>
           <Layout.Header className="header">
             <div className="logo" onClick={() => history.push("/dashboard")}>
-              KNOWLEDGEHUB
+              KH
             </div>
 
             {currentUser ? (

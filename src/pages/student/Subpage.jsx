@@ -1,9 +1,12 @@
-import React, { useState } from "react";
-import { Row, Col, Button, List, Timeline, Card } from "antd";
+import React, { useEffect, useState } from "react";
+import { Row, Col, Button, List, Timeline, Card, message } from "antd";
 import ContentLayout from "components/ContentLayout";
-import { ClockCircleOutlined, FilePdfTwoTone } from "@ant-design/icons";
+import { ClockCircleOutlined } from "@ant-design/icons";
 import "./physics.scss";
-
+import { useParams } from "react-router-dom";
+import subjectdetailservice from "services/subjectdetail.service";
+import { getLearnMatUrl } from "services/azureblob.service";
+import { getResourceIcon } from "components/Resources";
 const cstyle = {
   marginBottom: 0,
   marginRight: 10,
@@ -14,44 +17,24 @@ const data1 = [
   "Zoom link for upcoming lesson  -  2020/07/19 - 9.10AM to 10.30AM",
 ];
 
-const data2 = [
-  {
-    name: "Motion in the same direction.pdf",
-    link: "http://localhost:3000/subject",
-  },
-  {
-    name: "Motion in the opposite direction.pdf",
-    link: "http://localhost:3000/subject",
-  },
-  { name: "Motion video lesson", link: "http://localhost:3000/subject" },
-];
-
-const data3 = [
-  { name: "Expansions of solid.pdf", link: "http://localhost:3000/subject" },
-  {
-    name: "Relationship between linear, area and volume expansivities.pdf",
-    link: "http://localhost:3000/subject",
-  },
-  {
-    name: "Volume expansion of liquids video lesson",
-    link: "http://localhost:3000/subject",
-  },
-];
-
-export default function Physics() {
-  const [learnMats, setLearnMats] = useState([data2, data3]);
+export default function Subpage() {
+  const [learnMats, setLearnMats] = useState([]);
+  const [title, setTitle] = useState("");
+  let { sdid } = useParams();
+  useEffect(() => {
+    subjectdetailservice
+      .getSubDetailAllDataforStudent(sdid)
+      .then((data) => {
+        setTitle(data.subject.name);
+        setLearnMats(data.resource_section);
+      })
+      .catch((e) => {
+        message.error(e.message);
+      });
+  }, [sdid]);
 
   return (
-    <ContentLayout title="Physics" paths={["Home", "Physics"]}>
-      {/* <Content
-          className="site-layout-background"
-          style={{
-            padding: 24,
-            margin: 0,
-            minHeight: 700,
-          }}
-        > */}
-
+    <ContentLayout title={title} paths={["Home", title]}>
       <Row>
         <Col xs={24} xl={16}>
           <Card title="My Lessons" className="lessoncard" style={cstyle}>
@@ -68,18 +51,25 @@ export default function Physics() {
             />
             <br />
 
-            {learnMats.map((learnmat, i) => {
+            {learnMats.map((section) => {
               return (
                 <List
-                  key={i}
+                  key={section.id}
                   style={{ textAlign: "left" }}
-                  header={<div>Mechanics</div>}
+                  header={<div>{section.name}</div>}
                   bordered
-                  dataSource={learnmat}
+                  dataSource={section.resource_details}
                   renderItem={(item) => (
                     <List.Item>
-                      <a href={item.link} className="linkspan">
-                        <FilePdfTwoTone twoToneColor="#cf1322" /> {item.name}
+                      <a
+                        href={
+                          item.type !== "link"
+                            ? getLearnMatUrl(item.filename)
+                            : item.filename
+                        }
+                        className="linkspan"
+                      >
+                        {getResourceIcon(item.type)} {item.name}
                       </a>
                     </List.Item>
                   )}

@@ -31,7 +31,8 @@ export default function TimeTableBig({ data }) {
               {data.map((row, index) => {
                 const datestr = getDateTxt(
                   row.period.starttime,
-                  row.period.endtime
+                  row.period.endtime,
+                  "h23"
                 );
                 const days = [1, 2, 3, 4, 5];
                 return (
