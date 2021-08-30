@@ -18,6 +18,16 @@ async function CreateConfigureClasses(data) {
     throw new Error(err.response.data.message);
   }
 }
+
+async function getClass(classid) {
+  try {
+    const res = await axios.get(`${apiurl}/classes/${classid}`, authHeader());
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+}
+
 async function getsection_and_no_classes() {
   const schoolid = authenticationservice.currentUserValue.school_id;
 
@@ -32,12 +42,69 @@ async function getsection_and_no_classes() {
   }
 }
 
+async function getsStudentEnrollStatus() {
+  const userid = authenticationservice.currentUserValue.id;
+
+  try {
+    const res = await axios.get(
+      `${apiurl}/classes/enrollStatus/${userid}`,
+      authHeader()
+    );
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+}
+
+async function enrollStudent(data) {
+  const userid = authenticationservice.currentUserValue.id;
+
+  try {
+    const res = await axios.post(
+      `${apiurl}/classes/enroll/${userid}`,
+      data,
+      authHeader()
+    );
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+}
+
+async function unenrollStudent(classid) {
+  try {
+    const userid = authenticationservice.currentUserValue.id;
+
+    const res = await axios.delete(
+      `${apiurl}/classes/unenroll/${classid}/${userid}`,
+      authHeader()
+    );
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+}
+
 async function getclassdetails(grade, name) {
   const schoolid = authenticationservice.currentUserValue.school_id;
 
   try {
     const res = await axios.get(
       `${apiurl}/classes/getdetails/${schoolid}/${grade}/${name}`,
+      authHeader()
+    );
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+}
+
+async function getSDsinClass(grade, name) {
+  const schoolid = authenticationservice.currentUserValue.school_id;
+
+  try {
+    const res = await axios.get(
+      `${apiurl}/classes/getSDsinClass/${schoolid}/${grade}/${name}`,
       authHeader()
     );
     return res.data;
@@ -112,10 +179,15 @@ async function updateSubjectDetail(data, sdid) {
 }
 
 const classroomservice = {
+  getClass,
   CreateConfigureClasses,
   getSubDetailsforTeacher,
   getSubDetailsforStudent,
+  getSDsinClass,
   getsection_and_no_classes,
+  getsStudentEnrollStatus,
+  enrollStudent,
+  unenrollStudent,
   getclassdetails,
   addSubjectDetail,
   removeSubjectDetail,
