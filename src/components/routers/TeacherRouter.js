@@ -15,7 +15,7 @@ export default function TeacherRouter() {
     <>
       <Switch>
         <Route exact path="/dashboard" component={Dashboard} />
-        <Route exact path="/subject" component={SubPage} />
+        <Route exact path="/subject/:sdid" component={SubPage} />
         <Route exact path="/s" component={Home} />
         <Route exact path="/applyleave" component={ApplyLeave} />
         <Route exact path="/classincharge" component={ClassInCharge} />

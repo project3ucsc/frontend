@@ -1,6 +1,8 @@
 .tutorcard {
     .ant-card-body {
-      height: calc(100vh-300px);
+
+      height: calc(100vh - 300px);
+
       overflow-y: scroll;
   
       .ant-list-item {

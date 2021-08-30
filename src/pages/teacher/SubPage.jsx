@@ -1,42 +1,12 @@
-import React, { useState } from "react";
-import {
-  Row,
-  Col,
-  Button,
-  List,
-  Menu,
-  Dropdown,
-  Card,
-  Form,
-  Input,
-} from "antd";
+import React, { useEffect, useState } from "react";
+import { Row, Col, Button, Card, Form, Input, message } from "antd";
 import ContentLayout from "components/ContentLayout";
-import {
-  DownOutlined,
-  EyeInvisibleOutlined,
-  EditOutlined,
-  DeleteOutlined,
-} from "@ant-design/icons";
 
 import "./subpage.scss";
 import LearnMatSection from "components/teacher/LearnMatSection";
-
-const menu = (
-  <Menu>
-    <Menu.Item onClick={(e) => console.log(e)}>
-      <EditOutlined /> Edit
-    </Menu.Item>
-    <Menu.Item onClick={() => console.log("sdvsdv")}>
-      <DeleteOutlined /> Delete
-    </Menu.Item>
-    <Menu.Item onClick={() => console.log("sdvsdv")}>
-      <EyeInvisibleOutlined /> Hide
-    </Menu.Item>
-    <Menu.Item disabled onClick={() => console.log("sdvsdv")}>
-      <EyeInvisibleOutlined /> Unhide
-    </Menu.Item>
-  </Menu>
-);
+import { useParams } from "react-router-dom";
+import subjectdetailservice from "services/subjectdetail.service";
+import MeetingUrlEditor from "components/teacher/MeetingUrlEditor";
 
 const cstyle = {
   marginBottom: 0,
@@ -44,81 +14,62 @@ const cstyle = {
   minHeight: 280,
 };
 
-const data1 = [
-  "Zoom link for upcoming lesson  -  2020/07/19 - 9.10AM to 10.30AM",
-];
-
-const data2 = [
-  {
-    id: 1,
-    name: "Motion in the same direction.pdf",
-    link: "http://localhost:3000/subject",
-  },
-  {
-    id: 2,
-    name: "Motion in the opposite direction.pdf",
-    link: "http://localhost:3000/subject",
-  },
-  { id: 3, name: "Motion video lesson", link: "http://localhost:3000/subject" },
-];
-
-const data3 = [
-  {
-    id: 1,
-    name: "Expansions of solid.pdf",
-    link: "http://localhost:3000/subject",
-  },
-  {
-    id: 2,
-    name: "Relationship between linear, area and volume expansivities.pdf",
-    link: "http://localhost:3000/subject",
-  },
-  {
-    id: 3,
-    name: "Volume expansion of liquids video lesson",
-    link: "http://localhost:3000/subject",
-  },
-];
-
-const data = [
-  { id: 1, title: "Mechanics", data: data2 },
-  { id: 2, title: "Themals", data: data3 },
-  { id: 3, title: "Test", data: data2 },
-];
 export default function SubPage() {
-  const [sections, setSections] = useState(data);
+  const [sections, setSections] = useState([]);
+  const [title, setTitle] = useState("");
+  const [loading, setLoading] = useState(false);
+  let { sdid } = useParams();
+  useEffect(() => {
+    setLoading(true);
+    subjectdetailservice
+      .getSubDetailAllDataforTeacher(sdid)
+      .then((data) => {
+        setTitle(
+          `${data.classroom.grade}-${data.classroom.name} ${data.subject.name}`
+        );
+        setSections(data.resource_section);
+        setLoading(false);
+
+        // console.log(data);
+      })
+      .catch((e) => {
+        message.error(e.message);
+        setLoading(false);
+      });
+  }, [sdid]);
 
   const deleteSection = async (id) => {
-    console.log(id);
-
     //delete call to backend
-
+    await subjectdetailservice.deleteResouceSection(id);
     // update ui
     setSections(sections.filter((sec) => sec.id !== id));
   };
-
-  const addSection = ({ title }) => {
-    //add call to backend
-
-    const secid = Math.floor(Math.random() * 100 + 4);
-    // update ui
-    setSections([...sections, { id: secid, title: title, data: [] }]);
+  const addSection = async ({ title }) => {
+    try {
+      //add call to backend
+      const newsection = await subjectdetailservice.addResouceSection(
+        sdid,
+        title
+      );
+      const secid = newsection.id;
+      // update ui
+      setSections([
+        ...sections,
+        { id: secid, name: title, resource_details: [] },
+      ]);
+    } catch (error) {
+      message.error(error.message);
+    }
   };
-  return (
-    <ContentLayout title="Physics" paths={["Home", "Physics"]}>
-      {/* <Content
-          className="site-layout-background"
-          style={{
-            padding: 24,
-            margin: 0,
-            minHeight: 700,
-          }}
-        > */}
 
+  return (
+    <ContentLayout title={title} paths={["Home", title]}>
       <Row>
         <Col xs={24}>
-          <Card title="My Lessons" style={cstyle}>
-            <List
+          {!loading && <MeetingUrlEditor sdid={sdid} />}
+
+          <Card title="My Lessons" className="lesson-card" style={cstyle}>
+            {/* <List
               header={<div>Upcoming lesson</div>}
               // footer={<div>Footer</div>}
               bordered
@@ -134,7 +85,7 @@ export default function SubPage() {
                   </Dropdown>
                 </List.Item>
               )}
-            />
+            /> */}
             <br />
 
             {sections.map((sec, i) => {
@@ -143,7 +94,7 @@ export default function SubPage() {
                   key={sec.id}
                   // sectionid={sec}
                   deleteSection={deleteSection}
-                  data={sec}
+                  section={sec}
                 />
               );
             })}
