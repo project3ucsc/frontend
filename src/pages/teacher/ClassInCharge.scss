@@ -1,13 +1,12 @@
-.tutorcard {
+.teachercard {
     .ant-card-body {
-
-      height: calc(100vh - 300px);
-
+      height: calc(90vh - 300px);
       overflow-y: scroll;
   
       .ant-list-item {
-        background-color: #d8e7d6;
+        background-color: aliceblue;
         margin-bottom: 5px;
+        padding-right: 10px;
         // margin: 5px;
         &:hover {
           background-color: rgb(211, 234, 255);

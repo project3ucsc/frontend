@@ -9,6 +9,7 @@ import TeacherRouter from "./TeacherRouter";
 import PrincipalRouter from "./PrincipalRouter";
 import SAdiminRouter from "./SAdiminRouter";
 import SystemAdminRouter from "./SystemAdminRouter";
+import TutorRouter from "./TutorRouter";
 
 export default function MainUserRouter() {
   if (auth.currentUserValue) {
@@ -28,6 +29,9 @@ export default function MainUserRouter() {
     }
     if (currentrole === Role.ADMIN) {
       return <SystemAdminRouter />;
+    }
+    if (currentrole === Role.TUTOR) {
+      return <TutorRouter />;
     }
   }
 

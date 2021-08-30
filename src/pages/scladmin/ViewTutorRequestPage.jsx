@@ -75,6 +75,7 @@ export default function ViewTutorRequestPage() {
             <Modal
                 visible={popupvisible} 
                 title="Activate tutor account"
+                onCancel={() => setpopvisible(false)}
                 footer={[
                     <Button key="back" onClick={ () => setpopvisible(false) }>
                         Cancel
@@ -154,5 +155,4 @@ export default function ViewTutorRequestPage() {
     );
 }
 
-//admin dashboard popup close mark not working
 //manageuser page have to be added

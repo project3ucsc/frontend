@@ -80,7 +80,7 @@ export default function SAdminDashboard() {
         visible={visible}
         title="Activate the teacher"
         // onOk={handleOk}
-        // onCancel={handleCancel}
+        onCancel={ () => setvisible(false)}
         footer={[
           <Button key="back" onClick={() => setvisible(false)}>
             Cancel
