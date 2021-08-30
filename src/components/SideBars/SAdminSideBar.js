@@ -8,7 +8,7 @@ import {
   ScheduleOutlined,
   HomeOutlined,
   UserSwitchOutlined,
-  AuditOutlined,
+  UsergroupAddOutlined,
 } from "@ant-design/icons";
 
 import { Layout, Menu } from "antd";
@@ -53,7 +53,7 @@ export default function SAdminSideBar() {
         <Menu.Item key="7" icon={<UserSwitchOutlined />}>
           <Link to="/manageuser">Manage users</Link>
         </Menu.Item>
-        <Menu.Item key="8" icon={<AuditOutlined />}>
+        <Menu.Item key="8" icon={<UsergroupAddOutlined />}>
           <Link to="/tutorrequests">Tutor requests</Link>
         </Menu.Item>
       </Menu>

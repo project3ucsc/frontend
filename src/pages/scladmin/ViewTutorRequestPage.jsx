@@ -14,7 +14,7 @@ import {
 import ContentLayout from "components/ContentLayout";
 import "./ViewTutorRequestPage.scss";
 
-export default function ViewTutorRequestPage() {
+export default function ViewTutorRequestPage() {  
 
     const { Content } = Layout;
     const [ popupvisible,setpopvisible] = useState(false);
@@ -46,22 +46,27 @@ export default function ViewTutorRequestPage() {
         {
             title : "Ms. Sandali Liyanage",
             discrip : "sandali.liyanage@gmail.com",
+            status : "Accepted"
         },
         {
             title : "Mr. Kapila Weerasinghe",
-            discrip : "kapila.weerasinghe@gmail.com"
+            discrip : "kapila.weerasinghe@gmail.com",
+            status : "Rejected"
         },
         {
             title : "Mr. Deepal Perera",
-            discrip : "deepal.perera@gmail.com"
+            discrip : "deepal.perera@gmail.com",
+            status : "Accepted"
         },
         {
             title : "Mrs. Deepani Kumari",
-            discrip : "deepani.kumari@gmail.com"
+            discrip : "deepani.kumari@gmail.com",
+            status : "Rejected"
         },
         {
             title : "Mr. Lakshan Perera",
-            discrip : "lakshan.perera@gmail.com"
+            discrip : "lakshan.perera@gmail.com",
+            status : "Accepted"
         },
     ];
 
@@ -85,10 +90,11 @@ export default function ViewTutorRequestPage() {
                 <Descriptions title="Tutor Details" layout="vertical">
                     <Descriptions.Item label="Name">Mr. Lakmal Silva</Descriptions.Item>
                     <Descriptions.Item label="telephone Number">0715537961</Descriptions.Item>
-                    <Descriptions.Item label="Email">lakmal.silva@gmail.com</Descriptions.Item>
-                    <Descriptions.Item label="Gender">Male</Descriptions.Item>
+                    <Descriptions.Item label="Email">lakmal.si@gmail.com</Descriptions.Item>
+                    <Descriptions.Item label="Description" span={3}>I believe that every student deserves access to quality education and academic resources.</Descriptions.Item>
                     <Descriptions.Item label="Assigner">Mr. H.M.M. Senarath</Descriptions.Item>
                     <Descriptions.Item label="Assigner Designation">Principal</Descriptions.Item>
+                    
                 </Descriptions>
             </Modal>
 
@@ -130,12 +136,13 @@ export default function ViewTutorRequestPage() {
                                 itemLayout = "horizontal"
                                 dataSource = { historyData }
                                 renderItem =  { item => (
-                                    <List.Item onClick={() => setpopvisible(true)}>
+                                    <List.Item onClick={() => setpopvisible(true)} style={{paddingRight:10}}>
                                         <List.Item.Meta
                                             avatar = {<Avatar style={{margin : 10}} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" /> }
                                             title = {item.title}
                                             description = {item.discrip}
                                         />
+                                        <div>{item.status}</div>
                                     </List.Item>
                                 )}
                             />,
