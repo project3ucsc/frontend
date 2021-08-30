@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Button, List, Timeline, Card, message } from "antd";
 import ContentLayout from "components/ContentLayout";
-import { ClockCircleOutlined, FilePdfTwoTone } from "@ant-design/icons";
+import { ClockCircleOutlined } from "@ant-design/icons";
 import "./physics.scss";
 import { useParams } from "react-router-dom";
 import subjectdetailservice from "services/subjectdetail.service";
