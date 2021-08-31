@@ -5,7 +5,7 @@ import { Enum_std_detail_status } from "utils/common";
 const { Title } = Typography;
 const tstyle = { textAlign: "center", marginTop: 0 };
 
-export default function Enroll_Pending({ classid, setStdStatus }) {
+export default function EnrollPending({ classid, setStdStatus }) {
   const [clsdata, setClsdata] = useState(null);
   const [loading, setLoading] = useState(true);
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col } from "antd";
+import { Row, Col, Input } from "antd";
 import { Form, message, Button, Select, Typography } from "antd";
 
 import classroomservice from "services/classroom.service";
@@ -15,7 +15,7 @@ const { Option } = Select;
 
 const tstyle = { textAlign: "center", marginTop: 0 };
 
-export default function Enroll_Form({ setStdStatus, setClassid }) {
+export default function EnrollForm({ setStdStatus, setClassid }) {
   const [gradeclassform] = Form.useForm();
 
   const [gradesnclasses, setGradesnclasses] = useState([]);
@@ -249,6 +249,22 @@ export default function Enroll_Form({ setStdStatus, setClassid }) {
       <Title style={tstyle} level={5}>
         You haven't enrolled to a class yet
       </Title>
+      <Form.Item
+        name="regid"
+        label="Registration No"
+        rules={[
+          {
+            required: true,
+            message: "Please enter registration number!",
+          },
+        ]}
+      >
+        <Input
+          placeholder="Enter registration number in school"
+          style={{ minWidth: 100 }}
+        ></Input>
+      </Form.Item>
+
       <Form.Item
         name="grade"
         label="Grade"
