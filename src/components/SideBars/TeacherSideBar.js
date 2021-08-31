@@ -13,11 +13,12 @@ import {
 
 import { Layout, Menu } from "antd";
 import classroomservice from "services/classroom.service";
+import authenticationservice from "services/authentication.service";
 const { SubMenu } = Menu;
 
 export default function TeacherSideBar() {
   const [subLinks, setSubLinks] = useState([]);
-
+  const teacher_id = authenticationservice.currentUserValue.id;
   useEffect(() => {
     classroomservice
       .getSubDetailsforTeacher()
@@ -55,7 +56,16 @@ export default function TeacherSideBar() {
 
         <SubMenu key="sub1" icon={<AppstoreOutlined />} title="Subjects">
           {subLinks.map((item) => (
-            <Menu.Item key={"s" + item.id}>
+            <Menu.Item
+              icon={
+                teacher_id === item.classroom.classteacher_id ? (
+                  <TableOutlined style={{ marginRight: 0 }} />
+                ) : (
+                  ""
+                )
+              }
+              key={"s" + item.id}
+            >
               <Link to={"/subject/" + item.id}>
                 {" "}
                 {`${item.classroom.grade}-${item.classroom.name} ${item.subject.name}`}

@@ -9,7 +9,6 @@ import {
   Space,
   Typography,
   message,
-  Popconfirm,
   Divider,
   Empty,
 } from "antd";
@@ -17,6 +16,7 @@ import ContentLayout from "components/ContentLayout";
 import "./ClassRoomManagePage.scss";
 import { PlusOutlined } from "@ant-design/icons";
 import classroomservice from "services/classroom.service";
+import SubTeacherListItem from "components/SubTeacherListItem";
 
 const { Option } = Select;
 const { Title } = Typography;
@@ -34,125 +34,6 @@ const searchpropsforSelect = {
     option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0,
 };
 
-function SubTeacherListItem({ teachers, subjects, sd, remove }) {
-  const [disabled, setDisabled] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const [visible, setVisible] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
-
-  const showdeletePopconfirm = () => {
-    setVisible(true);
-  };
-
-  const handleOkdelete = () => {
-    setConfirmLoading(true);
-    setTimeout(() => {
-      setVisible(false);
-      setConfirmLoading(false);
-
-      // update ui
-      remove(sd.id);
-    }, 2000);
-  };
-
-  const handleCancel = () => {
-    console.log("Clicked cancel button");
-    setVisible(false);
-  };
-  const onFinish = async (val) => {
-    try {
-      if (!disabled) {
-        setLoading(true);
-        console.log(val);
-        await classroomservice.updateSubjectDetail(val, sd.id);
-        message.success("Subject detail upadted succesfully");
-        setLoading(false);
-      }
-    } catch (error) {
-      setLoading(false);
-      message.error(error.message);
-    }
-
-    setDisabled(!disabled);
-  };
-
-  return (
-    <Form
-      onFinish={onFinish}
-      initialValues={{
-        subject: sd.subjectid,
-        teacher: sd.teacher_id,
-      }}
-    >
-      <Space
-        // key={key}
-        align="baseline"
-        style={spacestyle}
-      >
-        <Form.Item
-          name="subject"
-          rules={[
-            {
-              required: true,
-              message: "Missing subject",
-            },
-          ]}
-        >
-          <Select
-            {...searchpropsforSelect}
-            disabled={disabled}
-            placeholder="select subject"
-            style={{ minWidth: 150 }}
-          >
-            {subjects.map((subject) => (
-              <Option key={subject.id} value={subject.id}>
-                {subject.name}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
-
-        <Form.Item
-          name="teacher"
-          rules={[
-            {
-              required: true,
-              message: "Missing teacher",
-            },
-          ]}
-        >
-          <Select
-            {...searchpropsforSelect}
-            placeholder="select teacher"
-            style={{ minWidth: 150 }}
-            disabled={disabled}
-          >
-            {teachers.map((teacher) => (
-              <Option key={teacher.id} value={teacher.id}>
-                {teacher.username}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
-        <Button htmlType="submit" loading={loading}>
-          {disabled ? "Edit" : "Save"}
-        </Button>
-        <Popconfirm
-          title="Are you sure to remove？"
-          visible={visible}
-          onConfirm={handleOkdelete}
-          okButtonProps={{ loading: confirmLoading }}
-          onCancel={handleCancel}
-        >
-          <Button danger onClick={showdeletePopconfirm}>
-            Remove
-          </Button>
-        </Popconfirm>
-      </Space>
-    </Form>
-  );
-}
-
 export default function ClassRoomManagePage() {
   const { Content } = Layout;
 
@@ -160,6 +41,10 @@ export default function ClassRoomManagePage() {
   const [gradeclassform] = Form.useForm();
   const [gradesnclasses, setGradesnclasses] = useState([]);
   const [gradecount, setGradecount] = useState([]);
+
+  // states for clsteacher form
+  const [ctStatus, setCtStatus] = useState("");
+  const [classteacherform] = Form.useForm();
 
   // states for down form
   const [subjects, setSubjects] = useState([]);
@@ -190,6 +75,13 @@ export default function ClassRoomManagePage() {
       setSubjects(data.subjects);
       setTeachers(data.teachers);
       setclassroomid(data.allsubjectdetails.id);
+      classteacherform.setFieldsValue({
+        classteacher: data.allsubjectdetails.classteacher_id,
+      });
+      if (data.allsubjectdetails.classteacher_id === null)
+        setCtStatus("warning");
+      else setCtStatus("success");
+
       // console.log(data);
       console.log(data.allsubjectdetails);
       setSubjectDetails(data.allsubjectdetails.subject_detail);
@@ -204,6 +96,25 @@ export default function ClassRoomManagePage() {
     const data = val.split(".");
     setGradecount(parseInt(data[1]));
     gradeclassform.setFieldsValue({ class: null });
+    setclassroomid(0);
+    setCtStatus("");
+  };
+
+  const onClassTeacherChange = async (val) => {
+    console.log(val);
+    try {
+      if (classroomid !== 0) {
+        setCtStatus("validating");
+
+        await classroomservice.setClassteacher(classroomid, val);
+
+        setCtStatus("success");
+        message.success("Class teacher set successfully");
+      }
+    } catch (error) {
+      message.error(error.message);
+      setCtStatus("error");
+    }
   };
 
   const onAddSubjectDetail = async ({ subject, teacher }) => {
@@ -319,6 +230,43 @@ export default function ClassRoomManagePage() {
                   <Button type="primary" htmlType="submit">
                     Select
                   </Button>
+                </Form.Item>
+              </Form>
+            </Col>
+          </Row>
+          <Divider />
+
+          <Row>
+            <Col sm={24} xl={24}>
+              <Form
+                style={{ justifyContent: "center" }}
+                form={classteacherform}
+                layout="inline"
+              >
+                <Form.Item
+                  name="classteacher"
+                  label="Class Teacher "
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please select class teacher!",
+                    },
+                  ]}
+                  hasFeedback
+                  validateStatus={ctStatus}
+                >
+                  <Select
+                    onChange={onClassTeacherChange}
+                    {...searchpropsforSelect}
+                    placeholder="select teacher"
+                    style={{ minWidth: 200 }}
+                  >
+                    {teachers.map((teacher) => (
+                      <Option key={teacher.id} value={teacher.id}>
+                        {teacher.username}
+                      </Option>
+                    ))}
+                  </Select>
                 </Form.Item>
               </Form>
             </Col>

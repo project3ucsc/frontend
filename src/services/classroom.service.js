@@ -19,6 +19,19 @@ async function CreateConfigureClasses(data) {
   }
 }
 
+async function setClassteacher(classid, teacherid) {
+  try {
+    const res = await axios.patch(
+      `${apiurl}/classes/setClassteacher`,
+      { classid, teacherid },
+      authHeader()
+    );
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+}
+
 async function getClass(classid) {
   try {
     const res = await axios.get(`${apiurl}/classes/${classid}`, authHeader());
@@ -48,6 +61,21 @@ async function getsStudentEnrollStatus() {
   try {
     const res = await axios.get(
       `${apiurl}/classes/enrollStatus/${userid}`,
+      authHeader()
+    );
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+}
+
+async function getEnrolledStudents() {
+  const userid = authenticationservice.currentUserValue.id;
+  const schoolid = authenticationservice.currentUserValue.school_id;
+
+  try {
+    const res = await axios.get(
+      `${apiurl}/classes/EnrolledStudents/${userid}/${schoolid}`,
       authHeader()
     );
     return res.data;
@@ -181,11 +209,13 @@ async function updateSubjectDetail(data, sdid) {
 const classroomservice = {
   getClass,
   CreateConfigureClasses,
+  setClassteacher,
   getSubDetailsforTeacher,
   getSubDetailsforStudent,
   getSDsinClass,
   getsection_and_no_classes,
   getsStudentEnrollStatus,
+  getEnrolledStudents,
   enrollStudent,
   unenrollStudent,
   getclassdetails,
