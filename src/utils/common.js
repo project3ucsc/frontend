@@ -46,6 +46,7 @@ export const Enum_std_detail_status = {
   NO_ENROll: "NO_ENROll",
   PENDING: "PENDING",
   ACTIVE: "ACTIVE",
+  REJECTED: "REJECTED",
 };
 
 var datemap = new Map();
@@ -78,10 +79,25 @@ sectionmap.set("G3", "PRIMARY");
 sectionmap.set("G4", "PRIMARY");
 sectionmap.set("G5", "PRIMARY");
 
+var subdispmap = new Map();
+subdispmap.set("OPTIONAL_69", "Aesthetic Subject");
+subdispmap.set("OL_BUCKET_1", "Bucket 1 subject");
+subdispmap.set("OL_BUCKET_2", "Bucket 2 subject");
+subdispmap.set("OL_BUCKET_3", "Bucket 3 subject");
+subdispmap.set("MATH_CHEM_IT", "Optional Subject");
+subdispmap.set("BIO_PHY_AGRI", "Optional Subject");
+subdispmap.set("ART_BLA", "Optional Subject");
+subdispmap.set("COM_IT", "Optional Subject");
+subdispmap.set("TECH_IT", "Optional Subject");
+
 export function getDaybyNumber(day) {
   return datemap.get(day);
 }
 
 export function getSectionFromGrade(grade) {
   return sectionmap.get(grade);
+}
+
+export function getSubGroupDiscription(sub) {
+  return subdispmap.get(sub);
 }

@@ -84,6 +84,19 @@ async function getEnrolledStudents() {
   }
 }
 
+async function setStdStatus(stdid, status) {
+  try {
+    const res = await axios.patch(
+      `${apiurl}/classes/setStdStatus`,
+      { stdid, status },
+      authHeader()
+    );
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+}
+
 async function enrollStudent(data) {
   const userid = authenticationservice.currentUserValue.id;
 
@@ -105,6 +118,18 @@ async function unenrollStudent(classid) {
 
     const res = await axios.delete(
       `${apiurl}/classes/unenroll/${classid}/${userid}`,
+      authHeader()
+    );
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+}
+
+async function getStudentDetail(stdid) {
+  try {
+    const res = await axios.get(
+      `${apiurl}/classes/getStudentDetail/${stdid}`,
       authHeader()
     );
     return res.data;
@@ -213,9 +238,11 @@ const classroomservice = {
   getSubDetailsforTeacher,
   getSubDetailsforStudent,
   getSDsinClass,
+  getStudentDetail,
   getsection_and_no_classes,
   getsStudentEnrollStatus,
   getEnrolledStudents,
+  setStdStatus,
   enrollStudent,
   unenrollStudent,
   getclassdetails,
