@@ -38,7 +38,11 @@ export default function Profile() {
       .then((res) => {
         setLoading(false);
         console.log(res.data);
-        let tmp = { ...res.data, school: "Bandaragama Central College" };
+        let tmp = {
+          ...res.data,
+          school: res.data.school.name,
+          schooladr: res.data.school.address,
+        };
         form.setFieldsValue(tmp);
         setUserProfile(tmp);
       })
@@ -171,6 +175,9 @@ export default function Profile() {
               </Form.Item> */}
 
               <Form.Item disabled label="School" name="school">
+                <Input disabled />
+              </Form.Item>
+              <Form.Item disabled label="School address" name="schooladr">
                 <Input disabled />
               </Form.Item>
 

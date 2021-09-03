@@ -215,7 +215,7 @@ export default function EnrollForm({ setStdStatus, setClassid }) {
     </>
   );
 
-  const AlSelect = opsubs.al.length > 1 && (
+  const AlSelect = opsubs.al.length >= 1 && (
     <Form.Item name="OPTIONAL_AL" label="Optional Subject" rules={selectRules}>
       <Select placeholder="select subject" style={{ minWidth: 100 }}>
         {opsubs.al.map((sub) => {
