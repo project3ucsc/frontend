@@ -94,6 +94,17 @@ async function updateResouceName(data) {
   }
 }
 
+async function getMeetingDetailsforStudent(sdid, day) {
+  try {
+    const res = await axios.get(
+      `${apiurl}/subjectdetail/getMeetingDetailsforStudent/${sdid}/${day}`,
+      authHeader()
+    );
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+}
 async function getMeetingDetails(sdid, day) {
   try {
     const res = await axios.get(
@@ -128,6 +139,7 @@ const subjectdetailservice = {
   deleteResouce,
   updateResouceName,
   getMeetingDetails,
+  getMeetingDetailsforStudent,
   editMeetingUrl,
 };
 export default subjectdetailservice;

@@ -44,6 +44,7 @@ export default function SubPage() {
     // update ui
     setSections(sections.filter((sec) => sec.id !== id));
   };
+
   const addSection = async ({ title }) => {
     try {
       //add call to backend
@@ -69,30 +70,11 @@ export default function SubPage() {
           {!loading && <MeetingUrlEditor sdid={sdid} />}
 
           <Card title="My Lessons" className="lesson-card" style={cstyle}>
-            {/* <List
-              header={<div>Upcoming lesson</div>}
-              // footer={<div>Footer</div>}
-              bordered
-              dataSource={data1}
-              renderItem={(item) => (
-                <List.Item>
-                  <span className="linkspan">{item}</span>
-                  <Dropdown overlay={menu} placement="bottomCenter" arrow>
-                    <Button type="link">
-                      Options
-                      <DownOutlined />
-                    </Button>
-                  </Dropdown>
-                </List.Item>
-              )}
-            /> */}
             <br />
-
             {sections.map((sec, i) => {
               return (
                 <LearnMatSection
                   key={sec.id}
-                  // sectionid={sec}
                   deleteSection={deleteSection}
                   section={sec}
                 />
