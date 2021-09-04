@@ -62,7 +62,10 @@ export default function MeetingUrlEditor({ sdid }) {
   const [meetingArr, setMeetingArr] = useState([]);
 
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
+    setLoading(true);
+
     subjectdetailservice
       .getMeetingDetails(sdid, day)
       .then((data) => {
@@ -71,6 +74,8 @@ export default function MeetingUrlEditor({ sdid }) {
         if (day !== 6) {
           setMeetingData(data);
         } else {
+          setMeetingData(data[0]);
+
           setMeetingArr(data);
         }
         setLoading(false);
@@ -81,7 +86,6 @@ export default function MeetingUrlEditor({ sdid }) {
   }, [day]);
 
   function handleDayChange(value) {
-    console.log(`selected ${value}`);
     setDay(value);
   }
 
@@ -123,7 +127,6 @@ export function MeetingUrl({ data }) {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalTyp, setModalTyp] = useState("editl");
   const [mdata, setMdata] = useState(data);
-
   const [modalform] = Form.useForm();
 
   const showModal = () => {

@@ -1,11 +1,11 @@
 import { Route, Switch } from "react-router-dom";
 
 import Dashboard from "pages/teacher/Dashboard";
-import Home from "pages/Home";
 import ApplyLeave from "pages/teacher/ApplyLeave";
 import NotFound404 from "pages/NotFound404";
 import SubPage from "pages/teacher/SubPage";
 import ClassInCharge from "pages/teacher/ClassInCharge";
+import VideoPage from "pages/VideoPage";
 
 // import PrivateRoute from "utils/PrivateRoute";
 // import { Role } from "utils/common";
@@ -16,7 +16,11 @@ export default function TeacherRouter() {
       <Switch>
         <Route exact path="/dashboard" component={Dashboard} />
         <Route exact path="/subject/:sdid" component={SubPage} />
-        <Route exact path="/s" component={Home} />
+        <Route
+          exact
+          path="/resource/:secname/:name/:filename"
+          component={VideoPage}
+        />
         <Route exact path="/applyleave" component={ApplyLeave} />
         <Route exact path="/classincharge" component={ClassInCharge} />
 

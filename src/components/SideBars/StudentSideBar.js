@@ -16,13 +16,19 @@ export default function StudentSideBar() {
   const { SubMenu } = Menu;
   const [subLinks, setSubLinks] = useState([]);
   const [loadingSubs, setLoadingSubs] = useState(true);
+  const [classroonName, setClassroonName] = useState("");
 
   useEffect(() => {
     classroomservice
       .getSubDetailsforStudent()
       .then((data) => {
         setLoadingSubs(false);
-        setSubLinks(data);
+        setSubLinks(data.subs);
+        setClassroonName(`${data.classroom.grade}-${data.classroom.name}`);
+        localStorage.setItem(
+          "clsname",
+          `${data.classroom.grade}-${data.classroom.name}`
+        );
         console.log(data);
       })
       .catch((e) => {
@@ -56,7 +62,11 @@ export default function StudentSideBar() {
           <Link to="/Dashboard">Dashboard</Link>
         </Menu.Item>
         {!loadingSubs && subLinks.length !== 0 && (
-          <SubMenu key="sub1" icon={<AppstoreOutlined />} title="Subjects">
+          <SubMenu
+            key="sub1"
+            icon={<AppstoreOutlined />}
+            title={"Subjects " + classroonName}
+          >
             {subLinks.map((item) => (
               <Menu.Item key={"s" + item.id}>
                 <Link to={"/subject/" + item.id}>{item.subject.name}</Link>

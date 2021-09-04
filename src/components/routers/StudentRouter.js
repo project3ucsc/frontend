@@ -7,6 +7,7 @@ import Subpage from "pages/student/Subpage";
 import tvprogramme from "pages/student/tvprogramme";
 import NotFound404 from "pages/NotFound404";
 import EnrollPage from "pages/student/EnrollPage";
+import VideoPage from "pages/VideoPage";
 
 // import { Role } from "utils/common";
 
@@ -18,6 +19,11 @@ export default function StudentRouter() {
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/subject" component={EnrollPage} />
         <Route exact path="/subject/:sdid" component={Subpage} />
+        <Route
+          exact
+          path="/resource/:secname/:name/:filename"
+          component={VideoPage}
+        />
         <Route exact path="/timetable" component={StudentTimeTable} />
         <Route exact path="/tvprogramme" component={tvprogramme} />
         <Route component={NotFound404} />

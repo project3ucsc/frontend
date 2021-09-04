@@ -222,15 +222,25 @@ export default function LearnMatSection({ deleteSection, section }) {
       setIsEditing(true);
     };
 
+    const getResourceLink = (type, filename, name) => {
+      if (type === "link") {
+        return filename;
+      } else if (type === "vid") {
+        return `/resource/${name}/${filename}`;
+      } else {
+        return getLearnMatUrl(filename);
+      }
+    };
+
     return (
       <List.Item>
         {!isEditing ? (
           <a
-            href={
-              item.type !== "link"
-                ? getLearnMatUrl(item.filename)
-                : item.filename
-            }
+            href={getResourceLink(
+              item.type,
+              item.filename,
+              `${section.name}/${item.name}`
+            )}
             className="linkspan"
           >
             {getResourceIcon(item.type)} {name}
