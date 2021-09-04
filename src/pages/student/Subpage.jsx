@@ -9,6 +9,7 @@ import {
   message,
   Badge,
   Spin,
+  Tabs,
 } from "antd";
 import ContentLayout from "components/ContentLayout";
 import { ClockCircleOutlined } from "@ant-design/icons";
@@ -30,6 +31,7 @@ const meetingcardstyle = {
   height: 194,
   minHeight: 100,
 };
+const { TabPane } = Tabs;
 
 export default function Subpage() {
   const [learnMats, setLearnMats] = useState([]);
@@ -54,6 +56,16 @@ export default function Subpage() {
       });
   }, [sdid]);
 
+  const getResourceLink = (type, filename, name) => {
+    if (type === "link") {
+      return filename;
+    } else if (type === "vid") {
+      return `/resource/${name}/${filename}`;
+    } else {
+      return getLearnMatUrl(filename);
+    }
+  };
+
   return (
     <ContentLayout title={title} paths={["Home", title]}>
       <Row>
@@ -69,48 +81,51 @@ export default function Subpage() {
               </li>
             </ul>
           </Card>
-          <Card title="My Lessons" className="lessoncard" style={cstyle}>
-            {learnMats.map((section) => {
-              return (
-                <List
-                  key={section.id}
-                  style={{ textAlign: "left" }}
-                  header={<div>{section.name}</div>}
-                  bordered
-                  dataSource={section.resource_details}
-                  renderItem={(item) => (
-                    <List.Item>
-                      <a
-                        href={
-                          item.type !== "link"
-                            ? getLearnMatUrl(item.filename)
-                            : item.filename
-                        }
-                        className="linkspan"
-                      >
-                        {getResourceIcon(item.type)} {item.name}
-                      </a>
-                    </List.Item>
-                  )}
-                />
-              );
-            })}
-          </Card>
+
+          <Tabs type="card">
+            <TabPane tab="Lessons" key="1">
+              <Card title="My Lessons" className="lessoncard" style={cstyle}>
+                {learnMats.map((section) => {
+                  return (
+                    <List
+                      key={section.id}
+                      style={{ textAlign: "left" }}
+                      header={<div>{section.name}</div>}
+                      bordered
+                      dataSource={section.resource_details}
+                      renderItem={(item) => (
+                        <List.Item>
+                          <a
+                            href={getResourceLink(
+                              item.type,
+                              item.filename,
+                              `${section.name}/${item.name}`
+                            )}
+                            className="linkspan"
+                          >
+                            {getResourceIcon(item.type)} {item.name}
+                          </a>
+                        </List.Item>
+                      )}
+                    />
+                  );
+                })}
+              </Card>
+            </TabPane>
+            <TabPane tab="Assesments" key="2">
+              <Card
+                title="Assesments"
+                className="lessoncard"
+                style={cstyle}
+              ></Card>
+            </TabPane>
+          </Tabs>
         </Col>
 
         {/* <Col xl={1}></Col> */}
 
         <Col xs={24} xl={8}>
           <Card title="Timeline" className="timelinecard" style={cstyle}>
-            {/* <Content
-                    className="site-layout-background"
-                    style={{
-                        padding: 24,
-                        margin: 0,
-                        minHeight: 280,
-                        backgroundColor: "#ffffff",
-                    }} 
-                >*/}
             <Timeline>
               <Timeline.Item>
                 <Button type="link">Thermal physics lesson 7</Button> 2021-09-01

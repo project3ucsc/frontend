@@ -4,6 +4,7 @@ import ContentLayout from "components/ContentLayout";
 import TimeTableBig from "components/TimeTableBig";
 import TimeTableSm from "components/TimeTableSm";
 import timeslotservice from "services/timeslot.service";
+import { getClassName } from "utils/common";
 
 const { TabPane } = Tabs;
 
@@ -28,7 +29,10 @@ export default function StudentTimeTable() {
   }, []);
 
   return (
-    <ContentLayout title="Timetable" paths={["Home", "Timetable"]}>
+    <ContentLayout
+      title={"Timetable " + getClassName()}
+      paths={["Home", "Timetable"]}
+    >
       <Content
         className="site-layout-background"
         style={{

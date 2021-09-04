@@ -101,3 +101,9 @@ export function getSectionFromGrade(grade) {
 export function getSubGroupDiscription(sub) {
   return subdispmap.get(sub);
 }
+
+export function getClassName() {
+  let name = localStorage.getItem("clsname");
+  if (name) return name;
+  else return "";
+}

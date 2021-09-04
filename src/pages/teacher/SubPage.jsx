@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Button, Card, Form, Input, message } from "antd";
+import { Row, Col, Button, Card, Form, Input, message, Tabs } from "antd";
 import ContentLayout from "components/ContentLayout";
 
 import "./subpage.scss";
@@ -7,6 +7,8 @@ import LearnMatSection from "components/teacher/LearnMatSection";
 import { useParams } from "react-router-dom";
 import subjectdetailservice from "services/subjectdetail.service";
 import MeetingUrlEditor from "components/teacher/MeetingUrlEditor";
+
+const { TabPane } = Tabs;
 
 const cstyle = {
   marginBottom: 0,
@@ -69,31 +71,45 @@ export default function SubPage() {
         <Col xs={24}>
           {!loading && <MeetingUrlEditor sdid={sdid} />}
 
-          <Card title="My Lessons" className="lesson-card" style={cstyle}>
-            <br />
-            {sections.map((sec, i) => {
-              return (
-                <LearnMatSection
-                  key={sec.id}
-                  deleteSection={deleteSection}
-                  section={sec}
-                />
-              );
-            })}
+          <Tabs type="card">
+            <TabPane tab="Lessons" key="1">
+              <Card title="My Lessons" className="lesson-card" style={cstyle}>
+                <br />
+                {sections.map((sec, i) => {
+                  return (
+                    <LearnMatSection
+                      key={sec.id}
+                      deleteSection={deleteSection}
+                      section={sec}
+                    />
+                  );
+                })}
 
-            <Card title="Add new section">
-              <Form onFinish={addSection} layout="inline">
-                <Form.Item name="title" label="Section Title">
-                  <Input style={{ width: "auto" }} placeholder="Enter title" />
-                </Form.Item>
-                <Form.Item>
-                  <Button type="primary" htmlType="submit">
-                    Add
-                  </Button>
-                </Form.Item>
-              </Form>
-            </Card>
-          </Card>
+                <Card title="Add new section">
+                  <Form onFinish={addSection} layout="inline">
+                    <Form.Item name="title" label="Section Title">
+                      <Input
+                        style={{ width: "auto" }}
+                        placeholder="Enter title"
+                      />
+                    </Form.Item>
+                    <Form.Item>
+                      <Button type="primary" htmlType="submit">
+                        Add
+                      </Button>
+                    </Form.Item>
+                  </Form>
+                </Card>
+              </Card>
+            </TabPane>
+            <TabPane tab="Assesments" key="2">
+              <Card
+                title="Assesments"
+                className="lessoncard"
+                style={cstyle}
+              ></Card>
+            </TabPane>
+          </Tabs>
         </Col>
       </Row>
     </ContentLayout>
