@@ -49,6 +49,12 @@ export const Enum_std_detail_status = {
   REJECTED: "REJECTED",
 };
 
+export const enum_BtnState = {
+  dirty: "d",
+  success: "s",
+  err: "e",
+};
+
 var datemap = new Map();
 datemap.set(1, "Monday");
 datemap.set(2, "Tuesday");
