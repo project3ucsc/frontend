@@ -7,6 +7,7 @@ import LearnMatSection from "components/teacher/LearnMatSection";
 import { useParams } from "react-router-dom";
 import subjectdetailservice from "services/subjectdetail.service";
 import MeetingUrlEditor from "components/teacher/MeetingUrlEditor";
+import AssesmentListTec from "components/AssesmentListTec";
 
 const { TabPane } = Tabs;
 
@@ -103,11 +104,9 @@ export default function SubPage() {
               </Card>
             </TabPane>
             <TabPane tab="Assesments" key="2">
-              <Card
-                title="Assesments"
-                className="lessoncard"
-                style={cstyle}
-              ></Card>
+              <Card title="Assesments" className="lessoncard" style={cstyle}>
+                <AssesmentListTec sdid={sdid} />
+              </Card>
             </TabPane>
           </Tabs>
         </Col>
