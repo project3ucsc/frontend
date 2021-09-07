@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { List, Avatar } from "antd";
+import { List, Avatar, message } from "antd";
+import assmntservice from "services/assmnt.service";
 
 const initdata = [
   { title: "sdvcsdvs", duedate: "2021/3/30 - 12.00pm" },
@@ -8,7 +9,17 @@ const initdata = [
 
 export default function AssesmentListStu({ sdid }) {
   const [data, setData] = useState(initdata);
-  useEffect(() => {}, [sdid]);
+  useEffect(() => {
+    assmntservice
+      .getAssmnts(sdid)
+      .then((data) => {
+        setData(data);
+      })
+      .catch((e) => {
+        message.error(e.message);
+      });
+  }, [sdid]);
+
   return (
     <List
       itemLayout="horizontal"
