@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import subjectdetailservice from "services/subjectdetail.service";
 import MeetingUrlEditor from "components/teacher/MeetingUrlEditor";
 import AssesmentListTec from "components/AssesmentListTec";
+import AddAssesmentForm from "components/AddAssesmentForm";
 
 const { TabPane } = Tabs;
 
@@ -106,6 +107,16 @@ export default function SubPage() {
             <TabPane tab="Assesments" key="2">
               <Card title="Assesments" className="lessoncard" style={cstyle}>
                 <AssesmentListTec sdid={sdid} />
+              </Card>
+            </TabPane>
+
+            <TabPane tab="Add Assesment" key="3">
+              <Card
+                title="Add New Assesment"
+                className="lessoncard"
+                style={cstyle}
+              >
+                <AddAssesmentForm sdid={sdid} />
               </Card>
             </TabPane>
           </Tabs>

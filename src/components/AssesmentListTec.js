@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { List, Avatar } from "antd";
+import { List, Avatar, message, Button } from "antd";
+import assmntservice from "services/assmnt.service";
 
 const initdata = [
   { title: "sdvcsdvs", duedate: "2021/3/30 - 12.00pm" },
@@ -8,8 +9,18 @@ const initdata = [
 ];
 
 export default function AssesmentListTec({ sdid }) {
-  const [data, setData] = useState(initdata);
-  useEffect(() => {}, [sdid]);
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    assmntservice
+      .getAssmnts(sdid)
+      .then((data) => {
+        setData(data);
+      })
+      .catch((e) => {
+        message.error(e.message);
+      });
+  }, [sdid]);
+
   return (
     <List
       itemLayout="horizontal"
@@ -17,13 +28,15 @@ export default function AssesmentListTec({ sdid }) {
       renderItem={(item) => (
         <List.Item
           actions={[
-            <a key="list-loadmore-edit">
+            <Button type="link" key="list-loadmore-edit">
               {" "}
-              <Link to="/assessment/23">edit</Link>
-            </a>,
-            <a key="list-loadmore-more">
-              <Link to="/assessment/submisstions/12">submisstions</Link>
-            </a>,
+              <Link to={"/assessment/" + item.id}>edit</Link>
+            </Button>,
+            <Button key="list-loadmore-more">
+              <Link to={"/assessment/submisstions/" + item.id}>
+                submisstions
+              </Link>
+            </Button>,
           ]}
         >
           <List.Item.Meta
