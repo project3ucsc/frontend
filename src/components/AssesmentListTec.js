@@ -2,12 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { List, Avatar, message, Button } from "antd";
 import assmntservice from "services/assmnt.service";
-
-const initdata = [
-  { title: "sdvcsdvs", duedate: "2021/3/30 - 12.00pm" },
-  { title: "sdvcsdvs", duedate: "2021/3/30 - 12.00pm" },
-];
-
+import "./AssesmentList.scss";
 export default function AssesmentListTec({ sdid }) {
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -20,34 +15,36 @@ export default function AssesmentListTec({ sdid }) {
         message.error(e.message);
       });
   }, [sdid]);
-
+  // new Date().toLocaleDateString()
   return (
     <List
+      className="res-list"
       itemLayout="horizontal"
       dataSource={data}
-      renderItem={(item) => (
-        <List.Item
-          actions={[
-            <Button type="link" key="list-loadmore-edit">
-              {" "}
+      renderItem={(item) => {
+        let duedate = new Date(item.duedate);
+        let duetdateTxt = duedate.toLocaleString();
+        return (
+          <List.Item>
+            <List.Item.Meta
+              avatar={
+                <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+              }
+              title={<Link to={"/assessment/" + item.id}>{item.title}</Link>}
+              description={"Due Date : " + duetdateTxt}
+            />
+
+            <Button className="editbtn" type="link" key="list-loadmore-edit">
               <Link to={"/assessment/" + item.id}>edit</Link>
-            </Button>,
-            <Button key="list-loadmore-more">
+            </Button>
+            <Button type="link" key="list-loadmore-more">
               <Link to={"/assessment/submisstions/" + item.id}>
                 submisstions
               </Link>
-            </Button>,
-          ]}
-        >
-          <List.Item.Meta
-            avatar={
-              <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-            }
-            title={<a href="https://ant.design">{item.title}</a>}
-            description={item.duedate}
-          />
-        </List.Item>
-      )}
+            </Button>
+          </List.Item>
+        );
+      }}
     />
   );
 }

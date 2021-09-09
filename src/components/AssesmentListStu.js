@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { List, Avatar, message } from "antd";
+import { List, Avatar, message, Button } from "antd";
 import assmntservice from "services/assmnt.service";
+import { Link } from "react-router-dom";
 
 const initdata = [
   { title: "sdvcsdvs", duedate: "2021/3/30 - 12.00pm" },
@@ -22,19 +23,24 @@ export default function AssesmentListStu({ sdid }) {
 
   return (
     <List
+      className="res-list"
       itemLayout="horizontal"
       dataSource={data}
-      renderItem={(item) => (
-        <List.Item>
-          <List.Item.Meta
-            avatar={
-              <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-            }
-            title={<a href="https://ant.design">{item.title}</a>}
-            description={item.duedate}
-          />
-        </List.Item>
-      )}
+      renderItem={(item) => {
+        let duedate = new Date(item.duedate);
+        let duetdateTxt = duedate.toLocaleString();
+        return (
+          <List.Item>
+            <List.Item.Meta
+              avatar={
+                <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+              }
+              title={<Link to={"/assessment/" + item.id}>{item.title}</Link>}
+              description={"Due Date : " + duetdateTxt}
+            />
+          </List.Item>
+        );
+      }}
     />
   );
 }

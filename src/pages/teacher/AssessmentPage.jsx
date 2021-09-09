@@ -60,11 +60,11 @@ export default function AssessmentPage() {
   }
 
   return (
-    <BackLayout title={getClassName()} subtitle={"bla bla"}>
+    <BackLayout title="Manage Assesment" subtitle={getClassName()}>
       <Row>
         <Col xs={24}>
           {!loading ? (
-            <Card title="Manage Assesment" className="lessoncard">
+            <Card title="" className="lessoncard">
               <EditableTxt
                 assid={assid}
                 property="title"
@@ -153,7 +153,7 @@ export function EditableTxt({ txt, label, property, assid }) {
       </Col>
       <Col xs={16} md={18}>
         <Paragraph
-          style={{ fontSize: 15 }}
+          style={{ whiteSpace: "pre-wrap", fontSize: 15 }}
           editable={{
             onChange: onChange,
             onEnd: onFinish,
