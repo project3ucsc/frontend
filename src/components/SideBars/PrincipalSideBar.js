@@ -18,7 +18,7 @@ export default function PrincipalSideBar() {
       className="site-layout-background"
       breakpoint={"md"}
       // trigger={null}
-      collapsedWidth={65}
+      collapsedWidth={50}
       collapsible
 
       // collapsed={collapsed}

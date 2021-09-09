@@ -9,11 +9,17 @@ import uploadFileToBlob, {
   isStorageConfigured,
 } from "services/azureblob.service";
 import assmntservice from "services/assmnt.service";
+import { enum_submissionStatus } from "utils/common";
 
 const storageConfigured = isStorageConfigured();
 
-const AttachUpload = ({ file, container, dbid }) => {
-  // UI/form management
+const AttachUpload = ({
+  file,
+  container,
+  dbid,
+  setSubmissionStaus,
+  duedate,
+}) => {
   const [uploading, setUploading] = useState(false);
   const [uploaded, setUploaded] = useState(file);
   const showname = file.filename.split("-nm-")[1];
@@ -43,11 +49,28 @@ const AttachUpload = ({ file, container, dbid }) => {
       const filename = await uploadFileToBlob(fileList[0], container);
       if (container === containers.attachments)
         await assmntservice.updateAssmnt(dbid, "filename", filename);
-      if (container === containers.submissions)
-        // await assmntservice.updateAssmnt(dbid,'filename',filename);
+      if (container === containers.submissions) {
+        await assmntservice.upsertSubmission(dbid, filename);
 
-        // setFilename(filename);
-        setUploaded({ bool: true, filename: filename });
+        // update ui
+        const today = new Date();
+        const st =
+          duedate > today
+            ? enum_submissionStatus.submitearly
+            : enum_submissionStatus.submitlate;
+        setSubmissionStaus((prev) => {
+          return {
+            ...prev,
+            status: st,
+            filename: filename,
+            submitdate: today.toLocaleString(),
+          };
+        });
+      }
+
+      // setFilename(filename);
+
+      setUploaded({ bool: true, filename: filename });
       setUploading(false);
 
       setFileList([
@@ -77,10 +100,18 @@ const AttachUpload = ({ file, container, dbid }) => {
           await deleteBlobFiile(uploaded.filename, container);
           if (container === containers.attachments)
             await assmntservice.updateAssmnt(dbid, "filename", "NA");
-          if (container === containers.submissions)
-            // await assmntservice.updateAssmnt(dbid,'filename','NA');
+          if (container === containers.submissions) {
+            await assmntservice.upsertSubmission(dbid, "NA");
 
-            message.success("Upoloaded file deleted");
+            setSubmissionStaus((prev) => {
+              return {
+                ...prev,
+                status: enum_submissionStatus.noattempt,
+                filename: "NA",
+              };
+            });
+          }
+          message.success("Upoloaded file deleted");
           setUploaded({ bool: false, filename: "" });
           // setFilename("NA");
         }

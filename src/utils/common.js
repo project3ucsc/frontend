@@ -55,6 +55,12 @@ export const enum_BtnState = {
   err: "e",
 };
 
+export const enum_submissionStatus = {
+  noattempt: "na",
+  submitearly: "se",
+  submitlate: "ls",
+};
+
 var datemap = new Map();
 datemap.set(1, "Monday");
 datemap.set(2, "Tuesday");
@@ -114,7 +120,7 @@ export function getClassName() {
   else return "";
 }
 
-export function getTimeAgo(subdate, now) {
+export function getTimeAgo(subdate, now, prefix) {
   var dYrs = now.getFullYear() - subdate.getFullYear();
   var dMonths = now.getMonth() - subdate.getMonth();
   var dDays = now.getDate() - subdate.getDate();
@@ -131,9 +137,10 @@ export function getTimeAgo(subdate, now) {
       else txt = `${dDays} days`;
     else txt = `${dMonths} months`;
   else txt = `${dYrs} hours`;
-
-  if (txt.charAt(0) === "-") txt = "after " + txt.substring(1);
-  else txt = "before " + txt;
+  if (prefix) {
+    if (txt.charAt(0) === "-") txt = "after " + txt.substring(1);
+    else txt = "before " + txt;
+  }
   // console.log(txt);
 
   return txt;

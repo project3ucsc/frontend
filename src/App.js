@@ -66,7 +66,7 @@ function App() {
                 </Button>
                 <span className="logtext">
                   <Avatar size="small" icon={<UserOutlined />} />
-                  {currentUser.username}
+                  {window.innerWidth > 768 ? currentUser.username : ""}
                 </span>
                 <span className="notification-bell" onClick={onNotiDrawerShow}>
                   <Badge size="small" count={notifiCount}>

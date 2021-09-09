@@ -20,7 +20,7 @@ export default function SAdminSideBar() {
       className="site-layout-background"
       breakpoint={"md"}
       // trigger={null}
-      collapsedWidth={65}
+      collapsedWidth={50}
       collapsible
 
       // collapsed={collapsed}
