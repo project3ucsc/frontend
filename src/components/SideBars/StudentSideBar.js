@@ -93,6 +93,9 @@ export default function StudentSideBar() {
         <Menu.Item key="7" icon={<UserOutlined />}>
           <Link to="/tvprogramme">Suggest Free Programmes</Link>
         </Menu.Item>
+        <Menu.Item key="8" icon={<HomeOutlined />}>
+          <Link to="/tuitionHome">Extra Classes</Link>
+        </Menu.Item>
 
         {/* <SubMenu key="sub2" icon={<MailOutlined />} title="Navigation Two">
           <Menu.Item key="9">Option 9</Menu.Item>
