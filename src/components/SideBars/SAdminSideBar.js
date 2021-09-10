@@ -54,6 +54,9 @@ export default function SAdminSideBar() {
           <Link to="/manageuser">Manage users</Link>
         </Menu.Item>
         <Menu.Item key="8" icon={<UsergroupAddOutlined />}>
+          <Link to="/teacherrequests">Teacher requests</Link>
+        </Menu.Item>
+        <Menu.Item key="9" icon={<UsergroupAddOutlined />}>
           <Link to="/tutorrequests">Tutor requests</Link>
         </Menu.Item>
       </Menu>
