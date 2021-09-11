@@ -1,27 +1,32 @@
 import React from "react";
 import { Layout, Row, Col } from "antd";
-import { Form, Input, Button, Select, Radio } from "antd";
-import { InputNumber } from "antd";
-import { DatePicker } from "antd";
-import { TimePicker } from "antd";
-import moment from "moment";
-
+import { Form, Input, Button, Select, DatePicker,TimePicker, Space } from "antd";
 import ContentLayout from "components/ContentLayout";
+import { Tabs } from 'antd';
+
+
+
 
 export default function ApplyLeave() {
   const { Content } = Layout;
   const format = "HH:mm";
-  // const { RangePicker } = DatePicker;
+ 
   const onFinish = (values) => {
     console.log("Success:", values);
   };
-
+  const { RangePicker } = DatePicker;
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
   const { Option } = Select;
 
   const { TextArea } = Input;
+
+  const { TabPane } = Tabs;
+
+  function callback(key) {
+    console.log(key);
+  }
 
   const tailLayout = {
     wrapperCol: {
@@ -42,129 +47,197 @@ export default function ApplyLeave() {
       >
         <Row>
           <Col xs={24} xl={18}>
+
+
+          <Tabs defaultActiveKey="1" onChange={callback}>
+            <TabPane tab="Short Leave" key="1">
+
+                <Form
+                  name="basic"
+                  labelCol={{
+                    span: 8,
+                  }}
+                  wrapperCol={{
+                    span: 16,
+                  }}
+                  initialValues={{
+                    remember: true,
+                  }}
+                  onFinish={onFinish}
+                  onFinishFailed={onFinishFailed}
+                >
+                  
+                 
+
+                  <Form.Item
+                    label="Staff ID Number"
+                    name="id"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input Staff ID number!",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Input your Staff ID number here.." />
+                  </Form.Item>
+                  
+                  {/*<Form.Item
+                    label="Name"
+                    name="name"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input name!",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Input your name here.." />
+                  </Form.Item>*/}
+                  
+                  
+                  
+                  <Form.Item
+                    label="Leave Date"
+                    name="date"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input date!",
+                      },
+                    ]}
+                  >
+                    <DatePicker />
+                  </Form.Item>
+
+                  <Form.Item name="reason" label="Reason"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input reason!",
+                      },
+                    ]}
+                  >
+                    <TextArea rows={4} placeholder="Enter reason here.." />
+                  </Form.Item>
+
+                
+
+                  
+                  <Form.Item
+                        name="select-multiple"
+                        label="Leave time slots"
+                        rules={[{ required: true, message: 'Please select time slots!', type: 'array' }]}
+                    >
+                        <Select mode="multiple" placeholder="Click here and select all the timeslots that you are going to apply for leave..">
+                            <Option value="timeslot1">TimeSlot 1 Grade Class Subject</Option>
+                            <Option value="timeslot2">Timeslot 2 Grade Class Subject</Option>
+                            <Option value="timeslot3">Timeslot 3 Grade Class Subject</Option>
+                        </Select>
+                    </Form.Item>
+
+                  
+
+                  
+
+                  
+
+                  <Form.Item {...tailLayout}>
+                    <Button htmlType="button">Cancel</Button>
+
+                    <Button type="primary" htmlType="submit">
+                      Submit
+                    </Button>
+                  </Form.Item>
+                </Form>
+
+
+            </TabPane>
+            <TabPane tab="Long Leave" key="2">
+              
             <Form
-              name="basic"
-              labelCol={{
-                span: 8,
-              }}
-              wrapperCol={{
-                span: 16,
-              }}
-              initialValues={{
-                remember: true,
-              }}
-              onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
-            >
-              <Form.Item
-                label="Date"
-                name="date"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input start time!",
-                  },
-                ]}
-              >
-                <DatePicker />
-              </Form.Item>
+                  name="basic"
+                  labelCol={{
+                    span: 8,
+                  }}
+                  wrapperCol={{
+                    span: 16,
+                  }}
+                  initialValues={{
+                    remember: true,
+                  }}
+                  onFinish={onFinish}
+                  onFinishFailed={onFinishFailed}
+                >
+                  
+                 
 
-              <Form.Item
-                label="Time"
-                name="time"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input start time!",
-                  },
-                ]}
-              >
-                <TimePicker
-                  defaultValue={moment("12:08", format)}
-                  format={format}
-                />
-              </Form.Item>
+                  <Form.Item
+                    label="Staff ID Number"
+                    name="id"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input Staff ID number!",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Input your Staff ID number here.." />
+                  </Form.Item>
+                  
+                  {/*<Form.Item
+                    label="Name"
+                    name="name"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input name!",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Input your name here.." />
+                  </Form.Item>*/}
+                  
+                  
+                  
+                  <Form.Item
+                    label="Leave Date Range"
+                    name="daterange"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input date range!",
+                      },
+                    ]}
+                  >
+                    <RangePicker />
+                  </Form.Item>
 
-              <Form.Item
-                label="Grade"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please grade!",
-                  },
-                ]}
-              >
-                <Form.Item name="grade" noStyle>
-                  <InputNumber min={1} max={13} />
-                </Form.Item>
-              </Form.Item>
+                  <Form.Item name="reason" label="Reason"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please reason for the leave!",
+                      },
+                    ]}
+                  >
+                    <TextArea rows={4} placeholder="Enter reason here.." />
+                  </Form.Item>
+                  
 
-              <Form.Item
-                label="Class"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input class!",
-                  },
-                ]}
-              >
-                <Form.Item name="class" noStyle>
-                  <InputNumber min={1} max={13} />
-                </Form.Item>
-              </Form.Item>
+                  <Form.Item {...tailLayout}>
+                    <Button htmlType="button">Cancel</Button>
 
-              <Form.Item
-                name="subject"
-                label="Subject"
-                hasFeedback
-                rules={[
-                  { required: true, message: "Please select the subject!" },
-                ]}
-              >
-                <Select placeholder="Please select the subject">
-                  <Option value="Combined Maths"> Combined Maths</Option>
-                  <Option value="Physics"> Physics </Option>
-                  <Option value="Chemistry">Chemistry </Option>
-                  <Option value="IT"> IT </Option>
-                </Select>
-              </Form.Item>
+                    <Button type="primary" htmlType="submit">
+                      Submit
+                    </Button>
+                  </Form.Item>
+                </Form>
 
-              <Form.Item
-                name="Media Type"
-                label="Need to arrange alternative teacher?"
-              >
-                <Radio.Group>
-                  <Radio value="yes">Yes</Radio>
-                  <Radio value="no">No</Radio>
-                </Radio.Group>
-              </Form.Item>
+            </TabPane>
+          </Tabs>
 
-              <Form.Item
-                label="Suggest alternative teachers (optional)"
-                name="altTeacher"
-              >
-                <Select placeholder="Select a teacher">
-                  <Option value="1">Teacher 1</Option>
-                  <Option value="2">Teacher 2</Option>
-                  <Option value="3">Teacher 3</Option>
-                  <Option value="4">Teacher 4</Option>
-                  <Option value="5">Teacher 5</Option>
-                  <Option value="6">Teacher 6</Option>
-                </Select>
-              </Form.Item>
-
-              <Form.Item name="reason" label="Reason">
-                <TextArea rows={4} placeholder="Enter reason here.." />
-              </Form.Item>
-
-              <Form.Item {...tailLayout}>
-                <Button htmlType="button">Cancel</Button>
-
-                <Button type="primary" htmlType="submit">
-                  Submit
-                </Button>
-              </Form.Item>
-            </Form>
+            
           </Col>
           <Col xs={24} xl={6}></Col>
         </Row>
