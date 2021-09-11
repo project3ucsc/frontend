@@ -12,7 +12,7 @@ import {
 } from "@ant-design/icons";
 
 import { Layout, Menu } from "antd";
-
+const { SubMenu } = Menu;
 export default function SAdminSideBar() {
   return (
     <Layout.Sider
@@ -50,15 +50,24 @@ export default function SAdminSideBar() {
         <Menu.Item key="6" icon={<TableOutlined />}>
           <Link to="/timetables">TimeTables</Link>
         </Menu.Item>
-        <Menu.Item key="7" icon={<UserSwitchOutlined />}>
-          <Link to="/manageuser">Manage users</Link>
-        </Menu.Item>
-        <Menu.Item key="8" icon={<UsergroupAddOutlined />}>
-          <Link to="/teacherrequests">Teacher requests</Link>
-        </Menu.Item>
-        <Menu.Item key="9" icon={<UsergroupAddOutlined />}>
-          <Link to="/tutorrequests">Tutor requests</Link>
-        </Menu.Item>
+
+        <SubMenu
+          key="m"
+          icon={<UsergroupAddOutlined />}
+          title={"User Management"}
+        >
+          <Menu.Item key="m1">
+            <Link to="/StudentManagement">Student Management</Link>
+          </Menu.Item>
+
+          <Menu.Item key="m2">
+            <Link to="/TeacherManagement">Teacher Management</Link>
+          </Menu.Item>
+
+          <Menu.Item key="m3">
+            <Link to="/TutorManagement">Tutor Management</Link>
+          </Menu.Item>
+        </SubMenu>
       </Menu>
     </Layout.Sider>
   );

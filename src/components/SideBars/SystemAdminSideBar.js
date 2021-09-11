@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {
-  TableOutlined,
+  UsergroupAddOutlined,
   BorderOuterOutlined,
   DesktopOutlined,
   SolutionOutlined,
@@ -45,8 +45,8 @@ export default function SystemAdminSideBar() {
         <Menu.Item key="5" icon={<ScheduleOutlined />}>
           <Link to="/timeslots">Analysis</Link>
         </Menu.Item>
-        <Menu.Item key="6" icon={<TableOutlined />}>
-          <Link to="/timetables">Tutor Managment</Link>
+        <Menu.Item key="6" icon={<UsergroupAddOutlined />}>
+          <Link to="/PrincipalMangemnt">Princpal Managment</Link>
         </Menu.Item>
         <Menu.Item key="7" icon={<HomeOutlined />}>
           <Link to="/RegSchool">School Managment</Link>

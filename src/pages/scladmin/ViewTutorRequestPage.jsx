@@ -71,8 +71,8 @@ export default function ViewTutorRequestPage() {
 
   return (
     <ContentLayout
-      title="Tutor Requests"
-      paths={["SchoolAdmin", "Tutor Requests"]}
+      title="Tutor Management"
+      paths={["SchoolAdmin", "TutorManagement"]}
     >
       <Modal
         visible={popupvisible}

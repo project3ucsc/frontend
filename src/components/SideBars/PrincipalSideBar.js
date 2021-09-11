@@ -29,7 +29,7 @@ export default function PrincipalSideBar() {
           <Link to="/dashboard">Dashboard</Link>
         </Menu.Item>
         <Menu.Item key="3" icon={<UsergroupAddOutlined />}>
-          <Link to="/scladminrequests">School Admin requests</Link>
+          <Link to="/SclAdminManagement">School Admin Management</Link>
         </Menu.Item>
       </Menu>
     </Layout.Sider>

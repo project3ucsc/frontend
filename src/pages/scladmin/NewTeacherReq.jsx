@@ -85,14 +85,11 @@ export default function NewTeacherReq() {
       setpopupvisible(false);
       message.success("Teacher rejected successfully");
 
-      // update ui
-
-      //   const activedstu = pendingList.find(
-      //     (student) => student.id === modalData.id
-      //   );
-      //   setActiveList([...activeList], { ...activedstu, status: "ACTIVE" });
       setPendingList(
         pendingList.filter((student) => student.id !== modalData.id)
+      );
+      setActiveList(
+        activeList.filter((student) => student.id !== modalData.id)
       );
     } catch (error) {
       message.error(error.message);
@@ -101,8 +98,8 @@ export default function NewTeacherReq() {
 
   return (
     <ContentLayout
-      title="Teacher Requests"
-      paths={["SchoolAdmin", "Teacher Requests"]}
+      title="Teacher Management"
+      paths={["SchoolAdmin", "Teacher Management"]}
     >
       <Modal
         visible={popupvisible}
@@ -122,8 +119,11 @@ export default function NewTeacherReq() {
                 </Button>,
               ]
             : [
+                <Button danger key="" onClick={onReject}>
+                  Revoke Account
+                </Button>,
                 <Button type="primary" onClick={() => setpopupvisible(false)}>
-                  OK
+                  Close Modal
                 </Button>,
               ]
         }
@@ -137,7 +137,7 @@ export default function NewTeacherReq() {
               {modalData.phone}
             </Descriptions.Item>
             <Descriptions.Item label="Email">
-              n{modalData.email}
+              {modalData.email}
             </Descriptions.Item>
             <Descriptions.Item label="Gender">
               {modalData.gender}

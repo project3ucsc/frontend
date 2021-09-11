@@ -20,7 +20,7 @@ import authenticationservice from "services/authentication.service";
 const { TabPane } = Tabs;
 const { Content } = Layout;
 
-export default function NewSclAdminReq() {
+export default function PrincipalMangemnt() {
   const [popupvisible, setpopupvisible] = useState(false);
   const [activeList, setActiveList] = useState([]);
   const [pendingList, setPendingList] = useState([]);
@@ -29,10 +29,11 @@ export default function NewSclAdminReq() {
   const [mdataLoading, setMdataLoading] = useState(true);
 
   const [activeTab, setActiveTab] = useState("1");
+  //const handleCancel = () => setpopupvisible(false);
 
   useEffect(() => {
     authenticationservice
-      .getPendingNAciveAccounts(Role.SCHOOLADMIN)
+      .getPendingNAciveAccounts(Role.PRINCIPAl)
       .then((data) => {
         // console.log(data);
         setActiveList(data.active);
@@ -63,7 +64,7 @@ export default function NewSclAdminReq() {
       // change db
       await authenticationservice.setAccountStatus("ACTIVE", modalData.id);
       setpopupvisible(false);
-      message.success("School Admin accepted successfully");
+      message.success("Teacher accepted successfully");
 
       // update ui
       const activedstu = pendingList.find(
@@ -82,14 +83,8 @@ export default function NewSclAdminReq() {
     try {
       await authenticationservice.setAccountStatus("REVOKED", modalData.id);
       setpopupvisible(false);
-      message.success("School Admin rejected successfully");
+      message.success("Teacher rejected successfully");
 
-      // update ui
-
-      //   const activedstu = pendingList.find(
-      //     (student) => student.id === modalData.id
-      //   );
-      //   setActiveList([...activeList], { ...activedstu, status: "ACTIVE" });
       setPendingList(
         pendingList.filter((student) => student.id !== modalData.id)
       );
@@ -103,13 +98,13 @@ export default function NewSclAdminReq() {
 
   return (
     <ContentLayout
-      title="School Admin Requests"
-      paths={["SchoolAdmin", "SchoolAdmin Requests"]}
+      title="Princpal Managment"
+      paths={["SystemAdmin", "Princpal Managment"]}
     >
       <Modal
         visible={popupvisible}
         onCancel={() => setpopupvisible(false)}
-        title="School Admin Details"
+        title="Principal Details"
         footer={
           activeTab === "1"
             ? [
@@ -128,29 +123,40 @@ export default function NewSclAdminReq() {
                   Revoke Account
                 </Button>,
                 <Button type="primary" onClick={() => setpopupvisible(false)}>
-                  OK
+                  Close Modal
                 </Button>,
               ]
         }
       >
         {!mdataLoading ? (
-          <Descriptions layout="vertical" title="User Info">
-            <Descriptions.Item label="Name">
-              {modalData.username}
-            </Descriptions.Item>
-            <Descriptions.Item label="Telephone">
-              {modalData.phone}
-            </Descriptions.Item>
-            <Descriptions.Item label="Email">
-              n{modalData.email}
-            </Descriptions.Item>
-            <Descriptions.Item label="Gender">
-              {modalData.gender}
-            </Descriptions.Item>
-            <Descriptions.Item label="Address">
-              {modalData.adr}
-            </Descriptions.Item>
-          </Descriptions>
+          <>
+            <Descriptions layout="vertical" title="Principal Info">
+              <Descriptions.Item label="Name">
+                {modalData.username}
+              </Descriptions.Item>
+              <Descriptions.Item label="Telephone">
+                {modalData.phone}
+              </Descriptions.Item>
+              <Descriptions.Item label="Email">
+                {modalData.email}
+              </Descriptions.Item>
+              <Descriptions.Item label="Gender">
+                {modalData.gender}
+              </Descriptions.Item>
+              <Descriptions.Item label="Address">
+                {modalData.adr}
+              </Descriptions.Item>
+            </Descriptions>
+
+            <Descriptions layout="vertical" title="School Info">
+              <Descriptions.Item label="Name">
+                {modalData.school.name}
+              </Descriptions.Item>
+              <Descriptions.Item label="Address">
+                {modalData.school.address}
+              </Descriptions.Item>
+            </Descriptions>
+          </>
         ) : (
           <Spin />
         )}
@@ -161,12 +167,13 @@ export default function NewSclAdminReq() {
           minHeight: 280,
         }}
       >
+        {/* <Row gutter={16}> */}
         <Tabs
           type="card"
           defaultActiveKey="1"
           onChange={(key) => setActiveTab(key)}
         >
-          <TabPane tab="New SchoolAdmin accounts" key="1">
+          <TabPane tab="New Principal accounts" key="1">
             <Card title="Pending Requests" className="teacherclscard">
               <List
                 itemLayout="horizontal"
@@ -187,15 +194,16 @@ export default function NewSclAdminReq() {
                       title={item.username}
                       description={item.email}
                     />
+                    <div>{item.school.name}</div>
                   </List.Item>
                 )}
               />
             </Card>
           </TabPane>
 
-          <TabPane tab="Approved SchoolAdmins" key="2">
+          <TabPane tab="Approved Principals" key="2">
             {/* <Col xs={24} xl={24}> */}
-            <Card title="Teacher List" className="teacherclscard">
+            <Card title="Principal List" className="teacherclscard">
               <List
                 itemLayout="horizontal"
                 dataSource={activeList}
@@ -215,7 +223,7 @@ export default function NewSclAdminReq() {
                       title={item.username}
                       description={item.email}
                     />
-                    <div>{item.status}</div>
+                    <div>{item.school.name}</div>
                   </List.Item>
                 )}
               />

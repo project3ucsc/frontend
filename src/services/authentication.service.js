@@ -76,6 +76,17 @@ async function getUserDetail(userid) {
     throw new Error(err.response.data.message);
   }
 }
+async function getPrincipalDetail(userid) {
+  try {
+    const res = await axios.get(
+      `${apiurl}/user/principal/${userid}`,
+      authHeader()
+    );
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+}
 
 function logout() {
   localStorage.removeItem("user");
@@ -90,6 +101,7 @@ const authenticationservice = {
   getPendingNAciveAccounts,
   setAccountStatus,
   getUserDetail,
+  getPrincipalDetail,
   currentuser: currentUserSubject.asObservable(),
   get currentUserValue() {
     return currentUserSubject.value;

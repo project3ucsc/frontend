@@ -9,7 +9,7 @@ export default function PrincipalRouter() {
     <>
       <Switch>
         <Route exact path="/dashboard" component={Dashboard} />
-        <Route exact path="/scladminrequests" component={NewSclAdminReq} />
+        <Route exact path="/SclAdminManagement" component={NewSclAdminReq} />
 
         <Route component={NotFound404} />
       </Switch>
