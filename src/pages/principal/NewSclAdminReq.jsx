@@ -20,7 +20,7 @@ import authenticationservice from "services/authentication.service";
 const { TabPane } = Tabs;
 const { Content } = Layout;
 
-export default function NewTeacherReq() {
+export default function NewSclAdminReq() {
   const [popupvisible, setpopupvisible] = useState(false);
   const [activeList, setActiveList] = useState([]);
   const [pendingList, setPendingList] = useState([]);
@@ -29,11 +29,10 @@ export default function NewTeacherReq() {
   const [mdataLoading, setMdataLoading] = useState(true);
 
   const [activeTab, setActiveTab] = useState("1");
-  //const handleCancel = () => setpopupvisible(false);
 
   useEffect(() => {
     authenticationservice
-      .getPendingNAciveAccounts(Role.TEACHER)
+      .getPendingNAciveAccounts(Role.SCHOOLADMIN)
       .then((data) => {
         // console.log(data);
         setActiveList(data.active);
@@ -64,7 +63,7 @@ export default function NewTeacherReq() {
       // change db
       await authenticationservice.setAccountStatus("ACTIVE", modalData.id);
       setpopupvisible(false);
-      message.success("Teacher accepted successfully");
+      message.success("School Admin accepted successfully");
 
       // update ui
       const activedstu = pendingList.find(
@@ -83,7 +82,7 @@ export default function NewTeacherReq() {
     try {
       await authenticationservice.setAccountStatus("REVOKED", modalData.id);
       setpopupvisible(false);
-      message.success("Teacher rejected successfully");
+      message.success("School Admin rejected successfully");
 
       // update ui
 
@@ -101,13 +100,13 @@ export default function NewTeacherReq() {
 
   return (
     <ContentLayout
-      title="Teacher Requests"
-      paths={["SchoolAdmin", "Teacher Requests"]}
+      title="School Admin Requests"
+      paths={["SchoolAdmin", "SchoolAdmin Requests"]}
     >
       <Modal
         visible={popupvisible}
         onCancel={() => setpopupvisible(false)}
-        title="Student Details"
+        title="School Admin Details"
         footer={
           activeTab === "1"
             ? [
@@ -156,13 +155,12 @@ export default function NewTeacherReq() {
           minHeight: 280,
         }}
       >
-        {/* <Row gutter={16}> */}
         <Tabs
           type="card"
           defaultActiveKey="1"
           onChange={(key) => setActiveTab(key)}
         >
-          <TabPane tab="New Teacher accounts" key="1">
+          <TabPane tab="New SchoolAdmin accounts" key="1">
             <Card title="Pending Requests" className="teacherclscard">
               <List
                 itemLayout="horizontal"
@@ -189,7 +187,7 @@ export default function NewTeacherReq() {
             </Card>
           </TabPane>
 
-          <TabPane tab="Approved Teachers" key="2">
+          <TabPane tab="Approved SchoolAdmins" key="2">
             {/* <Col xs={24} xl={24}> */}
             <Card title="Teacher List" className="teacherclscard">
               <List
