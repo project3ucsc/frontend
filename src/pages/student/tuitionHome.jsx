@@ -11,6 +11,7 @@ import {
   Divider,
   Button,
 } from "antd";
+import { Link } from "react-router-dom";
 import { Drawer, List} from 'antd';
 import ContentLayout from "components/ContentLayout";
 import { AudioOutlined } from "@ant-design/icons";
@@ -78,9 +79,7 @@ const onSearch = (value) => console.log(value);
 
 
 export default function tuitionHome() {
-
-    
-    
+  
   return (
     <ContentLayout
       title="Tuition Class Managment"
@@ -144,7 +143,7 @@ export default function tuitionHome() {
       <List.Item>
         <List.Item.Meta
           avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-          title={<a href="https://ant.design">{item.title}</a>}
+          title={<Link to="../tutor/subjectPage">{item.title}</Link>}
           description="Ant Design, a design language for background applications, is refined by Ant UED Team"
         />
       </List.Item>

@@ -32,6 +32,9 @@ export default function TutorSideBar() {
                 <Menu.Item key="7" icon={<DollarOutlined />}>
                     <Link to="/paymentslipcheck">Payments</Link>
                 </Menu.Item>
+                <Menu.Item key="8" icon={<DollarOutlined />}>
+                    <Link to="/subjectPage">Lesson</Link>
+                </Menu.Item>
                 {/* <SubMenu></SubMenu> */}
             </Menu>
         </Layout.Sider>
