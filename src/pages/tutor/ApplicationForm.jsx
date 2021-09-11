@@ -145,6 +145,18 @@ export default function ApplicationForm() {
                 <TextArea rows={4} placeholder="Enter any additional details that you want to add .." />
               </Form.Item>
 
+              <Form.Item
+                    name="select-multiple"
+                    label="Schools to apply"
+                    rules={[{ required: true, message: 'Please select schools!', type: 'array' }]}
+                >
+                    <Select mode="multiple" placeholder="Click here and select all the schools that you are going to apply..">
+                        <Option value="school1">School 1</Option>
+                        <Option value="school2">School 2</Option>
+                        <Option value="school3">School 3</Option>
+                    </Select>
+                </Form.Item>
+
             <Form.Item name="classdetails" label="Class Details">
               <Form.List name="tutorclasses">
                 {(fields, { add, remove }) => (
