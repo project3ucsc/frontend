@@ -55,6 +55,12 @@ export const enum_BtnState = {
   err: "e",
 };
 
+export const enum_submissionStatus = {
+  noattempt: "na",
+  submitearly: "se",
+  submitlate: "ls",
+};
+
 var datemap = new Map();
 datemap.set(1, "Monday");
 datemap.set(2, "Tuesday");
@@ -112,4 +118,36 @@ export function getClassName() {
   let name = localStorage.getItem("clsname");
   if (name) return name;
   else return "";
+}
+
+export function getTimeAgo(subdate, now, prefix) {
+  var dYrs = now.getFullYear() - subdate.getFullYear();
+  var dMonths = now.getMonth() - subdate.getMonth();
+  var dDays = now.getDate() - subdate.getDate();
+  var dHours = now.getHours() - subdate.getHours();
+  var dMins = now.getMinutes() - subdate.getMinutes();
+
+  let txt = "";
+
+  if (dYrs === 0)
+    if (dMonths === 0)
+      if (dDays === 0)
+        if (dHours === 0) txt = `${dMins} minutes`;
+        else txt = `${dHours} hours`;
+      else txt = `${dDays} days`;
+    else txt = `${dMonths} months`;
+  else txt = `${dYrs} hours`;
+  if (prefix) {
+    if (txt.charAt(0) === "-") txt = "after " + txt.substring(1);
+    else txt = "before " + txt;
+  }
+  // console.log(txt);
+
+  return txt;
+
+  // console.log("yr " + dYrs);
+  // console.log("mon " + dMonths);
+  // console.log("day " + dDays);
+  // console.log("h " + dHours);
+  // console.log("m " + dMins);
 }

@@ -40,4 +40,5 @@ export default function TutorSideBar() {
             </Menu>
         </Layout.Sider>
     );
+
 }

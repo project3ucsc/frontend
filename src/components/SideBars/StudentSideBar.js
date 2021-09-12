@@ -46,7 +46,7 @@ export default function StudentSideBar() {
       className="site-layout-background"
       breakpoint={"md"}
       // trigger={null}
-      collapsedWidth={65}
+      collapsedWidth={50}
       collapsible
 
       // collapsed={collapsed}

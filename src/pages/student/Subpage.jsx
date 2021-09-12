@@ -19,6 +19,7 @@ import subjectdetailservice from "services/subjectdetail.service";
 import { getLearnMatUrl } from "services/azureblob.service";
 import { getResourceIcon } from "components/Resources";
 import { getDateTxt, getDaybyNumber } from "utils/common";
+import AssesmentListStu from "components/AssesmentListStu";
 
 const cstyle = {
   marginBottom: 0,
@@ -113,11 +114,9 @@ export default function Subpage() {
               </Card>
             </TabPane>
             <TabPane tab="Assesments" key="2">
-              <Card
-                title="Assesments"
-                className="lessoncard"
-                style={cstyle}
-              ></Card>
+              <Card title="Assesments" className="lessoncard" style={cstyle}>
+                <AssesmentListStu sdid={sdid} />
+              </Card>
             </TabPane>
           </Tabs>
         </Col>

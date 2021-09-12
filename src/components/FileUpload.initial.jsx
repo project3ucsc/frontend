@@ -4,6 +4,7 @@ import { UploadOutlined } from "@ant-design/icons";
 
 import Path from "path";
 import uploadFileToBlob, {
+  containers,
   isStorageConfigured,
 } from "services/azureblob.service";
 
@@ -23,7 +24,10 @@ const FileUpload = () => {
     console.log(fileList);
 
     // *** UPLOAD TO AZURE STORAGE ***
-    const blobsInContainer = await uploadFileToBlob(fileList[0]);
+    const blobsInContainer = await uploadFileToBlob(
+      fileList[0],
+      containers.learnmats
+    );
 
     // prepare UI for results
     setBlobList(blobsInContainer);
