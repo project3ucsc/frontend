@@ -238,9 +238,9 @@ const Register = ({ history }) => {
               </Form.Item>
               <Form.Item name="gender" label="Gender">
                 <Select placeholder="select your gender">
-                  <Option value="male">Male</Option>
-                  <Option value="female">Female</Option>
-                  <Option value="other">Other</Option>
+                  <Option value="M">Male</Option>
+                  <Option value="F">Female</Option>
+                  <Option value="O">Other</Option>
                 </Select>
               </Form.Item>
               {userRole === Role.PRINCIPAl ? (
