@@ -8,7 +8,11 @@ import tvprogramme from "pages/student/tvprogramme";
 import NotFound404 from "pages/NotFound404";
 import EnrollPage from "pages/student/EnrollPage";
 import VideoPage from "pages/VideoPage";
+
+import tuitionHome from "pages/student/tuitionHome";
+
 import AssessmentStuPage from "pages/student/AssessmentStuPage";
+
 
 
 // import { Role } from "utils/common";
@@ -29,7 +33,9 @@ export default function StudentRouter() {
         />
         <Route exact path="/timetable" component={StudentTimeTable} />
         <Route exact path="/tvprogramme" component={tvprogramme} />
-        
+
+        <Route exact path="/tuitionHome" component={tuitionHome} />
+
         <Route component={NotFound404} />
       </Switch>
     </>
