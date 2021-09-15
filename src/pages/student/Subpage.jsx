@@ -20,6 +20,7 @@ import { getLearnMatUrl } from "services/azureblob.service";
 import { getResourceIcon } from "components/Resources";
 import { getDateTxt, getDaybyNumber } from "utils/common";
 import AssesmentListStu from "components/AssesmentListStu";
+import reliefservice from "services/relief.service";
 
 const cstyle = {
   marginBottom: 0,
@@ -29,7 +30,7 @@ const cstyle = {
 const meetingcardstyle = {
   marginBottom: 10,
   marginRight: 10,
-  height: 194,
+  // height: 194,
   minHeight: 100,
 };
 const { TabPane } = Tabs;
@@ -76,11 +77,7 @@ export default function Subpage() {
             className="lesson-card"
             style={meetingcardstyle}
           >
-            <ul class="ant-list-items">
-              <li class="ant-list-item" style={{ padding: 0 }}>
-                {!loading && <MeetingUrl sdid={sdid} />}
-              </li>
-            </ul>
+            {!loading && <MeetingUrl sdid={sdid} />}
           </Card>
 
           <Tabs type="card">
@@ -154,15 +151,25 @@ export function MeetingUrl({ sdid }) {
 
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const [relifTxt, setRelifTxt] = useState("");
   useEffect(() => {
     setLoading(true);
     subjectdetailservice
-      .getMeetingDetailsforStudent(sdid, today.getDay())
+      .getMeetingDetailsforStudent(sdid, 1)
       .then((data) => {
         console.log(data);
         setData(data);
         setLoading(false);
+
+        reliefservice
+          .checkRelifinStudent(data.id, sdid)
+          .then((txt) => {
+            setRelifTxt(txt);
+            console.log(txt);
+          })
+          .catch((e) => {
+            console.log(e.message);
+          });
       })
       .catch((e) => {
         message.error(e.message);
@@ -171,30 +178,38 @@ export function MeetingUrl({ sdid }) {
 
   // const lastupdated = new Date(data.lastupdated);
   return !loading ? (
-    <Badge.Ribbon
-      text={`${getDaybyNumber(data.weekday)} ${getDateTxt(
-        data.period_time.starttime,
-        data.period_time.endtime,
-        "h12"
-      )}`}
-      placement="start"
-    >
-      <Col xs={24} className="meetingUrlcol">
-        <Row style={{ marginBottom: 30 }}></Row>
-        <Row>
-          <Col sm={12}>
-            <a href={data.meetingurl} class="linkspan">
-              Go to Link
-            </a>
-          </Col>
-          <Col sm={12}>
-            <p style={{ float: "right" }}>
-              Last updated : {new Date(data.lastupdated).toLocaleDateString()}
-            </p>
-          </Col>
-        </Row>
-      </Col>
-    </Badge.Ribbon>
+    <>
+      <p>{relifTxt}</p>
+      <ul class="ant-list-items">
+        <li class="ant-list-item" style={{ padding: 0 }}>
+          <Badge.Ribbon
+            text={`${getDaybyNumber(data.weekday)} ${getDateTxt(
+              data.period_time.starttime,
+              data.period_time.endtime,
+              "h12"
+            )}`}
+            placement="start"
+          >
+            <Col xs={24} className="meetingUrlcol">
+              <Row style={{ marginBottom: 30 }}></Row>
+              <Row>
+                <Col sm={12}>
+                  <a href={data.meetingurl} class="linkspan">
+                    Go to Link
+                  </a>
+                </Col>
+                <Col sm={12}>
+                  <p style={{ float: "right" }}>
+                    Last updated :{" "}
+                    {new Date(data.lastupdated).toLocaleDateString()}
+                  </p>
+                </Col>
+              </Row>
+            </Col>
+          </Badge.Ribbon>
+        </li>
+      </ul>
+    </>
   ) : (
     <Spin />
   );
