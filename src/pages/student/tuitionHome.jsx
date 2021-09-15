@@ -10,22 +10,17 @@ import {
   Avatar,
   Divider,
   Button,
-
 } from "antd";
 import { Link } from "react-router-dom";
 import { Drawer, List } from "antd";
 import ContentLayout from "components/ContentLayout";
 import { AudioOutlined } from "@ant-design/icons";
 import { useParams } from "react-router-dom";
-import "./tuitionhome.scss"
+import "./tuitionhome.scss";
 
-import { useState } from 'react';
-import { Modal} from 'antd';
+import { useState } from "react";
+import { Modal } from "antd";
 
-
-  
-
-  
 const { TabPane } = Tabs;
 const { Content } = Layout;
 const { Meta } = Card;
@@ -119,72 +114,89 @@ export default function TuitionHome() {
                 <div className="site-card-wrapper">
                   <Row gutter={16}>
                     <Col span={8}>
-                     < div className="card-body1"bordered={true}>
-                      <Card title="Science"  >
-                        <ul>
-                        <li>Grade : </li>
-                          <li>Subject : </li>
-                          <li>Date and Time : </li>
-                          <li>Fees : </li>
-                          <li>Description : </li>
-                        </ul>
-                        <Button type="primary" colour={"black"}>Enroll</Button>
-                        <space size={[8,20]}></space>
-                        <Button type="primary" >View More</Button>
-                        <Modal title="Basic Modal" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-        <p>Some contents...</p>
-        </Modal>
-
-
-                      </Card>
+                      <div className="card-body1" bordered={true}>
+                        <Card title="Science">
+                          <ul>
+                            <li>Grade : </li>
+                            <li>Subject : </li>
+                            <li>Date and Time : </li>
+                            <li>Fees : </li>
+                            <li>Contact : </li>
+                          </ul>
+                          <Button type="primary" colour={"black"}>
+                            Enroll
+                          </Button>
+                          <Button type="primary" onClick={showModal}>
+                            View More
+                          </Button>
+                          <Modal
+                           title="Important Details"
+                            visible={isModalVisible}
+                            onOk={handleOk}
+                            onCancel={handleCancel}
+                          >
+                            <p>Description...</p>
+                          </Modal>
+                        </Card>
                       </div>
                     </Col>
                     <Col span={8}>
                       <div className="card-body2" bordered={true}>
-                      <Card title="Maths"  >
-                      <ul>
-                        <li>Grade : </li>
-                          <li>Subject : </li>
-                          <li>Date and Time : </li>
-                          <li>Fees : </li>
-                          <li>Description : </li>
-                        </ul>
-                        <Button type="primary" colour={"black"}>Enroll</Button>
-                        <space size={[8,20]}></space>
-                        <Button type="primary" >View More</Button>
-                        <Modal title="Basic Modal" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-        <p>Some contents...</p>
-        </Modal>
-                       
-                      </Card>
-                     </div>
+                        <Card title="Maths">
+                          <ul>
+                            <li>Grade : </li>
+                            <li>Subject : </li>
+                            <li>Date and Time : </li>
+                            <li>Fees : </li>
+                            <li>Contact : </li>
+                          </ul>
+                          <Button type="primary" colour={"black"}>
+                            Enroll
+                          </Button>
+                          <Button type="primary" onClick={showModal}>
+                            View More
+                          </Button>
+                          <Modal
+                            title="Important Details"
+                            visible={isModalVisible}
+                            onOk={handleOk}
+                            onCancel={handleCancel}
+                          >
+                            <p>Description...</p>
+                          </Modal>
+                        </Card>
+                      </div>
                     </Col>
-                    
+
                     <Col span={8}>
-                    <div className="card-body3" bordered={true}>
-                      <Card title="English" bordered={true}>
-                      <ul>
-                        <li>Grade : </li>
-                          <li>Subject : </li>
-                          <li>Date and Time : </li>
-                          <li>Fees : </li>
-                          <li>Contact : </li>
-                        </ul>
-                        <Button class="btn" type="primary" colour={"black"}>Enroll </Button>
-                        <space size={[8,20]}></space>
-                        <Button type="primary" >View More</Button>
-                        <Button type="primary" View More onClick={showModal} ></Button>
-                        <Modal title="Basic Modal" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-                        <Button type="primary" >View More</Button>
-        <p>Some contents...</p>
-        </Modal>
-                        
-                      </Card>
+                      <div className="card-body3" bordered={true}>
+                        <Card title="English" bordered={true}>
+                          <ul>
+                            <li>Grade : </li>
+                            <li>Subject : </li>
+                            <li>Date and Time : </li>
+                            <li>Fees : </li>
+                            <li>Contact : </li>
+                          </ul>
+                          <Button type="primary" colour={"black"}>
+                            Enroll
+                          </Button>
+                          <Button type="primary" onClick={showModal}>
+                            View More
+                          </Button>
+                          <Modal
+                            title="Important Details"
+                            visible={isModalVisible}
+                            onOk={handleOk}
+                            onCancel={handleCancel}
+                          >
+                            <p>Description...</p>
+                          </Modal>
+                        </Card>
                       </div>
                     </Col>
                   </Row>
                 </div>
-                
               </TabPane>
               <TabPane tab="Enrolled Classes" key="2">
                 <List
