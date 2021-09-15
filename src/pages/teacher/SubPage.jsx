@@ -26,7 +26,7 @@ export default function SubPage() {
   useEffect(() => {
     setLoading(true);
     subjectdetailservice
-      .getSubDetailAllDataforTeacher(sdid)
+      .getSubDetailAllDataforTeacher(sdid, "0")
       .then((data) => {
         setTitle(
           `${data.classroom.grade}-${data.classroom.name} ${data.subject.name}`

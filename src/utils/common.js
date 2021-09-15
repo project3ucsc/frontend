@@ -61,6 +61,13 @@ export const enum_submissionStatus = {
   submitlate: "ls",
 };
 
+export const enum_releifStatus = {
+  pending: "a",
+  active: "b",
+  rejected: "c",
+  expried: "d",
+};
+
 var datemap = new Map();
 datemap.set(1, "Monday");
 datemap.set(2, "Tuesday");
