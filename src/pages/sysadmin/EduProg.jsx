@@ -220,12 +220,12 @@ export default function EduProg() {
                     <Input placeholder="Please input your name" />
                   </Form.Item>
 
-                  <form.Item name="subject" label="subject" rules={[{
+                  <Form.Item name="subject" label="subject" rules={[{
                     required: true,
                     message:"Please inout subject name",
                   },]}>
                     <Input placeholder="Please input subject name"/>
-                  </form.Item>
+                  </Form.Item>
  
                   <Form.Item
                     name="discription"

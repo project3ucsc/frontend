@@ -45,6 +45,7 @@ export default function SubjectPage() {
     setLoading(true);
     subjectdetailservice
       .getSubDetailAllDataforTeacher(sdid)
+      
       .then((data) => {
         setTitle(
           `${data.classroom.grade}-${data.classroom.name} ${data.subject.name}`
