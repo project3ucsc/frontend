@@ -8,7 +8,7 @@ import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/ico
 
 
 export default function Dashboard() {
-  const classes = ["Maths", "Chemistry", "Physics"];
+  const classes = ["Maths", "Chemistry", "Physics", "English", "IT"];
   const { Content } = Layout;
 
   const { Meta } = Card;
@@ -24,11 +24,11 @@ export default function Dashboard() {
         }}
       >
         <Row>
-          <Col xs={24} xl={18}>
+          
             <div className="card-wrapper">
               {classes.map((classt, index) => {
                 return (
-
+                    
                   <Link to="/classdetails">
                     <Card
                       style={{ width: 300 }}
@@ -57,10 +57,8 @@ export default function Dashboard() {
                 );
               })}
             </div>
-          </Col>
-          {/*<Col xs={24} xl={6}>
-            sdgsdg
-            </Col>*/}
+          
+          
         </Row>
       </Content>
     </ContentLayout>
