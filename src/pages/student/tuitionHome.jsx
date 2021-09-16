@@ -10,6 +10,7 @@ import {
   Avatar,
   Divider,
   Button,
+  Tag,
 } from "antd";
 import { Link } from "react-router-dom";
 import { Drawer, List } from "antd";
@@ -112,88 +113,95 @@ export default function TuitionHome() {
                 </Space>
                 <Divider />
                 <div className="site-card-wrapper">
-                  <Row gutter={16}>
+                  <Row gutter={24}>
                     <Col span={8}>
                       <div className="card-body1" bordered={true}>
-                        <Card title="Science">
-                          <ul>
-                            <li>Grade : </li>
-                            <li>Subject : </li>
-                            <li>Date and Time : </li>
-                            <li>Fees : </li>
-                            <li>Contact : </li>
-                          </ul>
-                          <Button type="primary" colour={"black"}>
+                      <Tag className="title" color="magenta"> Science | Grade 10
+                       <div className="details">
+                       <p> Ms. Kumuduni Fernando </p>
+                          <p> Fryday at 4PM- 6PM </p>
+                          <p> Monthly Fee 2500 LKR </p>
+                          </div>
+                          <Button className="enroll1" type="primary" colour={"black"}>
                             Enroll
                           </Button>
-                          <Button type="primary" onClick={showModal}>
+                          <Button className="view1" type="primary" onClick={showModal}>
                             View More
                           </Button>
+                          </Tag>
+                      </div>
                           <Modal
                            title="Important Details"
                             visible={isModalVisible}
                             onOk={handleOk}
                             onCancel={handleCancel}
                           >
-                            <p>Description...</p>
+                            <p>About Teacher :</p>
+                            <p>Contact :</p>
+                            <p>Description :</p>
                           </Modal>
-                        </Card>
-                      </div>
+                        
+                        
                     </Col>
                     <Col span={8}>
                       <div className="card-body2" bordered={true}>
-                        <Card title="Maths">
-                          <ul>
-                            <li>Grade : </li>
-                            <li>Subject : </li>
-                            <li>Date and Time : </li>
-                            <li>Fees : </li>
-                            <li>Contact : </li>
-                          </ul>
-                          <Button type="primary" colour={"black"}>
+                      <Tag className="title" color="orange"> History | Grade 10
+                       <div className="details">
+                       <p> Mr. Prasanna Perera </p>
+                          <p> Fryday at 4PM- 6PM </p>
+                          <p> Monthly Fee 2500 LKR </p>
+                          </div>
+                          <Button className="enroll2" type="primary" colour={"black"}>
                             Enroll
                           </Button>
-                          <Button type="primary" onClick={showModal}>
+                          <Button className="view2" type="primary" onClick={showModal}>
                             View More
                           </Button>
+                          </Tag>
+                      </div>
                           <Modal
-                            title="Important Details"
+                           title="Important Details"
                             visible={isModalVisible}
                             onOk={handleOk}
                             onCancel={handleCancel}
                           >
+                            <p>About Teacher :</p>
+                            <p>Contact :</p>
                             <p>Description...</p>
                           </Modal>
-                        </Card>
-                      </div>
+                        
+                        
                     </Col>
 
                     <Col span={8}>
                       <div className="card-body3" bordered={true}>
-                        <Card title="English" bordered={true}>
-                          <ul>
-                            <li>Grade : </li>
-                            <li>Subject : </li>
-                            <li>Date and Time : </li>
-                            <li>Fees : </li>
-                            <li>Contact : </li>
-                          </ul>
-                          <Button type="primary" colour={"black"}>
+                      <Tag className="title" color="purple"> Maths | Grade 10
+                       <div className="details">
+                       <p> Mr. Aruna Prasad </p>
+                       
+                          <p> Fryday at 4PM- 6PM </p>
+                          <p> Monthly Fee 2500 LKR </p>
+                          </div>
+                          <Button className="enroll3" type="primary" colour={"black"}>
                             Enroll
                           </Button>
-                          <Button type="primary" onClick={showModal}>
+                          <Button className="view3" type="primary" onClick={showModal}>
                             View More
                           </Button>
+                          </Tag>
+                      </div>
                           <Modal
-                            title="Important Details"
+                           title="Important Details"
                             visible={isModalVisible}
                             onOk={handleOk}
                             onCancel={handleCancel}
                           >
+                            <p>About Teacher :</p>
+                            <p>Contact :</p>
                             <p>Description...</p>
                           </Modal>
-                        </Card>
-                      </div>
+                        
+                        
                     </Col>
                   </Row>
                 </div>
