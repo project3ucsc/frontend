@@ -218,7 +218,7 @@ export default function TuitionHome() {
                         }
                         title={<Link to="subjectPage">{item.title}</Link>}
                         id={id}
-                        description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                        description="<Tutor name  |  Date  |  Time >"
                       />
                     </List.Item>
                   )}
