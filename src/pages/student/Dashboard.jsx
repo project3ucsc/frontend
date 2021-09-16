@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row, Col, Card, Calendar, PageHeader, List } from "antd";
 import ContentLayout from "components/ContentLayout";
 //import { PlusOutlined } from "@ant-design/icons";
 import "./dashboard.scss";
+import img1 from "../../img/student_cover1.jpg";
 
 const cstyle = {
   padding: 24,
@@ -53,6 +54,7 @@ export default function Dashboard() {
 
   //const { Content } = Layout;
   const { Meta } = Card;
+  const [currentUser, setCurrentUser] = useState();
 
   const subjects = [
     { _id: "1", name: "Com. Maths", teacher: "Mr. M.T. Premarathna", rate: 3 },
@@ -78,23 +80,16 @@ export default function Dashboard() {
           backgroundColor:"#ffffff",
         }}
       > */}
-      <div className="site-page-header-ghost-wrapper">
-        <PageHeader
-          className="page-header-1"
-          style={{ height: 70 }}
-          //ghost={false}
 
-          title="Good Afternoon Lakshan! Today will be a busy day for you..."
-        >
-          <br />
-        </PageHeader>
-      </div>
+      <img className="cover" src={img1} alt="img1" />
+      <p className="msg">Welcome !!</p>
+      <p className="msg2"> Have a Nice Day</p>
 
       <Row>
         <Col xs={24} xl={18}>
           <div className="card-wrapper-student-dash">
             {subjects.map((item, i) => (
-              <Card key={i} hoverable style={{ width: 300 }}>
+              <Card className="card" bordered={true} key={i} hoverable style={{ width: 300 }}>
                 <Meta title={item.name} description={item.teacher} />
               </Card>
             ))}
