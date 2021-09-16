@@ -67,6 +67,12 @@ export const enum_releifStatus = {
   rejected: "c",
   expried: "d",
 };
+export const enum_tutorschool_req = {
+  pending: "a",
+  active: "b",
+  rejected: "c",
+};
+
 
 var datemap = new Map();
 datemap.set(1, "Monday");

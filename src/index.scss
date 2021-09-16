@@ -120,3 +120,9 @@ body::-webkit-scrollbar-track {
 body::-webkit-scrollbar-thumb {
   background: #1990fc;
 }
+
+.leftform {
+  label {
+    float: left;
+  }
+}
