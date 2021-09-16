@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Layout, Row, Col, InputNumber } from "antd";
-import { Form, Input, Button, Select, DatePicker,Modal, List, Avatar,Descriptions,Card, } from "antd";
+import { Form, Input, Button, Select, DatePicker,Modal, List, Avatar,Descriptions,Card,Space, } from "antd";
 import ContentLayout from "components/ContentLayout";
 import { Tabs } from 'antd';
 import { Link } from "react-router-dom"; 
@@ -14,8 +14,12 @@ import "./ViewStudentRequest.scss";
 
 
 export default function ClassDetails() {
+  const [isDisable, setIsDisable] = useState(true);
+  const [loading, setLoading] = useState(false);
+
   const { Content } = Layout;
   const onFinish = (values) => {
+    setIsDisable(true);
     console.log("Success:", values);
   };
   const onFinishFailed = (errorInfo) => {
@@ -130,6 +134,7 @@ export default function ClassDetails() {
 
 
           <Tabs defaultActiveKey="1" onChange={callback}>
+{/*----------------------------------------------------------------------------------------------------- */}
             <TabPane tab="Class Information" key="1">
 
                 <Form
@@ -157,7 +162,7 @@ export default function ClassDetails() {
                       },
                     ]}
                   >
-                    <Select placeholder="Select the subject..">
+                    <Select disabled={isDisable} placeholder="Select the subject..">
                             <Option value="maths">Maths</Option>
                             <Option value="physics">Physics</Option>
                             <Option value="chemistry">Chemistry</Option>
@@ -174,7 +179,7 @@ export default function ClassDetails() {
                       },
                     ]}
                   >
-                    <InputNumber min="1" max="13" placeholder="Input grade here.." />
+                    <InputNumber disabled={isDisable} min="1" max="13" placeholder="Input grade here.." />
                   </Form.Item>
                   
                   <Form.Item
@@ -187,7 +192,7 @@ export default function ClassDetails() {
                       },
                     ]}
                   >
-                    <Select placeholder="Select the medium..">
+                    <Select disabled={isDisable} placeholder="Select the medium..">
                             <Option value="Sinhala">Sinhala</Option>
                             <Option value="English">English</Option>
                             <Option value="Tamil">Tamil</Option>
@@ -205,8 +210,8 @@ export default function ClassDetails() {
                       },
                     ]}
                   >
-                    <Select placeholder="Select the date..">
-                    <Option value="Monday">Monday</Option>
+                    <Select disabled={isDisable} placeholder="Select the date..">
+                        <Option value="Monday">Monday</Option>
                         <Option value="Teusday">Tuesday</Option>
                         <Option value="Wednesday">Wednesday</Option>
                         <Option value="Thursday">Thursday</Option>
@@ -226,7 +231,7 @@ export default function ClassDetails() {
                       },
                     ]}
                   >
-                    <DatePicker.RangePicker />
+                    <DatePicker.RangePicker disabled={isDisable} />
                   </Form.Item>
 
                   <Form.Item
@@ -239,7 +244,7 @@ export default function ClassDetails() {
                             },
                         ]}
                     >
-                        <InputNumber max="1000" placeholder="Input class fee here.." />
+                        <InputNumber disabled={isDisable} max="1000" placeholder="Input class fee here.." />
                     </Form.Item>
 
                   <Form.Item name="description" label="Class Description"
@@ -250,21 +255,45 @@ export default function ClassDetails() {
                       },
                     ]}
                   >
-                    <TextArea rows={4} placeholder="Enter class description here.." />
+                    <TextArea disabled={isDisable} rows={4} placeholder="Enter class description here.." />
                   </Form.Item>
 
-                
+                  <Form.Item style={{ float: "right" }}>
+                    <Space>
+                    {!isDisable && (
+                        <Button
+                        onClick={() => setIsDisable(true)}
+                        htmlType="button"
+                        danger
+                        >
+                        Cancel
+                        </Button>
+                    )}
+                    <Button onClick={() => setIsDisable(false)} htmlType="button">
+                        Edit
+                    </Button>
 
-                  <Form.Item {...tailLayout}>
+                    <Button
+                        loading={loading}
+                        disabled={isDisable}
+                        type="primary"
+                        htmlType="submit"
+                    >
+                        Save
+                    </Button>
+                    </Space>
+                </Form.Item>
+
+                  {/*<Form.Item {...tailLayout}>
                     <Button htmlType="button">Cancel</Button>
 
                     <Button type="primary" htmlType="submit">
                       Submit
                     </Button>
-                  </Form.Item>
+                </Form.Item>*/}
                 </Form>
             </TabPane>
-
+{/*----------------------------------------------------------------------------------------------------- */}
             <TabPane tab="New Student Requests" key="2">
               
                     <Modal
@@ -303,7 +332,8 @@ export default function ClassDetails() {
                         }}
                     >
                         <Row gutter={16}>
-                            <Col xs={24} xl={12}>
+                            {/*<Col xs={24} xl={12}>*/}
+                            <Col xs={32} xl={20}>
                                 <Card 
                                     title="New Student Requests"
                                     className="studentcard"
@@ -323,7 +353,7 @@ export default function ClassDetails() {
                                     />,
                                 </Card>
                             </Col>
-                            <Col xs={24} xl={12}>
+                           {/* <Col xs={24} xl={12}>
                                 <Card 
                                     title="History of Student Requests"
                                     className="studentcard"
@@ -343,15 +373,15 @@ export default function ClassDetails() {
                                         )}
                                     />,
                                 </Card>
-                            </Col>
+                             </Col>*/}
                         </Row>
                 </Content>
 
             </TabPane>
-
+{/*----------------------------------------------------------------------------------------------------- */}
+            
             <TabPane tab="Enrolled Students" key="3">
-              
-                    
+    
                     <Content
                         // className="site-layout-background"
                         style={{
@@ -360,7 +390,7 @@ export default function ClassDetails() {
                         minHeight: 280,
                         }}
                     >
-                        <Row gutter={32}>
+                        <Row gutter={16}>
                             <Col xs={32} xl={20}>
                             <Link to="/studentpaymentdetails">
                                 <Card 
@@ -369,7 +399,7 @@ export default function ClassDetails() {
                                 >
                                     <List
                                         itemLayout = "horizontal"
-                                        dataSource = { listData }
+                                        dataSource = { enrolledData }
                                         renderItem =  { item => (
                                             <List.Item > {/*onClick={() => setpopvisible(true)}>*/}
                                                 <List.Item.Meta
