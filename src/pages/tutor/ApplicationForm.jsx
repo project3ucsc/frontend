@@ -19,7 +19,7 @@ export default function ApplicationForm() {
 
   const { TextArea } = Input;
 
-  const normFile = (e) => {
+  /*const normFile = (e) => {
     console.log('Upload event:', e);
   
     if (Array.isArray(e)) {
@@ -27,7 +27,19 @@ export default function ApplicationForm() {
     }
   
     return e && e.fileList;
-  };
+  };*/
+
+  const prefixSelector = (
+    <Form.Item name="prefix" noStyle>
+      <Select
+        style={{
+          width: 70,
+        }}
+      >
+        <Option value="94">+94</Option>
+      </Select>
+    </Form.Item>
+  );
 
   return (
     <ContentLayout
@@ -72,7 +84,7 @@ export default function ApplicationForm() {
                 <Input placeholder="Input your name here.." />
               </Form.Item>
 
-              <Form.Item
+              {/*<Form.Item
                 label="ID Number"
                 name="id"
                 rules={[
@@ -83,15 +95,19 @@ export default function ApplicationForm() {
                 ]}
               >
                 <Input placeholder="Input your ID number here.." />
-              </Form.Item>
+              </Form.Item>*/}
 
               <Form.Item
                 label="E-mail Address"
                 name="email"
                 rules={[
                   {
+                    type: "email",
+                    message: "The input is not valid E-mail!",
+                  },
+                  {
                     required: true,
-                    message: "Please input e-mail address!",
+                    message: "Please input your E-mail!",
                   },
                 ]}
               >
@@ -108,7 +124,12 @@ export default function ApplicationForm() {
                   },
                 ]}
               >
-                <InputNumber />
+                <Input
+                  addonBefore={prefixSelector}
+                  style={{
+                    width: "100%",
+                  }}
+                />
               </Form.Item>
 
               <Form.Item
@@ -124,7 +145,7 @@ export default function ApplicationForm() {
                 <TextArea rows={4} placeholder="Input your relevant qualification details here.." />
               </Form.Item>
 
-              <Form.Item
+             {/* <Form.Item
                     name="upload"
                     label="Upload"
                     valuePropName="fileList"
@@ -139,7 +160,7 @@ export default function ApplicationForm() {
                     <Upload name="logo" action="/upload.do" listType="picture">
                     <Button icon={<UploadOutlined />}>Click to upload qualification documents</Button>
                     </Upload>
-                </Form.Item>
+                    </Form.Item>*/}
 
               <Form.Item name="description" label="Description">
                 <TextArea rows={4} placeholder="Enter any additional details that you want to add .." />
