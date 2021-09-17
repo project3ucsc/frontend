@@ -33,7 +33,7 @@ export default function ApplicationForm() {
         authHeader()
       );
       message.success("Request sent to the schools successfully");
-      return res.data;
+      // return res.data;
     } catch (err) {
       message.error(err.response.data.message);
     }

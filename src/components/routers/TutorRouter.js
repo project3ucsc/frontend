@@ -7,25 +7,29 @@ import SubjectPage from "pages/tutor/SubjectPage";
 import ApplicationForm from "pages/tutor/ApplicationForm";
 import ClassDetails from "pages/tutor/ClassDetails";
 import StudentPaymentDetails from "pages/tutor/StudentPaymentDetails";
-import AddNewClasses from "pages/tutor/AddNewClasses"
+import AddNewClasses from "pages/tutor/AddNewClasses";
 import NotFound404 from "pages/NotFound404";
 import Profile from "pages/student/Profile";
 
 export default function TutorRouter() {
-    return (
-        <>
-        <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/dashboard" component={Dashboard} />
-            <Route exact path="/subjectPage" component={SubjectPage} />
-            <Route exact path="/paymentslipcheck" component={PaymentSlipCheck} />
-            <Route exact path="/applicationform" component={ApplicationForm} />
-            <Route exact path="/classdetails" component={ClassDetails} />
-            <Route exact path="/studentpaymentdetails" component={StudentPaymentDetails} />
-            <Route exact path="/addnewclasses" component={AddNewClasses} />
-            <Route exact path="/profile" component={Profile} />
-            <Route component={NotFound404} />
-        </Switch>
-        </>
-    );
+  return (
+    <>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/dashboard" component={Dashboard} />
+        <Route exact path="/subjectPage" component={SubjectPage} />
+        <Route exact path="/paymentslipcheck" component={PaymentSlipCheck} />
+        <Route exact path="/applicationform" component={ApplicationForm} />
+        <Route exact path="/classdetails/:classid" component={ClassDetails} />
+        <Route
+          exact
+          path="/studentpaymentdetails"
+          component={StudentPaymentDetails}
+        />
+        <Route exact path="/addnewclasses" component={AddNewClasses} />
+        <Route exact path="/profile" component={Profile} />
+        <Route component={NotFound404} />
+      </Switch>
+    </>
+  );
 }

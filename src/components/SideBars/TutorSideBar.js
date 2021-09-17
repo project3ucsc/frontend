@@ -9,7 +9,8 @@ import {
   DesktopOutlined,
   DollarOutlined,
   FormOutlined,
-  UserOutlined,  PlusCircleOutlined,
+  UserOutlined,
+  PlusCircleOutlined,
 } from "@ant-design/icons";
 
 export default function TutorSideBar() {
@@ -18,7 +19,7 @@ export default function TutorSideBar() {
       width={200}
       className="site-layout-background"
       breakpoint={"md"}
-      collapsedWidth={65}
+      collapsedWidth={50}
       collapsible
     >
       <Menu defaultSelectedKeys={["2"]} mode="inline">
@@ -38,17 +39,15 @@ export default function TutorSideBar() {
         <Menu.Item key="9" icon={<FormOutlined />}>
           <Link to="/applicationform">Application Form</Link>
         </Menu.Item>
-
-        <Menu.Item key="10" icon={<UserOutlined />}>
+        <Menu.Item key="10" icon={<PlusCircleOutlined />}>
+          <Link to="/addnewclasses">Add New Class</Link>
+        </Menu.Item>
+        <Menu.Item key="11" icon={<UserOutlined />}>
           <Link to="/profile">Profile</Link>
         </Menu.Item>
-    <Menu.Item key="9" icon={<PlusCircleOutlined />}>
-                    <Link to="/addnewclasses">Add New Class</Link>
-                </Menu.Item>
+
         {/* <SubMenu></SubMenu> */}
       </Menu>
     </Layout.Sider>
   );
-
 }
-
