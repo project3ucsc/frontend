@@ -74,19 +74,13 @@ export default function TeacherSideBar() {
           ))}
         </SubMenu>
 
-        <Menu.Item key="4" icon={<SolutionOutlined />}>
-          <Link to="/manageclasses">ClassRooms</Link>
-        </Menu.Item>
-        <Menu.Item key="5" icon={<ScheduleOutlined />}>
-          <Link to="/timeslots">TimeSlots</Link>
-        </Menu.Item>
-        <Menu.Item key="6" icon={<TableOutlined />}>
-          <Link to="/timetables">TimeTables</Link>
-        </Menu.Item>
         <Menu.Item key="7" icon={<AuditOutlined />}>
+          <Link to="/ReliefManagement">Relief Classes</Link>
+        </Menu.Item>
+        <Menu.Item key="8" icon={<AuditOutlined />}>
           <Link to="/applyleave">ApplyLeave</Link>
         </Menu.Item>
-        <Menu.Item key="8" icon={<FolderOpenOutlined />}>
+        <Menu.Item key="9" icon={<FolderOpenOutlined />}>
           <Link to="/classincharge">ClassInCharge</Link>
         </Menu.Item>
       </Menu>
