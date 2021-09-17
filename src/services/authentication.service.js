@@ -1,22 +1,12 @@
 // import React from 'react'
 import axios from "axios";
 import { BehaviorSubject } from "rxjs";
+import { authHeader } from "utils/authheader";
 import { apiurl } from "utils/common";
 
 const currentUserSubject = new BehaviorSubject(
   JSON.parse(localStorage.getItem("user"))
 );
-
-const authenticationservice = {
-  login,
-  logout,
-  register,
-  getschools,
-  currentuser: currentUserSubject.asObservable(),
-  get currentUserValue() {
-    return currentUserSubject.value;
-  },
-};
 
 async function login(email, password) {
   try {
@@ -53,9 +43,69 @@ async function getschools() {
   }
 }
 
+async function setAccountStatus(status, userid) {
+  try {
+    const res = await axios.patch(
+      `${apiurl}/login/activate`,
+      { userid, status },
+      authHeader()
+    );
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+}
+async function getPendingNAciveAccounts(role) {
+  try {
+    const schoolid = authenticationservice.currentUserValue.school_id;
+
+    const res = await axios.get(
+      `${apiurl}/login/acc/${role}/${schoolid}`,
+      authHeader()
+    );
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+}
+async function getUserDetail(userid) {
+  try {
+    const res = await axios.get(`${apiurl}/user/${userid}`, authHeader());
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+}
+async function getPrincipalDetail(userid) {
+  try {
+    const res = await axios.get(
+      `${apiurl}/user/principal/${userid}`,
+      authHeader()
+    );
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+}
+
 function logout() {
   localStorage.removeItem("user");
   currentUserSubject.next(null);
 }
+
+const authenticationservice = {
+  login,
+  logout,
+  register,
+  getschools,
+  getPendingNAciveAccounts,
+  setAccountStatus,
+  getUserDetail,
+  getPrincipalDetail,
+  currentuser: currentUserSubject.asObservable(),
+  get currentUserValue() {
+    return currentUserSubject.value;
+  },
+};
 
 export default authenticationservice;
