@@ -4,7 +4,7 @@ import Home from "pages/Home";
 import PaymentSlipCheck from "pages/tutor/PaymentSlipCheck";
 import Dashboard from "pages/tutor/Dashboard";
 
-import SubjectPage from "pages/tutor/subjectPage";
+import SubjectPage from "pages/tutor/SubjectPage";
 
 import ApplicationForm from "pages/tutor/ApplicationForm";
 
