@@ -32,7 +32,7 @@ export default function TutorSideBar() {
                     <Link to="/dashboard">Dashboard</Link>
                 </Menu.Item>
                 <Menu.Item key="7" icon={<DollarOutlined />}>
-                    <Link to="/paymentslipcheck">Payments</Link>
+                    <Link to="/managepayments">Manage Payments</Link>
                 </Menu.Item>
                 <Menu.Item key="8" icon={<FormOutlined />}>
                     <Link to="/applicationform">Application Form</Link>
