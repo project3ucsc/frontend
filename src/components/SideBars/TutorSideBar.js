@@ -9,7 +9,7 @@ import {
   DesktopOutlined,
   DollarOutlined,
   FormOutlined,
-  UserOutlined,
+  UserOutlined,  PlusCircleOutlined,
 } from "@ant-design/icons";
 
 export default function TutorSideBar() {
@@ -42,7 +42,9 @@ export default function TutorSideBar() {
         <Menu.Item key="10" icon={<UserOutlined />}>
           <Link to="/profile">Profile</Link>
         </Menu.Item>
-
+    <Menu.Item key="9" icon={<PlusCircleOutlined />}>
+                    <Link to="/addnewclasses">Add New Class</Link>
+                </Menu.Item>
         {/* <SubMenu></SubMenu> */}
       </Menu>
     </Layout.Sider>
