@@ -8,11 +8,6 @@ import { Link } from "react-router-dom";
 import "./ViewStudentRequest.scss";
 
 
-    
-    
-    
-
-
 export default function ClassDetails() {
   const [isDisable, setIsDisable] = useState(true);
   const [loading, setLoading] = useState(false);
