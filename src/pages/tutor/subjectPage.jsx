@@ -1,14 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Button, Card, Form, Input, message, Tabs } from "antd";
+import {
+  Row,
+  Col,
+  Button,
+  Card,
+  Form,
+  Input,
+  message,
+  Tabs,
+  Upload,
+  Divider,
+  DatePicker,
+  Space,
+} from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 import ContentLayout from "components/ContentLayout";
 
-import "./subpage.scss";
+import "../teacher/subpage.scss";
 import LearnMatSection from "components/teacher/LearnMatSection";
 import { useParams } from "react-router-dom";
 import subjectdetailservice from "services/subjectdetail.service";
 import MeetingUrlEditor from "components/teacher/MeetingUrlEditor";
-import AssesmentListTec from "components/AssesmentListTec";
-import AddAssesmentForm from "components/AddAssesmentForm";
 
 const { TabPane } = Tabs;
 
@@ -17,8 +29,14 @@ const cstyle = {
   marginRight: 10,
   minHeight: 280,
 };
+function onChange(date, dateString) {
+  console.log(date, dateString);
+}
 
-export default function SubPage() {
+export default function SubjectPage() {
+  const onfinish = (val) => {
+    console.log(val);
+  };
   const [sections, setSections] = useState([]);
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
@@ -26,7 +44,8 @@ export default function SubPage() {
   useEffect(() => {
     setLoading(true);
     subjectdetailservice
-      .getSubDetailAllDataforTeacher(sdid, "0")
+      .getSubDetailAllDataforTeacher(sdid)
+      
       .then((data) => {
         setTitle(
           `${data.classroom.grade}-${data.classroom.name} ${data.subject.name}`
@@ -68,11 +87,24 @@ export default function SubPage() {
   };
 
   return (
-    <ContentLayout title={title} paths={["Home", title]}>
+    <ContentLayout
+      title={"Science | Nimal Fernando "}
+      paths={["Home", "Science"]}
+    >
       <Row>
         <Col xs={24}>
-          {!loading && <MeetingUrlEditor sdid={sdid} />}
-
+          <Form
+            name="basic"
+            wrapperCol={{ span: 8 }}
+            initialValues={{ remember: true }}
+            autoComplete="off"
+          >
+            <Form.Item label="Payment Month" name="month">
+              <DatePicker onChange={onChange} picker="month" />
+            </Form.Item>
+            <Button icon={<UploadOutlined />}>Upload</Button>
+          </Form>
+          <Divider />
           <Tabs type="card">
             <TabPane tab="Lessons" key="1">
               <Card title="My Lessons" className="lesson-card" style={cstyle}>
@@ -106,17 +138,45 @@ export default function SubPage() {
             </TabPane>
             <TabPane tab="Assesments" key="2">
               <Card title="Assesments" className="lessoncard" style={cstyle}>
-                <AssesmentListTec sdid={sdid} />
+                <Card title="Add new Assigment">
+                  <Form onFinish={addSection} layout="inline">
+                    <Form.Item name="title" label="Assigment Title">
+                      <Input
+                        style={{ width: "auto" }}
+                        placeholder="Enter title"
+                      />
+                    </Form.Item>
+                    <Form.Item name="link" label="Assigment Link">
+                      <Input
+                        style={{ width: "auto" }}
+                        placeholder="Enter number of the assigment"
+                      />
+                    </Form.Item>
+                    <Form.Item>
+                      <Button type="primary" htmlType="submit">
+                        Add
+                      </Button>
+                    </Form.Item>
+                  </Form>
+                </Card>
               </Card>
             </TabPane>
-
-            <TabPane tab="Add Assesment" key="3">
+            <TabPane tab="Payment History" key="3">
               <Card
-                title="Add New Assesment"
-                className="lessoncard"
+                title="Payment History"
+                className="lesson-card"
                 style={cstyle}
               >
-                <AddAssesmentForm sdid={sdid} />
+                <br />
+                {sections.map((sec, i) => {
+                  return (
+                    <LearnMatSection
+                      key={sec.id}
+                      deleteSection={deleteSection}
+                      section={sec}
+                    />
+                  );
+                })}
               </Card>
             </TabPane>
           </Tabs>

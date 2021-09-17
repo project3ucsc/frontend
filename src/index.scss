@@ -93,7 +93,7 @@ $noto-border-color: #c0c0c0;
     z-index: 5;
   }
   .mainlayout {
-    margin-left: 60px;
+    margin-left: 50px;
   }
 }
 
@@ -119,4 +119,10 @@ body::-webkit-scrollbar-track {
 
 body::-webkit-scrollbar-thumb {
   background: #1990fc;
+}
+
+.leftform {
+  label {
+    float: left;
+  }
 }

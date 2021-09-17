@@ -220,27 +220,13 @@ export default function EduProg() {
                     <Input placeholder="Please input your name" />
                   </Form.Item>
 
-                  <Form.Item name="medium" label="Medium">
-                    <Select
-                      showSearch
-                      placeholder="Select a medium"
-                      optionFilterProp="children"
-                      onChange={onChange}
-                      onFocus={onFocus}
-                      onBlur={onBlur}
-                      onSearch={onSearch}
-                      filterOption={(input, option) =>
-                        option.children
-                          .toLowerCase()
-                          .indexOf(input.toLowerCase()) >= 0
-                      }
-                    >
-                      <option value="Sinhala">Sinhala</option>
-                      <option value="English">English</option>
-                      <option value="Tamil">Tamil</option>
-                    </Select>
+                  <Form.Item name="subject" label="subject" rules={[{
+                    required: true,
+                    message:"Please inout subject name",
+                  },]}>
+                    <Input placeholder="Please input subject name"/>
                   </Form.Item>
-
+ 
                   <Form.Item
                     name="discription"
                     label="Programme discription"

@@ -19,3 +19,32 @@
   border-radius: 5px;
   padding: 2px 10px;
 }
+
+.mobilecard {
+  margin: 0 2px 0 2px;
+  .ant-card-body {
+    height: calc(100vh - 230px);
+    overflow-y: scroll;
+
+    .ant-list-item {
+      background-color: aliceblue;
+      margin-bottom: 5px;
+      padding-right: 10px;
+      // margin: 5px;
+      &:hover {
+        background-color: rgb(211, 234, 255);
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .mobilecard {
+    margin-bottom: 10px;
+    .ant-card-body {
+      height: fit-content;
+
+      // overflow-y: scroll;
+    }
+  }
+}

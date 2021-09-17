@@ -13,35 +13,30 @@ import {
 } from "antd";
 
 import ContentLayout from "components/ContentLayout";
-import "./ClassInCharge.scss";
-import classroomservice from "services/classroom.service";
-import { Enum_std_detail_status, getSubGroupDiscription } from "utils/common";
+// import "./ClassInCharge.scss";
+import { Role } from "utils/common";
+import authenticationservice from "services/authentication.service";
 
 const { TabPane } = Tabs;
 const { Content } = Layout;
 
-export default function ClassInCharge() {
+export default function NewSclAdminReq() {
   const [popupvisible, setpopupvisible] = useState(false);
-  const [studentList, setStudentList] = useState({ aprroved: [], pending: [] });
+  const [activeList, setActiveList] = useState([]);
+  const [pendingList, setPendingList] = useState([]);
+
   const [modalData, setModalData] = useState(null);
   const [mdataLoading, setMdataLoading] = useState(true);
 
   const [activeTab, setActiveTab] = useState("1");
-  //const handleCancel = () => setpopupvisible(false);
 
   useEffect(() => {
-    classroomservice
-      .getEnrolledStudents()
+    authenticationservice
+      .getPendingNAciveAccounts(Role.SCHOOLADMIN)
       .then((data) => {
-        const { classroom, students } = data;
-        console.log(classroom, students);
-        const pending = students.filter(
-          (student) => student.status === Enum_std_detail_status.PENDING
-        );
-        const aprroved = students.filter(
-          (student) => student.status === Enum_std_detail_status.ACTIVE
-        );
-        setStudentList({ aprroved, pending });
+        // console.log(data);
+        setActiveList(data.active);
+        setPendingList(data.pending);
       })
       .catch((e) => {
         message.error(e.message);
@@ -50,10 +45,10 @@ export default function ClassInCharge() {
 
   const onListitemClick = async (e) => {
     try {
-      const stdid = e.currentTarget.id;
+      const userid = e.currentTarget.id;
       setMdataLoading(true);
-      const data = await classroomservice.getStudentDetail(stdid);
-      // console.log(data);
+      const data = await authenticationservice.getUserDetail(userid);
+      console.log(data);
       setModalData(data);
       setMdataLoading(false);
 
@@ -66,49 +61,55 @@ export default function ClassInCharge() {
   const onAccept = async () => {
     try {
       // change db
-      await classroomservice.setStdStatus(
-        modalData.id,
-        Enum_std_detail_status.ACTIVE
-      );
+      await authenticationservice.setAccountStatus("ACTIVE", modalData.id);
       setpopupvisible(false);
-      message.success("Student accepted successfully");
+      message.success("School Admin accepted successfully");
 
       // update ui
-      let { aprroved, pending } = studentList;
-      const activedstu = pending.find((student) => student.id === modalData.id);
-      aprroved.push({ ...activedstu, status: "ACTIVE" });
-      pending = pending.filter((student) => student.id !== modalData.id);
-      setStudentList({ aprroved, pending });
+      const activedstu = pendingList.find(
+        (student) => student.id === modalData.id
+      );
+      setActiveList([...activeList, activedstu]);
+      setPendingList(
+        pendingList.filter((student) => student.id !== modalData.id)
+      );
     } catch (error) {
       message.error(error.message);
     }
   };
+
   const onReject = async () => {
     try {
-      await classroomservice.setStdStatus(
-        modalData.id,
-        Enum_std_detail_status.REJECTED
-      );
+      await authenticationservice.setAccountStatus("REVOKED", modalData.id);
       setpopupvisible(false);
-      message.success("Student rejected successfully");
+      message.success("School Admin rejected successfully");
 
       // update ui
-      let { aprroved, pending } = studentList;
-      const activedstu = pending.find((student) => student.id === modalData.id);
-      aprroved.push({ ...activedstu, status: "REJECTED" });
-      pending = pending.filter((student) => student.id !== modalData.id);
-      setStudentList({ aprroved, pending });
+
+      //   const activedstu = pendingList.find(
+      //     (student) => student.id === modalData.id
+      //   );
+      //   setActiveList([...activeList], { ...activedstu, status: "ACTIVE" });
+      setPendingList(
+        pendingList.filter((student) => student.id !== modalData.id)
+      );
+      setActiveList(
+        activeList.filter((student) => student.id !== modalData.id)
+      );
     } catch (error) {
       message.error(error.message);
     }
   };
 
   return (
-    <ContentLayout title="Class In Charge" paths={["teacher", "ClassInCharge"]}>
+    <ContentLayout
+      title="School Admin Requests"
+      paths={["SchoolAdmin", "SchoolAdmin Requests"]}
+    >
       <Modal
         visible={popupvisible}
         onCancel={() => setpopupvisible(false)}
-        title="Student Details"
+        title="School Admin Details"
         footer={
           activeTab === "1"
             ? [
@@ -123,6 +124,9 @@ export default function ClassInCharge() {
                 </Button>,
               ]
             : [
+                <Button danger key="" onClick={onReject}>
+                  Revoke Account
+                </Button>,
                 <Button type="primary" onClick={() => setpopupvisible(false)}>
                   OK
                 </Button>,
@@ -130,34 +134,23 @@ export default function ClassInCharge() {
         }
       >
         {!mdataLoading ? (
-          <>
-            <Descriptions title="Student Details" layout="vertical">
-              <Descriptions.Item label="Student ID">
-                {modalData.regid}
-              </Descriptions.Item>
-              <Descriptions.Item label="Student name" span={2}>
-                {modalData.user.username}
-              </Descriptions.Item>
-              <Descriptions.Item label="Phone Number">
-                {modalData.user.phone}
-              </Descriptions.Item>
-              <Descriptions.Item label="Student email" span={2}>
-                {modalData.user.email}
-              </Descriptions.Item>
-              {/* <Descriptions.Item label="Address" span={3}>
-            76/16A, Sunethradevi Rd, Nugegoda
-          </Descriptions.Item> */}
-            </Descriptions>
-            <Descriptions title="Subject Details" layout="vertical">
-              {modalData.optionalsubs.map((sub) => (
-                <Descriptions.Item
-                  label={getSubGroupDiscription(sub.subjectgroup)}
-                >
-                  {sub.subject_detail.subject.name}
-                </Descriptions.Item>
-              ))}
-            </Descriptions>
-          </>
+          <Descriptions layout="vertical" title="User Info">
+            <Descriptions.Item label="Name">
+              {modalData.username}
+            </Descriptions.Item>
+            <Descriptions.Item label="Telephone">
+              {modalData.phone}
+            </Descriptions.Item>
+            <Descriptions.Item label="Email">
+              n{modalData.email}
+            </Descriptions.Item>
+            <Descriptions.Item label="Gender">
+              {modalData.gender}
+            </Descriptions.Item>
+            <Descriptions.Item label="Address">
+              {modalData.adr}
+            </Descriptions.Item>
+          </Descriptions>
         ) : (
           <Spin />
         )}
@@ -168,17 +161,16 @@ export default function ClassInCharge() {
           minHeight: 280,
         }}
       >
-        {/* <Row gutter={16}> */}
         <Tabs
           type="card"
           defaultActiveKey="1"
           onChange={(key) => setActiveTab(key)}
         >
-          <TabPane tab="New Student Requests" key="1">
+          <TabPane tab="New SchoolAdmin accounts" key="1">
             <Card title="Pending Requests" className="teacherclscard">
               <List
                 itemLayout="horizontal"
-                dataSource={studentList.pending}
+                dataSource={pendingList}
                 renderItem={(item) => (
                   <List.Item
                     key={item.id}
@@ -192,8 +184,8 @@ export default function ClassInCharge() {
                           src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
                         />
                       }
-                      title={item.user.username}
-                      description={"Student ID: " + item.regid}
+                      title={item.username}
+                      description={item.email}
                     />
                   </List.Item>
                 )}
@@ -201,12 +193,12 @@ export default function ClassInCharge() {
             </Card>
           </TabPane>
 
-          <TabPane tab="Approved Students" key="2">
+          <TabPane tab="Approved SchoolAdmins" key="2">
             {/* <Col xs={24} xl={24}> */}
-            <Card title="Student List" className="teacherclscard">
+            <Card title="Teacher List" className="teacherclscard">
               <List
                 itemLayout="horizontal"
-                dataSource={studentList.aprroved}
+                dataSource={activeList}
                 renderItem={(item) => (
                   <List.Item
                     key={item.id}
@@ -220,8 +212,8 @@ export default function ClassInCharge() {
                           src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
                         />
                       }
-                      title={item.user.username}
-                      description={"Student ID: " + item.regid}
+                      title={item.username}
+                      description={item.email}
                     />
                     <div>{item.status}</div>
                   </List.Item>

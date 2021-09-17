@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {
-  TableOutlined,
+  UsergroupAddOutlined,
   BorderOuterOutlined,
   DesktopOutlined,
   SolutionOutlined,
   ScheduleOutlined,
   HomeOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 
 import { Layout, Menu } from "antd";
@@ -18,7 +19,7 @@ export default function SystemAdminSideBar() {
       className="site-layout-background"
       breakpoint={"md"}
       // trigger={null}
-      collapsedWidth={65}
+      collapsedWidth={50}
       collapsible
 
       // collapsed={collapsed}
@@ -45,11 +46,14 @@ export default function SystemAdminSideBar() {
         <Menu.Item key="5" icon={<ScheduleOutlined />}>
           <Link to="/timeslots">Analysis</Link>
         </Menu.Item>
-        <Menu.Item key="6" icon={<TableOutlined />}>
-          <Link to="/timetables">Tutor Managment</Link>
+        <Menu.Item key="6" icon={<UsergroupAddOutlined />}>
+          <Link to="/PrincipalMangemnt">Princpal Managment</Link>
         </Menu.Item>
         <Menu.Item key="7" icon={<HomeOutlined />}>
           <Link to="/RegSchool">School Managment</Link>
+        </Menu.Item>
+        <Menu.Item key="8" icon={<UserOutlined />}>
+          <Link to="/profile">Profile</Link>
         </Menu.Item>
       </Menu>
     </Layout.Sider>

@@ -8,7 +8,7 @@ import {
   HomeOutlined,
   UserOutlined,
   ReadOutlined,
-  FolderAddOutlined
+  FolderAddOutlined,
 } from "@ant-design/icons";
 
 import { Layout, Menu } from "antd";
@@ -46,7 +46,7 @@ export default function StudentSideBar() {
       className="site-layout-background"
       breakpoint={"md"}
       // trigger={null}
-      collapsedWidth={65}
+      collapsedWidth={50}
       collapsible
 
       // collapsed={collapsed}
@@ -89,13 +89,14 @@ export default function StudentSideBar() {
         <Menu.Item key="4" icon={<UserOutlined />}>
           <Link to="/Profile">Profile</Link>
         </Menu.Item>
-        <Menu.Item key="5" icon={<ContainerOutlined />}>
-          Assessments
-        </Menu.Item>
+
         <Menu.Item key="7" icon={<UserOutlined />}>
           <Link to="/tvprogramme">Suggest Free Programmes</Link>
         </Menu.Item>
-        
+
+        <Menu.Item key="8" icon={<HomeOutlined />}>
+          <Link to="/tuitionHome">Extra Classes</Link>
+        </Menu.Item>
 
         {/* <SubMenu key="sub2" icon={<MailOutlined />} title="Navigation Two">
           <Menu.Item key="9">Option 9</Menu.Item>
