@@ -4,13 +4,13 @@ import { UploadOutlined, SelectOutlined } from "@ant-design/icons";
 
 import uploadFileToBlob, {
   deleteBlobFiile,
-  getLearnMatUrl,
+  getFileUrl,
   isStorageConfigured,
 } from "services/azureblob.service";
 
 const storageConfigured = isStorageConfigured();
 
-const FileUpload = ({ setFilename }) => {
+const FileUpload = ({ setFilename, container }) => {
   // UI/form management
   const [uploading, setUploading] = useState(false);
   const [uploaded, setUploaded] = useState({ bool: false, filename: "" });
@@ -26,24 +26,18 @@ const FileUpload = ({ setFilename }) => {
       },
     ]);
     // *** UPLOAD TO AZURE STORAGE ***
-    const filename = await uploadFileToBlob(fileList[0]);
+    const filename = await uploadFileToBlob(fileList[0], container);
 
     setFilename(filename);
     setUploaded({ bool: true, filename: filename });
     setUploading(false);
-    console.log({
-      name: fileList[0].name,
 
-      status: "success",
-      url: getLearnMatUrl(filename),
-      thumbUrl: getLearnMatUrl(filename),
-    });
     setFileList([
       {
         name: fileList[0].name,
         status: "success",
-        url: getLearnMatUrl(filename),
-        thumbUrl: getLearnMatUrl(filename),
+        url: getFileUrl(filename, container),
+        thumbUrl: getFileUrl(filename, container),
       },
     ]);
     // prepare UI for results
@@ -59,9 +53,10 @@ const FileUpload = ({ setFilename }) => {
       // console.log(file);
       try {
         if (uploaded.bool) {
-          await deleteBlobFiile(uploaded.filename);
+          await deleteBlobFiile(uploaded.filename, container);
           message.success("Upoloaded file deleted");
           setUploaded({ bool: false, filename: "" });
+          setFilename("NA");
         }
         setFileList([]);
       } catch (error) {
