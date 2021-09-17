@@ -10,53 +10,43 @@ import {
   Avatar,
   Divider,
   Button,
+  Tag,
 } from "antd";
 import { Link } from "react-router-dom";
-import { Drawer, List} from 'antd';
+import { Drawer, List } from "antd";
 import ContentLayout from "components/ContentLayout";
 import { AudioOutlined } from "@ant-design/icons";
-import {
-  EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined,
-  PhoneOutlined,
-} from "@ant-design/icons";
+import { useParams } from "react-router-dom";
+import "./tuitionhome.scss";
 
-import {
-  SmileTwoTone,
-  HeartTwoTone,
-  CheckCircleTwoTone,
-} from "@ant-design/icons";
+import { useState } from "react";
+import { Modal } from "antd";
 
 const { TabPane } = Tabs;
 const { Content } = Layout;
 const { Meta } = Card;
 
 const data = [
-    {
-      title: 'Science ',
-    },
-    {
-      title: 'Mathematics',
-    },
-    {
-      title: 'English',
-    },
-    {
-      title: 'Western Music',
-    },
-  ];
+  {
+    title: "Science ",
+  },
+  {
+    title: "Mathematics",
+  },
+  {
+    title: "English",
+  },
+  {
+    title: "Western Music",
+  },
+];
 
 const DescriptionItem = ({ title, content }) => (
-    <div className="site-description-item-profile-wrapper">
-      <p className="site-description-item-profile-p-label">{title}:</p>
-      {content}
-    </div>
-  );
-
-
-  
-
+  <div className="site-description-item-profile-wrapper">
+    <p className="site-description-item-profile-p-label">{title}:</p>
+    {content}
+  </div>
+);
 
 // tab
 function callback(key) {
@@ -76,10 +66,22 @@ const suffix = (
 );
 const onSearch = (value) => console.log(value);
 
+export default function TuitionHome() {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
 
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
 
-export default function tuitionHome() {
-  
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  let { id } = useParams();
+
   return (
     <ContentLayout
       title="Tuition Class Managment"
@@ -110,47 +112,117 @@ export default function tuitionHome() {
                   />
                 </Space>
                 <Divider />
-                <Card
-                  style={{ width: 300 }}
-                  cover={
-                    <img
-                      alt="example"
-                      src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                    />
-                  }
-                  actions={[
-                    <HeartTwoTone twoToneColor="#eb2f96" key="vote" />,
-                    <Button type="primary">Enroll</Button>,
-                    <PhoneOutlined key="contact" />,
-                  ]}
-                >
-                  <Meta
-                    avatar={
-                      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                    }
-                    title="Maths | Grade 9"
-                    description="This is the description"
-                  />
-                </Card>
-                ,
+                <div className="site-card-wrapper">
+                  <Row gutter={24}>
+                    <Col span={8}>
+                      <div className="card-body1" bordered={true}>
+                      <Tag className="title" color="magenta"> Science | Grade 10
+                       <div className="details">
+                       <p> Ms. Kumuduni Fernando </p>
+                          <p> Fryday at 4PM- 6PM </p>
+                          <p> Monthly Fee 2500 LKR </p>
+                          </div>
+                          <Button className="enroll1" type="primary" colour={"black"}>
+                            Enroll
+                          </Button>
+                          <Button className="view1" type="primary" onClick={showModal}>
+                            View More
+                          </Button>
+                          </Tag>
+                      </div>
+                          <Modal
+                           title="Important Details"
+                            visible={isModalVisible}
+                            onOk={handleOk}
+                            onCancel={handleCancel}
+                          >
+                            <p>About Teacher :</p>
+                            <p>Contact :</p>
+                            <p>Description :</p>
+                          </Modal>
+                        
+                        
+                    </Col>
+                    <Col span={8}>
+                      <div className="card-body2" bordered={true}>
+                      <Tag className="title" color="orange"> History | Grade 10
+                       <div className="details">
+                       <p> Mr. Prasanna Perera </p>
+                          <p> Fryday at 4PM- 6PM </p>
+                          <p> Monthly Fee 2500 LKR </p>
+                          </div>
+                          <Button className="enroll2" type="primary" colour={"black"}>
+                            Enroll
+                          </Button>
+                          <Button className="view2" type="primary" onClick={showModal}>
+                            View More
+                          </Button>
+                          </Tag>
+                      </div>
+                          <Modal
+                           title="Important Details"
+                            visible={isModalVisible}
+                            onOk={handleOk}
+                            onCancel={handleCancel}
+                          >
+                            <p>About Teacher :</p>
+                            <p>Contact :</p>
+                            <p>Description...</p>
+                          </Modal>
+                        
+                        
+                    </Col>
+
+                    <Col span={8}>
+                      <div className="card-body3" bordered={true}>
+                      <Tag className="title" color="purple"> Maths | Grade 10
+                       <div className="details">
+                       <p> Mr. Aruna Prasad </p>
+                       
+                          <p> Fryday at 4PM- 6PM </p>
+                          <p> Monthly Fee 2500 LKR </p>
+                          </div>
+                          <Button className="enroll3" type="primary" colour={"black"}>
+                            Enroll
+                          </Button>
+                          <Button className="view3" type="primary" onClick={showModal}>
+                            View More
+                          </Button>
+                          </Tag>
+                      </div>
+                          <Modal
+                           title="Important Details"
+                            visible={isModalVisible}
+                            onOk={handleOk}
+                            onCancel={handleCancel}
+                          >
+                            <p>About Teacher :</p>
+                            <p>Contact :</p>
+                            <p>Description...</p>
+                          </Modal>
+                        
+                        
+                    </Col>
+                  </Row>
+                </div>
               </TabPane>
               <TabPane tab="Enrolled Classes" key="2">
-
-              <List
-    itemLayout="horizontal"
-    dataSource={data}
-    renderItem={item => (
-      <List.Item>
-        <List.Item.Meta
-          avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-          title={<Link to="../tutor/subjectPage">{item.title}</Link>}
-          description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-        />
-      </List.Item>
-    )}
-    />
-
-
+                <List
+                  itemLayout="horizontal"
+                  dataSource={data}
+                  renderItem={(item) => (
+                    <List.Item>
+                      <List.Item.Meta
+                        avatar={
+                          <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                        }
+                        title={<Link to="subjectPage">{item.title}</Link>}
+                        id={id}
+                        description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                      />
+                    </List.Item>
+                  )}
+                />
               </TabPane>
             </Tabs>
           </Col>
@@ -158,7 +230,4 @@ export default function tuitionHome() {
       </Content>
     </ContentLayout>
   );
-            
-            }
-        
-
+}

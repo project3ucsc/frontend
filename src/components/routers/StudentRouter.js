@@ -9,9 +9,10 @@ import NotFound404 from "pages/NotFound404";
 import EnrollPage from "pages/student/EnrollPage";
 import VideoPage from "pages/VideoPage";
 
-import tuitionHome from "pages/student/tuitionHome";
+import TuitionHome from "pages/student/TuitionHome";
 
 import AssessmentStuPage from "pages/student/AssessmentStuPage";
+import SubjectPage from "pages/tutor/SubjectPage";
 
 
 
@@ -25,6 +26,7 @@ export default function StudentRouter() {
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/subject" component={EnrollPage} />
         <Route exact path="/subject/:sdid" component={Subpage} />
+        <Route exact path="/TuitionHome/:id" component={SubjectPage} />
         <Route exact path="/assessment/:assid" component={AssessmentStuPage} />
         <Route
           exact
@@ -34,7 +36,7 @@ export default function StudentRouter() {
         <Route exact path="/timetable" component={StudentTimeTable} />
         <Route exact path="/tvprogramme" component={tvprogramme} />
 
-        <Route exact path="/tuitionHome" component={tuitionHome} />
+        <Route exact path="/TuitionHome" component={TuitionHome} />
 
         <Route component={NotFound404} />
       </Switch>
