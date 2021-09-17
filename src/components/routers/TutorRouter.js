@@ -10,6 +10,8 @@ import ApplicationForm from "pages/tutor/ApplicationForm";
 
 import NotFound404 from "pages/NotFound404";
 
+import Profile from "pages/student/Profile";
+
 export default function TutorRouter() {
     return (
         <>
@@ -19,6 +21,7 @@ export default function TutorRouter() {
             <Route exact path="/subjectPage" component={SubjectPage} />
             <Route exact path="/paymentslipcheck" component={PaymentSlipCheck} />
             <Route exact path="/applicationform" component={ApplicationForm} />
+            <Route exact path="/profile" component={Profile} />
             <Route component={NotFound404} />
         </Switch>
         </>

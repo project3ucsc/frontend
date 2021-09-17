@@ -9,6 +9,7 @@ import {
   HomeOutlined,
   UserSwitchOutlined,
   UsergroupAddOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 
 import { Layout, Menu } from "antd";
@@ -68,6 +69,11 @@ export default function SAdminSideBar() {
             <Link to="/TutorManagement">Tutor Management</Link>
           </Menu.Item>
         </SubMenu>
+
+        <Menu.Item key="7" icon={<UserOutlined />}>
+          <Link to="/profile">Profile</Link>
+        </Menu.Item>
+
       </Menu>
     </Layout.Sider>
   );

@@ -8,6 +8,9 @@ import ClassInCharge from "pages/teacher/ClassInCharge";
 import VideoPage from "pages/VideoPage";
 import SubmissionsPage from "pages/teacher/SubmissionsPage";
 import AssessmentPage from "pages/teacher/AssessmentPage";
+
+import Profile from "pages/student/Profile";
+
 import ReliefPage from "pages/teacher/ReliefPage";
 import ReliefSubPage from "pages/teacher/ReliefSubPage";
 
@@ -36,7 +39,7 @@ export default function TeacherRouter() {
         <Route exact path="/reliefclass/:relid" component={ReliefSubPage} />
 
         <Route exact path="/classincharge" component={ClassInCharge} />
-
+        <Route exact path="/profile" component={Profile} />
         <Route component={NotFound404} />
       </Switch>
     </>
