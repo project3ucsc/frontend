@@ -1,16 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Row,
-  Col,
-  Button,
-  List,
-  Timeline,
-  Card,
-  message,
-  Badge,
-  Spin,
-  Tabs,
-} from "antd";
+import { Row, Col, List, Card, message, Badge, Spin, Tabs } from "antd";
 import ContentLayout from "components/ContentLayout";
 import "./physics.scss";
 import { useParams } from "react-router-dom";
@@ -124,12 +113,11 @@ export default function Subpage() {
 }
 
 export function MeetingUrl({ sdid }) {
-  const today = new Date();
-
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [relifTxt, setRelifTxt] = useState("");
   useEffect(() => {
+    const today = new Date();
     setLoading(true);
     let day = today.getDay() > 5 ? 1 : today.getDay();
     subjectdetailservice
@@ -152,7 +140,7 @@ export function MeetingUrl({ sdid }) {
       .catch((e) => {
         message.error(e.message);
       });
-  }, []);
+  }, [sdid]);
 
   // const lastupdated = new Date(data.lastupdated);
   return !loading ? (

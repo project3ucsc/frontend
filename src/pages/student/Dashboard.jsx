@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Row,
-  Col,
-  Card,
-  Calendar,
-  Button,
-  Timeline,
-  List,
-  message,
-} from "antd";
+import { Row, Col, Card, Button, Timeline, List, message } from "antd";
 import ContentLayout from "components/ContentLayout";
 //import { PlusOutlined } from "@ant-design/icons";
 import { ClockCircleOutlined } from "@ant-design/icons";
@@ -28,10 +19,6 @@ const cstyle = {
   marginBottom: 0,
   minHeight: 280,
 };
-
-function onPanelChange(value, mode) {
-  console.log(value, mode);
-}
 
 var adata = [
   {

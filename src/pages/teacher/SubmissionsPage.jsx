@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import BackLayout from "components/BackLayout";
-import { Row, Col, Card, List, Avatar, Typography, message } from "antd";
+import { Row, Col, Card, List, Typography, message } from "antd";
 
 import { SnippetsOutlined } from "@ant-design/icons";
 
@@ -42,7 +42,7 @@ export default function SubmissionsPage() {
                 <List.Item>
                   <List.Item.Meta
                     avatar={<SnippetsOutlined style={{ fontSize: 25 }} />}
-                    title={<a href="#">{item.user.username}</a>}
+                    title={<a href="./">{item.user.username}</a>}
                     description={item.user.studentdetail.regid}
                   />
 

@@ -4,8 +4,6 @@ import {
   TableOutlined,
   DesktopOutlined,
   AppstoreOutlined,
-  SolutionOutlined,
-  ScheduleOutlined,
   HomeOutlined,
   AuditOutlined,
   FolderOpenOutlined,

@@ -25,7 +25,7 @@ export default function AddNewClasses() {
   const onFinish = async (values) => {
     try {
       const tutorid = authenticationservice.currentUserValue.id;
-      const res = await axios.post(
+      await axios.post(
         `${apiurl}/tutor/classes`,
         { ...values, tutorid },
         authHeader()

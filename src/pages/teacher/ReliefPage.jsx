@@ -16,8 +16,7 @@ import {
 
 import ContentLayout from "components/ContentLayout";
 import "./ClassInCharge.scss";
-import classroomservice from "services/classroom.service";
-import { enum_releifStatus, Enum_std_detail_status } from "utils/common";
+import { enum_releifStatus } from "utils/common";
 import reliefservice from "services/relief.service";
 import { Link } from "react-router-dom";
 
@@ -30,9 +29,6 @@ export default function ReliefPage() {
   const [activeList, setActiveList] = useState([]);
   const [modalData, setModalData] = useState(null);
   const [mdataLoading, setMdataLoading] = useState(true);
-
-  const [activeTab, setActiveTab] = useState("1");
-  //const handleCancel = () => setpopupvisible(false);
 
   useEffect(() => {
     reliefservice

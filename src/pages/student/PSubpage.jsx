@@ -8,7 +8,6 @@ import {
   Card,
   message,
   Badge,
-  Spin,
   Tabs,
 } from "antd";
 import ContentLayout from "components/ContentLayout";
@@ -18,7 +17,7 @@ import { useParams } from "react-router-dom";
 import subjectdetailservice from "services/tutorsubject.service";
 import { getLearnMatUrl } from "services/azureblob.service";
 import { getResourceIcon } from "components/Resources";
-import { getDateTxt, getDaybyNumber } from "utils/common";
+import { getDateTxt } from "utils/common";
 import PAssesmentListStu from "components/tutor/PAssesmentListStu";
 import PaymentSlipUploadForm from "components/PaymentSlipUploadForm";
 

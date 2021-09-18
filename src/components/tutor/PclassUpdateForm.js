@@ -12,7 +12,7 @@ const { TextArea } = Input;
 export default function PclassUpdateForm({ classid }) {
   const [isDisable, setIsDisable] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [classData, setClassData] = useState({});
+  // const [classData, setClassData] = useState({});
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -59,7 +59,7 @@ export default function PclassUpdateForm({ classid }) {
       wrapperCol={{
         span: 16,
       }}
-      initialValues={classData}
+      // initialValues={classData}
       onFinish={onFinish}
     >
       <Form.Item

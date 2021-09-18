@@ -102,5 +102,6 @@ const assmntservice = {
   updateAssmnt,
   getSubmissions,
   upsertSubmission,
+  deleteAssmnt,
 };
 export default assmntservice;

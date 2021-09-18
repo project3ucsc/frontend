@@ -17,7 +17,6 @@ import {
   PlusOutlined,
   CheckOutlined,
   CloseOutlined,
-  EyeOutlined,
   EyeInvisibleOutlined,
   EditOutlined,
   DeleteOutlined,

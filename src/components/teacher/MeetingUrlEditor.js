@@ -83,7 +83,7 @@ export default function MeetingUrlEditor({ sdid }) {
       .catch((e) => {
         message.error(e.message);
       });
-  }, [day]);
+  }, [day, sdid]);
 
   function handleDayChange(value) {
     setDay(value);
@@ -159,11 +159,10 @@ export function MeetingUrl({ data }) {
         const thedate = val.date.format("YYYY-MM-DD");
         console.log(thedate);
 
-        const st = val.timerange[0].format("HH:mm");
-        const en = val.timerange[1].format("HH:mm");
-
-        const sttime = moment(thedate + " " + st);
-        const endtime = moment(thedate + " " + en);
+        // const st = val.timerange[0].format("HH:mm");
+        // const en = val.timerange[1].format("HH:mm");
+        // const sttime = moment(thedate + " " + st);
+        // const endtime = moment(thedate + " " + en);
       }
       //   setModalvisible(false);
       //   setConfirmLoading(false);

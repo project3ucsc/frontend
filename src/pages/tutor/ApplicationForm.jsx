@@ -27,7 +27,7 @@ export default function ApplicationForm() {
   const onFinish = async (values) => {
     try {
       const tutorid = authenticationservice.currentUserValue.id;
-      const res = await axios.post(
+      await axios.post(
         `${apiurl}/tutor/tutorschoolreq`,
         { ...values, tutorid },
         authHeader()

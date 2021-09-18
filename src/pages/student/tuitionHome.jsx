@@ -7,7 +7,7 @@ import StudentPclassList from "components/StudentPclassList";
 
 import axios from "axios";
 import { authHeader } from "utils/authheader";
-import { apiurl, getDateTxt } from "utils/common";
+import { apiurl } from "utils/common";
 import authenticationservice from "services/authentication.service";
 import TutionCardStu from "components/TutionCardStu";
 
