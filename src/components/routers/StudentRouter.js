@@ -12,9 +12,6 @@ import VideoPage from "pages/VideoPage";
 import TuitionHome from "pages/student/TuitionHome";
 
 import AssessmentStuPage from "pages/student/AssessmentStuPage";
-import SubjectPage from "pages/tutor/SubjectPage";
-
-
 
 // import { Role } from "utils/common";
 
@@ -26,7 +23,7 @@ export default function StudentRouter() {
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/subject" component={EnrollPage} />
         <Route exact path="/subject/:sdid" component={Subpage} />
-        <Route exact path="/TuitionHome/:id" component={SubjectPage} />
+        {/* <Route exact path="/TuitionHome/:id" component={SubjectPage} /> */}
         <Route exact path="/assessment/:assid" component={AssessmentStuPage} />
         <Route
           exact

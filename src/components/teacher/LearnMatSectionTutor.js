@@ -17,14 +17,13 @@ import {
   PlusOutlined,
   CheckOutlined,
   CloseOutlined,
-  EyeOutlined,
   EyeInvisibleOutlined,
   EditOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
 
 import FileUpload from "components/FileUpload";
-import subjectdetailservice from "services/subjectdetail.service";
+import subjectdetailservice from "services/tutorsubject.service";
 import {
   containers,
   deleteBlobFiile,
@@ -34,14 +33,14 @@ import { getResourceIcon } from "components/Resources";
 
 const { Panel } = Collapse;
 
-export default function LearnMatSection({ deleteSection, section }) {
+export default function LearnMatSectionTutor({ deleteSection, section }) {
   // for delete popup
   const [deleteconfirmvisible, setDeleteconfirmvisible] = useState(false);
   //   const [confirmLoading, setConfirmLoading] = useState(false);
   const showPopconfirm = () => {
     setDeleteconfirmvisible(true);
   };
-  const [learnmat, setLearnmat] = useState(section.resource_details);
+  const [learnmat, setLearnmat] = useState(section.presource_details);
 
   const handleDelete = async (e) => {
     try {
@@ -91,6 +90,7 @@ export default function LearnMatSection({ deleteSection, section }) {
 
         // updateui
         setLearnmat([...learnmat, newres]);
+        message.success("Leaning meatirial added succesfully");
 
         setFilename("");
       } catch (error) {

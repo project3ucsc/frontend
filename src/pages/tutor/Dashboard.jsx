@@ -5,16 +5,16 @@ import { authHeader } from "utils/authheader";
 import { apiurl, getDateTxt } from "utils/common";
 import authenticationservice from "services/authentication.service";
 
-import { Layout, Row, message, Card, Col } from "antd";
+import { Layout, message, Card } from "antd";
 import ContentLayout from "components/ContentLayout";
 import { Link } from "react-router-dom";
 
 // import { Avatar } from "antd";
-// import {
-//   EditOutlined,
-//   EllipsisOutlined,
-//   SettingOutlined,
-// } from "@ant-design/icons";
+import {
+  EditOutlined,
+  // EllipsisOutlined,
+  SettingOutlined,
+} from "@ant-design/icons";
 
 const { Content } = Layout;
 
@@ -51,57 +51,62 @@ export default function Dashboard() {
             {classroomList.map((classroom) => {
               return (
                 // <Col key={classroom.id} span={8}>
-                <Link key={classroom.id} to={"/classdetails/" + classroom.id}>
-                  <Card
-                    style={{ width: 200, margin: 10 }}
-                    cover={
-                      <img
-                        style={{ height: 100 }}
-                        alt="example"
-                        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                      />
+
+                <Card
+                  key={classroom.id}
+                  style={{ width: 200, margin: 10 }}
+                  // cover={
+                  //   <img
+                  //     style={{ height: 100 }}
+                  //     alt="example"
+                  //     src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                  //   />
+                  // }
+                  actions={[
+                    <Link to={"/classdetails/" + classroom.id}>
+                      {" "}
+                      <SettingOutlined key="setting" />
+                    </Link>,
+                    <Link to={"/classpage/" + classroom.id}>
+                      <EditOutlined key="edit" />
+                    </Link>,
+                    // <EllipsisOutlined key="ellipsis" />,
+                  ]}
+                >
+                  <Meta
+                    // avatar={
+                    //   <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                    // }
+                    title={classroom.subject + " | " + classroom.grade}
+                    description={
+                      <>
+                        {" "}
+                        <p style={{ margin: 3 }}>{classroom.day}</p>
+                        <p style={{ margin: 0 }}>
+                          {getDateTxt(
+                            classroom.sttime,
+                            classroom.endtime,
+                            "h12"
+                          )}
+                        </p>{" "}
+                      </>
                     }
-                    // actions={[
-                    //   <SettingOutlined key="setting" />,
-                    //   <EditOutlined key="edit" />,
-                    //   <EllipsisOutlined key="ellipsis" />,
-                    // ]}
-                  >
-                    <Meta
-                      // avatar={
-                      //   <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                      // }
-                      title={classroom.subject + " | " + classroom.grade}
-                      description={
-                        <>
-                          {" "}
-                          <p style={{ margin: 3 }}>{classroom.day}</p>
-                          <p style={{ margin: 0 }}>
-                            {getDateTxt(
-                              classroom.sttime,
-                              classroom.endtime,
-                              "h12"
-                            )}
-                          </p>{" "}
-                        </>
-                      }
-                    />
-                  </Card>
-                </Link>
+                  />
+                </Card>
                 // </Col>
               );
             })}
 
             <Link to="/addnewclasses">
               <Card
-                style={{ width: 200, height: 221, margin: 10 }}
-                cover={
-                  <img
-                    style={{ height: 100 }}
-                    alt="example"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                  />
-                }
+                style={{ width: 200, height: 170, margin: 10 }}
+                // cover={
+                //   <img
+                //     style={{ height: 100 }}
+                //     alt="example"
+                //     src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                //   />
+                // }
               >
                 +
               </Card>

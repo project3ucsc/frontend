@@ -84,7 +84,7 @@ export default function TeacherSideBar() {
         <Menu.Item key="9" icon={<FolderOpenOutlined />}>
           <Link to="/classincharge">ClassInCharge</Link>
         </Menu.Item>
-        <Menu.Item key="9" icon={<UserOutlined />}>
+        <Menu.Item key="10" icon={<UserOutlined />}>
           <Link to="/profile">Profile</Link>
         </Menu.Item>
       </Menu>
