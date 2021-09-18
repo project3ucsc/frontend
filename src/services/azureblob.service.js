@@ -4,7 +4,14 @@ import { BlobServiceClient } from "@azure/storage-blob";
 const sasToken =
   process.env.storagesastoken ||
   "sv=2020-08-04&ss=bfqt&srt=sco&sp=rwdlacuptfx&se=2021-12-01T14:42:13Z&st=2021-07-21T06:42:13Z&spr=https&sig=tUr%2Ft%2Fw10mP%2FCE7r3DxQ8csZkFRVFFykeqGlT6r9BsM%3D"; // Fill string with your SAS token
-const containerName = `matierials`;
+
+// const containerName = `matierials`;
+
+export const containers = {
+  learnmats: `matierials`,
+  submissions: "submissions",
+  attachments: "attachments",
+};
 const storageAccountName = process.env.storageresourcename || "khub"; // Fill string with your Storage resource name
 
 // Feature flag - disable storage feature to app if not configured
@@ -13,7 +20,11 @@ export const isStorageConfigured = () => {
 };
 
 export const getLearnMatUrl = (filename) => {
-  return `https://${storageAccountName}.blob.core.windows.net/${containerName}/${filename}`;
+  return `https://${storageAccountName}.blob.core.windows.net/${containers.learnmats}/${filename}`;
+};
+
+export const getFileUrl = (filename, cont) => {
+  return `https://${storageAccountName}.blob.core.windows.net/${cont}/${filename}`;
 };
 
 // return list of blobs in container to display
@@ -34,7 +45,7 @@ export const getLearnMatUrl = (filename) => {
 
 const createBlobInContainer = async (containerClient, file) => {
   // create blobClient for container
-  const filename = file.uid + "-" + file.name;
+  const filename = file.uid + "-nm-" + file.name;
   const blobClient = containerClient.getBlockBlobClient(filename);
 
   // set mimetype as determined from browser with file upload control
@@ -47,7 +58,7 @@ const createBlobInContainer = async (containerClient, file) => {
   return filename;
 };
 
-const uploadFileToBlob = async (file) => {
+const uploadFileToBlob = async (file, containerName) => {
   if (!file) return [];
 
   // get BlobService = notice `?` is pulled out of sasToken - if created in Azure portal
@@ -67,7 +78,7 @@ const uploadFileToBlob = async (file) => {
 };
 // </snippet_uploadFileToBlob>
 
-export const deleteBlobFiile = async (filename) => {
+export const deleteBlobFiile = async (filename, containerName) => {
   // if (!file) return [];
 
   // get BlobService = notice `?` is pulled out of sasToken - if created in Azure portal

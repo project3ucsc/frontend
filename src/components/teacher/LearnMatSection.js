@@ -17,7 +17,6 @@ import {
   PlusOutlined,
   CheckOutlined,
   CloseOutlined,
-  EyeOutlined,
   EyeInvisibleOutlined,
   EditOutlined,
   DeleteOutlined,
@@ -25,7 +24,11 @@ import {
 
 import FileUpload from "components/FileUpload";
 import subjectdetailservice from "services/subjectdetail.service";
-import { deleteBlobFiile, getLearnMatUrl } from "services/azureblob.service";
+import {
+  containers,
+  deleteBlobFiile,
+  getLearnMatUrl,
+} from "services/azureblob.service";
 import { getResourceIcon } from "components/Resources";
 
 const { Panel } = Collapse;
@@ -37,7 +40,6 @@ export default function LearnMatSection({ deleteSection, section }) {
   const showPopconfirm = () => {
     setDeleteconfirmvisible(true);
   };
-
   const [learnmat, setLearnmat] = useState(section.resource_details);
 
   const handleDelete = async (e) => {
@@ -47,7 +49,10 @@ export default function LearnMatSection({ deleteSection, section }) {
       const mat = learnmat.find((l) => l.id === id);
       if (mat.type !== "link") {
         // delete in azure blob
-        const deletedFile = await deleteBlobFiile(mat.filename);
+        const deletedFile = await deleteBlobFiile(
+          mat.filename,
+          containers.learnmats
+        );
         console.log(deletedFile);
       }
       // delete in db
@@ -63,13 +68,13 @@ export default function LearnMatSection({ deleteSection, section }) {
 
   const AddForm = () => {
     const [filetype, setFiletype] = useState("img");
-    const [filename, setFilename] = useState("");
+    const [filename, setFilename] = useState("NA");
 
     const handleAdd = async (values) => {
       console.log(values);
       console.log(filename);
 
-      if (values.type !== "link" && filename === "") {
+      if (values.type !== "link" && filename === "NA") {
         message.error("First select and upload a file");
         return;
       }
@@ -131,7 +136,11 @@ export default function LearnMatSection({ deleteSection, section }) {
           </Form.Item>
 
           {filetype !== "link" ? (
-            <FileUpload setFilename={setFilename} sectionid={4} />
+            <FileUpload
+              setFilename={setFilename}
+              container={containers.learnmats}
+              sectionid={4}
+            />
           ) : (
             <>
               <Form.Item

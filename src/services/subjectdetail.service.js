@@ -4,12 +4,12 @@ import { authHeader } from "utils/authheader";
 import { apiurl } from "utils/common";
 import authenticationservice from "./authentication.service";
 
-async function getSubDetailAllDataforTeacher(sdid) {
+async function getSubDetailAllDataforTeacher(sdid, isRel) {
   const userid = authenticationservice.currentUserValue.id;
 
   try {
     const res = await axios.get(
-      `${apiurl}/subjectdetail/teacher/${sdid}/${userid}`,
+      `${apiurl}/subjectdetail/teacher/${sdid}/${userid}/${isRel}`,
       authHeader()
     );
     return res.data;

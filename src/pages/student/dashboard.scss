@@ -6,48 +6,61 @@
 //     // background-color:#dfe6eb;
 //   }
 
-
 .card-wrapper-student-dash {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
+  .ant-card-body {
+    padding: 14px;
+  }
+  .ant-card {
+    margin: 5px;
+  }
+  //justify-content: space-between;
+}
+
+@media only screen and (max-width: 575px) {
+  .card-wrapper-student-dash {
+    .ant-card {
+      margin: 5px auto;
+    }
     //justify-content: space-between;
   }
+}
+.site-calendar-demo-card {
+  width: 260px;
+  height: 300px;
+  border: 1px solid #f0f0f0;
+  border-radius: 2px;
+}
 
-  .site-calendar-demo-card {
-    width: 260px;
-    height: 300px;
-    border: 1px solid #f0f0f0;
-    border-radius: 2px;
-  }
+.anncard {
+  .ant-card-body {
+    height: 450px;
+    overflow-y: scroll;
 
-  .anncard {
-    .ant-card-body {
-      height: 450px;
-      overflow-y: scroll;
-  
-      .ant-list-item {
-        background-color: #00bcd438;
-        margin-bottom: 5px;
-  
-        &:hover {
-          background-color: #00bbd456;
-        }
+    .ant-list-item {
+      background-color: #00bcd438;
+      margin-bottom: 5px;
+
+      &:hover {
+        background-color: #00bbd456;
       }
     }
   }
+}
 
-  .teachercard {
-    .ant-card-body {
-      height: 450px;
-      overflow-y: scroll;
-  
-      .ant-list-item {
-        background-color: aliceblue;
-        margin-bottom: 5px;
-        // margin: 5px;
-        &:hover {
-          background-color: rgb(211, 234, 255);
-        }
+.teachercard {
+  .ant-card-body {
+    height: 450px;
+    overflow-y: scroll;
+
+    .ant-list-item {
+      background-color: aliceblue;
+      margin-bottom: 5px;
+      // margin: 5px;
+      &:hover {
+        background-color: rgb(211, 234, 255);
       }
     }
   }
+}
