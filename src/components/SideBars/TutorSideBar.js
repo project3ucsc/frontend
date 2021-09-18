@@ -20,6 +20,7 @@ import {
 const { SubMenu } = Menu;
 
 export default function TutorSideBar() {
+
   const [subLinks, setSubLinks] = useState([]);
   useEffect(() => {
     let userid = authenticationservice.currentUserValue.id;
@@ -60,8 +61,8 @@ export default function TutorSideBar() {
         </SubMenu>
 
         <Menu.Item key="7" icon={<DollarOutlined />}>
-          <Link to="/paymentslipcheck">Payments</Link>
-        </Menu.Item>
+                    <Link to="/managepayments">Manage Payments</Link>
+            </Menu.Item>
 
         {/* <Menu.Item key="8" icon={<DollarOutlined />}>
           <Link to="/subjectPage">Lesson</Link>
@@ -80,4 +81,5 @@ export default function TutorSideBar() {
       </Menu>
     </Layout.Sider>
   );
+
 }
