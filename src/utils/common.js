@@ -72,7 +72,7 @@ export const enum_tutorschool_req = {
   active: "b",
   rejected: "c",
 };
-
+export const spinStyle = { style: { marginLeft: "35vw", marginTop: "20vh" } };
 
 var datemap = new Map();
 datemap.set(1, "Monday");
