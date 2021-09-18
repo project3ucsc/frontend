@@ -35,7 +35,9 @@ export default function PAssesmentListStu({ sdid }) {
               avatar={
                 <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
               }
-              title={<Link to={"/assessment/" + item.id}>{item.title}</Link>}
+              title={
+                <Link to={"/tution/assessment/" + item.id}>{item.title}</Link>
+              }
               description={"Due Date : " + duetdateTxt}
             />
           </List.Item>

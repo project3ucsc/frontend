@@ -32,7 +32,7 @@ export default function StudentPclassList() {
             avatar={
               <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
             }
-            title={<Link to={"subjectPage/" + item.id}>{item.name}</Link>}
+            title={<Link to={"/tution/subject/" + item.id}>{item.name}</Link>}
             description={item.tutor}
           />
         </List.Item>
