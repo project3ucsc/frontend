@@ -52,6 +52,7 @@ const tdata = [
     dis: "Test",
   },
 ];
+
 const { Meta } = Card;
 
 export default function Dashboard() {
@@ -107,12 +108,14 @@ export default function Dashboard() {
           >
             <div className="card-wrapper-student-dash">
               {schoolSubs.map((item, i) => (
-                <Card key={i} hoverable style={{ width: 180 }}>
-                  <Meta
-                    title={item.subject.name}
-                    description={item.teacher.username}
-                  />
-                </Card>
+                <Link key={i} to={"/subject/" + item.id}>
+                  <Card hoverable style={{ width: 180 }}>
+                    <Meta
+                      title={item.subject.name}
+                      description={item.teacher.username}
+                    />
+                  </Card>
+                </Link>
               ))}
             </div>
           </Card>
@@ -120,9 +123,11 @@ export default function Dashboard() {
           <Card title="Extra Private Classes">
             <div className="card-wrapper-student-dash">
               {tutionClasses.map((item, i) => (
-                <Card key={i} hoverable style={{ width: 220 }}>
-                  <Meta title={item.name} description={item.tutor} />
-                </Card>
+                <Link key={i} to={"/tution/subject/" + item.id}>
+                  <Card key={i} hoverable style={{ width: 220 }}>
+                    <Meta title={item.name} description={item.tutor} />
+                  </Card>
+                </Link>
               ))}
             </div>
           </Card>
