@@ -1,10 +1,15 @@
+
 import React, { useState, useEffect } from "react";
-import { Row, Col, Card, Button, Timeline, List, message } from "antd";
+import { Row, Col, Card, Button, Timeline, List, message, PageHeader,Calender } from "antd";
+
 import ContentLayout from "components/ContentLayout";
 //import { PlusOutlined } from "@ant-design/icons";
 import { ClockCircleOutlined } from "@ant-design/icons";
 
 import "./dashboard.scss";
+
+import img1 from "../../img/student_cover1.jpg";
+
 import classroomservice from "services/classroom.service";
 import { Link } from "react-router-dom";
 
@@ -12,6 +17,7 @@ import axios from "axios";
 import { authHeader } from "utils/authheader";
 import { apiurl } from "utils/common";
 import authenticationservice from "services/authentication.service";
+
 
 const cstyle = {
   padding: 10,
@@ -53,9 +59,10 @@ const tdata = [
   },
 ];
 
-const { Meta } = Card;
+
 
 export default function Dashboard() {
+
   const [schoolSubs, setSchoolSubs] = useState([]);
   const [tutionClasses, setTutionClasses] = useState([]);
   const [classroonName, setClassroonName] = useState("");
@@ -100,8 +107,11 @@ export default function Dashboard() {
         </PageHeader>
       </div> */}
 
+
       <Row gutter={[10, 0]}>
         <Col xs={24} xl={18}>
+
+
           <Card
             style={{ marginBottom: 10 }}
             title={"Subjects in your school " + classroonName}
@@ -131,6 +141,7 @@ export default function Dashboard() {
               ))}
             </div>
           </Card>
+
 
           <div className="site-card-border-less-wrapper-2">
             <Card

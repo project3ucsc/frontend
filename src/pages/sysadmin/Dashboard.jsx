@@ -1,6 +1,6 @@
 import React from "react";
 import { Layout, Row, Col, Card, Button, Statistic } from "antd";
-import img1 from "../../img/sysadmin1.png";
+import img1 from "../../img/admin_cover2.jpg";
 import ContentLayout from "components/ContentLayout";
 import "./sysadmin.scss";
 
@@ -10,29 +10,22 @@ export default function Dashboard() {
   return (
     <ContentLayout paths={["Home"]}>
       <Content
-        className="site-layout-background"
-        style={{
-          padding: 24,
-          margin: 0,
-          minHeight: 280,
-        }}
-      >
+        className="admin-header">
+     
+        <img className="cover" src={img1} alt="img1"  />
+      
         <Row>
           <Col xs={24} xl={24}>
-            <div className="sysadmin-header">
-              <h1>
-                Welcome Admin <img src={img1} alt="img1" />
-              </h1>
-            </div>
+           
             <Row gutter={16}>
               <Col span={6}>
-                <Statistic title="Active Principles" value={5} />
+                <Statistic className="stat" title="Active Principles" value={5} />
               </Col>
               <Col span={6}>
-                <Statistic title="Active Teachers" value={245} />
+                <Statistic className="stat" title="Active Teachers" value={245} />
               </Col>
               <Col span={6}>
-                <Statistic title="Active Students" value={745} />
+                <Statistic className="stat" title="Active Students" value={745} />
               </Col>
               <Button style={{ marginTop: 16 }} type="primary">
                 View Performance
