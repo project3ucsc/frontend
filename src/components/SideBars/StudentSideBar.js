@@ -9,6 +9,7 @@ import {
   UserOutlined,
   ReadOutlined,
   FolderAddOutlined,
+  SnippetsOutlined,
 } from "@ant-design/icons";
 
 import { Layout, Menu } from "antd";
@@ -96,6 +97,10 @@ export default function StudentSideBar() {
 
         <Menu.Item key="8" icon={<HomeOutlined />}>
           <Link to="/tuitionHome">Extra Classes</Link>
+        </Menu.Item>
+
+        <Menu.Item key="9" icon={<SnippetsOutlined/>}>
+          <Link to="/viewpublicresources">Public Resources</Link>
         </Menu.Item>
 
         {/* <SubMenu key="sub2" icon={<MailOutlined />} title="Navigation Two">

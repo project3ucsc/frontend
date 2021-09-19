@@ -14,6 +14,7 @@ import TuitionHome from "pages/student/TuitionHome";
 import AssessmentStuPage from "pages/student/AssessmentStuPage";
 import PSubpage from "pages/student/PSubpage";
 import PAssessmentStuPage from "pages/student/PAssessmentStuPage";
+import ViewPublicResources from "pages/student/ViewPublicResources";
 
 // import { Role } from "utils/common";
 
@@ -30,6 +31,7 @@ export default function StudentRouter() {
 
         <Route exact path="/tution/subject/:sdid" component={PSubpage} />
         {/* <Route exact path="/TuitionHome/:id" component={SubjectPage} /> */}
+        
         <Route
           exact
           path="/tution/assessment/:assid"
@@ -45,6 +47,7 @@ export default function StudentRouter() {
         <Route exact path="/tvprogramme" component={tvprogramme} />
 
         <Route exact path="/TuitionHome" component={TuitionHome} />
+        <Route exact path="/viewpublicresources" component={ViewPublicResources} />
 
         <Route component={NotFound404} />
       </Switch>
