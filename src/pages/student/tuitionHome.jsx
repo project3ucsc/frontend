@@ -72,9 +72,11 @@ export default function TuitionHome() {
                 </Space>
                 <Divider />
                 <div className="site-card-wrapper">
+
                   {classes.map((cls, i) => {
                     return <TutionCardStu cls={cls} key={i} i={i} />;
                   })}
+
                 </div>
               </TabPane>
               <TabPane tab="Enrolled Classes" key="2">
