@@ -1,0 +1,43 @@
+
+ h1{
+     font-size: 30px;
+     margin-left: 15%;
+     
+ }
+ 
+ h2{
+     margin-left: 10%;
+ }
+ .teacher-header{
+     
+     border-radius: 20px;
+     background: #fff;
+
+     img{
+        height: 100px;
+         width: calc( 100vh - 300px );
+         padding: 200px;
+         
+         //margin-left: 50%;
+     }
+ 
+ }
+ Tabs{
+ 
+ }
+
+ .classcard {
+    .ant-card-body {
+        height: calc( 100vh - 300px );
+        overflow-y: scroll;
+
+        .ant-list-item {
+            background-color: #d8e7d6;
+            margin-bottom: 5px;
+
+            &:hover {
+                background-color: rgb(211, 234, 255);;
+            }
+        }
+    }
+}
