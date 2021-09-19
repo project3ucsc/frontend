@@ -115,7 +115,7 @@ export default function TuitionHome() {
                   <Row gutter={24}>
                     <Col span={8}>
                       <div className="card-body1" bordered={true}>
-                      <Tag className="title" color="magenta"> Science | Grade 10
+                      <Tag className="title" color="cyan"> Science | Grade 10
                        <div className="details">
                        <p> Ms. Kumuduni Fernando </p>
                           <p> Fryday at 4PM- 6PM </p>
