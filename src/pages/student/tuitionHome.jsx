@@ -71,7 +71,6 @@ export default function TuitionHome() {
   const showModal = () => {
     setIsModalVisible(true);
   };
-
   const handleOk = () => {
     setIsModalVisible(false);
   };
