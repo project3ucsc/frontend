@@ -1,7 +1,7 @@
 import { Route, Switch } from "react-router-dom";
 
 import Home from "pages/Home";
-import PaymentSlipCheck from "pages/tutor/ManagePayments";
+import ManagePayments from "pages/tutor/ManagePayments";
 import Dashboard from "pages/tutor/Dashboard";
 import SubjectPage from "pages/tutor/SubPage";
 import ApplicationForm from "pages/tutor/ApplicationForm";
@@ -21,7 +21,7 @@ export default function TutorRouter() {
         <Route exact path="/" component={Home} />
         <Route exact path="/dashboard" component={Dashboard} />
         <Route exact path="/classpage/:sdid" component={SubjectPage} />
-      <Route exact path="/managepayments" component={ManagePayments} />
+        <Route exact path="/managepayments" component={ManagePayments} />
         <Route exact path="/applicationform" component={ApplicationForm} />
         <Route exact path="/classdetails/:classid" component={ClassDetails} />
         <Route exact path="/assessment/:assid" component={PAssessmentPage} />
@@ -43,4 +43,3 @@ export default function TutorRouter() {
     </>
   );
 }
-

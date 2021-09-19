@@ -14,7 +14,7 @@ import {
   DollarOutlined,
   FormOutlined,
   UserOutlined,
-  PlusCircleOutlined,
+  // PlusCircleOutlined,
   AppstoreOutlined,
 } from "@ant-design/icons";
 const { SubMenu } = Menu;
