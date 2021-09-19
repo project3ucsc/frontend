@@ -4,7 +4,7 @@ import Dashboard from "pages/student/Dashboard";
 import StudentTimeTable from "pages/student/StudentTimeTable";
 import Profile from "pages/student/Profile";
 import Subpage from "pages/student/Subpage";
-import tvprogramme from "pages/student/tvprogramme";
+import Tvprogramme from "pages/student/Tvprogramme";
 import NotFound404 from "pages/NotFound404";
 import EnrollPage from "pages/student/EnrollPage";
 import VideoPage from "pages/VideoPage";
@@ -32,7 +32,7 @@ export default function StudentRouter() {
           component={VideoPage}
         />
         <Route exact path="/timetable" component={StudentTimeTable} />
-        <Route exact path="/tvprogramme" component={tvprogramme} />
+        <Route exact path="/tvprogramme" component={Tvprogramme} />
 
         <Route exact path="/tuitionHome" component={tuitionHome} />
 
