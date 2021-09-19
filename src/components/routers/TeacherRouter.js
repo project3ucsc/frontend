@@ -9,6 +9,11 @@ import VideoPage from "pages/VideoPage";
 import SubmissionsPage from "pages/teacher/SubmissionsPage";
 import AssessmentPage from "pages/teacher/AssessmentPage";
 
+import Profile from "pages/student/Profile";
+
+import ReliefPage from "pages/teacher/ReliefPage";
+import ReliefSubPage from "pages/teacher/ReliefSubPage";
+
 // import PrivateRoute from "utils/PrivateRoute";
 // import { Role } from "utils/common";
 
@@ -30,8 +35,11 @@ export default function TeacherRouter() {
           component={VideoPage}
         />
         <Route exact path="/applyleave" component={ApplyLeave} />
-        <Route exact path="/classincharge" component={ClassInCharge} />
+        <Route exact path="/ReliefManagement" component={ReliefPage} />
+        <Route exact path="/reliefclass/:relid" component={ReliefSubPage} />
 
+        <Route exact path="/classincharge" component={ClassInCharge} />
+        <Route exact path="/profile" component={Profile} />
         <Route component={NotFound404} />
       </Switch>
     </>

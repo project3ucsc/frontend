@@ -1,20 +1,30 @@
-import React, { useState } from "react";
-import { Row, Col, Card, Calendar, PageHeader, List } from "antd";
+
+import React, { useState, useEffect } from "react";
+import { Row, Col, Card, Button, Timeline, List, message, PageHeader,Calender } from "antd";
+
 import ContentLayout from "components/ContentLayout";
 //import { PlusOutlined } from "@ant-design/icons";
+import { ClockCircleOutlined } from "@ant-design/icons";
+
 import "./dashboard.scss";
+
 import img1 from "../../img/student_cover1.jpg";
 
+import classroomservice from "services/classroom.service";
+import { Link } from "react-router-dom";
+
+import axios from "axios";
+import { authHeader } from "utils/authheader";
+import { apiurl } from "utils/common";
+import authenticationservice from "services/authentication.service";
+
+
 const cstyle = {
-  padding: 24,
-  margin: 10,
+  padding: 10,
+  margin: "10px 0",
   marginBottom: 0,
   minHeight: 280,
 };
-
-function onPanelChange(value, mode) {
-  console.log(value, mode);
-}
 
 var adata = [
   {
@@ -49,51 +59,89 @@ const tdata = [
   },
 ];
 
+
+
 export default function Dashboard() {
-  //const subjects = ["Maths", "Chemistry", "Physics", "English"];
 
-  //const { Content } = Layout;
-  const { Meta } = Card;
-  const [currentUser, setCurrentUser] = useState();
+  const [schoolSubs, setSchoolSubs] = useState([]);
+  const [tutionClasses, setTutionClasses] = useState([]);
+  const [classroonName, setClassroonName] = useState("");
 
-  const subjects = [
-    { _id: "1", name: "Com. Maths", teacher: "Mr. M.T. Premarathna", rate: 3 },
-    { _id: "2", name: "Physics", teacher: "Mr. Nimal Perea", rate: 2.5 },
-    {
-      _id: "3",
-      name: "Chemistry",
-      teacher: "E-thaksalawa",
-      title: "Mrs. Nimali Sandamini",
-      rate: 3,
-    },
-    { _id: "4", name: "General English", teacher: "Mis. Amali Perea", rate: 4 },
-    { _id: "5", name: "GIT", teacher: "Mr. Kasun Liyanage", rate: 3.5 },
-  ];
+  useEffect(() => {
+    let userid = authenticationservice.currentUserValue.id;
+    classroomservice
+      .getSubDetailsForStudentDash()
+      .then((data) => {
+        setSchoolSubs(data.subs);
+        setClassroonName(
+          `(${data.classroom.grade}-${data.classroom.name} classroom)`
+        );
+
+        console.log(data);
+      })
+      .catch((e) => {
+        console.log(e.message);
+      });
+
+    axios
+      .get(`${apiurl}/tutor/studenttution/${userid}`, authHeader())
+      .then((res) => {
+        setTutionClasses(res.data);
+      })
+      .catch((e) => {
+        message.error(e.response.data.message);
+      });
+  }, []);
+
   return (
     <ContentLayout title="DashBoard" paths={["Home", "Dashboard"]}>
-      {/* <Content
-        className="site-layout-background"
-        style={{
-          padding: 24,
-          margin: 0,
-          minHeight: 1280,
-          backgroundColor:"#ffffff",
-        }}
-      > */}
+      {/* <div className="site-page-header-ghost-wrapper">
+        <PageHeader
+          className="page-header-1"
+          style={{ height: 70 }}
+          //ghost={false}
 
-      <img className="cover" src={img1} alt="img1" />
-      <p className="msg">Welcome !!</p>
-      <p className="msg2"> Have a Nice Day</p>
+          title="Good Afternoon Lakshan! Today will be a busy day for you..."
+        >
+          <br />
+        </PageHeader>
+      </div> */}
 
-      <Row>
+
+      <Row gutter={[10, 0]}>
         <Col xs={24} xl={18}>
-          <div className="card-wrapper-student-dash">
-            {subjects.map((item, i) => (
-              <Card className="card" bordered={true} key={i} hoverable style={{ width: 300 }}>
-                <Meta title={item.name} description={item.teacher} />
-              </Card>
-            ))}
-          </div>
+
+
+          <Card
+            style={{ marginBottom: 10 }}
+            title={"Subjects in your school " + classroonName}
+          >
+            <div className="card-wrapper-student-dash">
+              {schoolSubs.map((item, i) => (
+                <Link key={i} to={"/subject/" + item.id}>
+                  <Card hoverable style={{ width: 180 }}>
+                    <Meta
+                      title={item.subject.name}
+                      description={item.teacher.username}
+                    />
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </Card>
+
+          <Card title="Extra Private Classes">
+            <div className="card-wrapper-student-dash">
+              {tutionClasses.map((item, i) => (
+                <Link key={i} to={"/tution/subject/" + item.id}>
+                  <Card key={i} hoverable style={{ width: 220 }}>
+                    <Meta title={item.name} description={item.tutor} />
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </Card>
+
 
           <div className="site-card-border-less-wrapper-2">
             <Card
@@ -133,7 +181,7 @@ export default function Dashboard() {
 
         <br />
         <Col xs={24} xl={6}>
-          <div className="site-card-border-less-wrapper">
+          {/* <div className="site-card-border-less-wrapper">
             <Card style={{ width: 370, height: 450 }}>
               <p>Card content</p>
 
@@ -145,14 +193,36 @@ export default function Dashboard() {
                 />
               </div>
             </Card>
-          </div>
+          </div> */}
+          <Card
+            title="Timeline"
+            className="timelinecard"
+            style={{ marginBottom: 10 }}
+          >
+            <Timeline>
+              <Timeline.Item>
+                <Button type="link">Thermal physics lesson 7</Button> 2021-09-01
+              </Timeline.Item>
+              <Timeline.Item>
+                <Button type="link">Thermal physics quiz 2</Button> 2021-09-06
+              </Timeline.Item>
+              <Timeline.Item
+                dot={<ClockCircleOutlined className="timeline-clock-icon" />}
+                color="red"
+              >
+                <Button type="link">Electronic Lesson 1</Button> 2021-09-10
+              </Timeline.Item>
+              <Timeline.Item>
+                <Button type="link">Electronic quiz 1</Button> 2015-09-01
+              </Timeline.Item>
+            </Timeline>
+          </Card>
 
-          <br />
           <div className="site-card-border-less-wrapper-2-right">
             <Card
               title="Upcoming Events"
               className="teachercard"
-              style={cstyle}
+              // style={cstyle}
             >
               <List
                 itemLayout="horizontal"

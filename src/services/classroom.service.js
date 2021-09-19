@@ -192,6 +192,19 @@ async function getSubDetailsforStudent() {
     throw new Error(err.response.data.message);
   }
 }
+async function getSubDetailsForStudentDash() {
+  const userid = authenticationservice.currentUserValue.id;
+
+  try {
+    const res = await axios.get(
+      `${apiurl}/classes/getSubDetailsforStudent/dash/${userid}`,
+      authHeader()
+    );
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+}
 
 async function addSubjectDetail(subject, teacher, classroomid) {
   try {
@@ -249,5 +262,6 @@ const classroomservice = {
   addSubjectDetail,
   removeSubjectDetail,
   updateSubjectDetail,
+  getSubDetailsForStudentDash,
 };
 export default classroomservice;

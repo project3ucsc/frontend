@@ -17,7 +17,6 @@ import {
   PlusOutlined,
   CheckOutlined,
   CloseOutlined,
-  EyeOutlined,
   EyeInvisibleOutlined,
   EditOutlined,
   DeleteOutlined,
@@ -41,7 +40,6 @@ export default function LearnMatSection({ deleteSection, section }) {
   const showPopconfirm = () => {
     setDeleteconfirmvisible(true);
   };
-
   const [learnmat, setLearnmat] = useState(section.resource_details);
 
   const handleDelete = async (e) => {
