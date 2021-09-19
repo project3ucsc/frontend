@@ -7,6 +7,7 @@ import {
   SolutionOutlined,
   ScheduleOutlined,
   HomeOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 
 import { Layout, Menu } from "antd";
@@ -50,6 +51,9 @@ export default function SystemAdminSideBar() {
         </Menu.Item>
         <Menu.Item key="7" icon={<HomeOutlined />}>
           <Link to="/RegSchool">School Managment</Link>
+        </Menu.Item>
+        <Menu.Item key="8" icon={<UserOutlined />}>
+          <Link to="/profile">Profile</Link>
         </Menu.Item>
       </Menu>
     </Layout.Sider>

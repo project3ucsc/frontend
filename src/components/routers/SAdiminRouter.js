@@ -11,6 +11,7 @@ import NewTeacherReq from "pages/scladmin/NewTeacherReq";
 
 import NotFound404 from "pages/NotFound404";
 import StudentMangament from "pages/scladmin/StudentMangament";
+import Profile from "pages/student/Profile";
 
 // import { Role } from "utils/common";
 
@@ -27,6 +28,7 @@ export default function SAdiminRouter() {
         <Route exact path="/TeacherManagement" component={NewTeacherReq} />
         <Route exact path="/StudentManagement" component={StudentMangament} />
         <Route exact path="/TutorManagement" component={ViewTutorRequestPage} />
+        <Route exact path="/profile" component={Profile} />
 
         <Route component={NotFound404} />
       </Switch>

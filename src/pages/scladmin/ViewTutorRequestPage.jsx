@@ -1,161 +1,193 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
-  Row,
-  Col,
-  Card,
-  Button,
   Layout,
   Modal,
+  Button,
+  Descriptions,
+  Card,
   List,
   Avatar,
-  Descriptions,
+  Tabs,
+  message,
+  Spin,
 } from "antd";
 
 import ContentLayout from "components/ContentLayout";
-import "./ViewTutorRequestPage.scss";
+// import "./ClassInCharge.scss";
+import axios from "axios";
+import { authHeader } from "utils/authheader";
+import { apiurl, enum_tutorschool_req } from "utils/common";
+import authenticationservice from "services/authentication.service";
+
+const { TabPane } = Tabs;
+const { Content } = Layout;
 
 export default function ViewTutorRequestPage() {
-  const { Content } = Layout;
-  const [popupvisible, setpopvisible] = useState(false);
+  const [popupvisible, setpopupvisible] = useState(false);
+  const [activeList, setActiveList] = useState([]);
+  const [pendingList, setPendingList] = useState([]);
 
-  const listData = [
-    {
-      title: "Mr. Lakmal Silva",
-      discrip: "lakmal.silva@gmail.com",
-    },
-    {
-      title: "Mr. Vishwa Herath",
-      discrip: "vishwa.herath@gmail.com",
-    },
-    {
-      title: "Mrs.Madara Warnakulasooriya",
-      discrip: "madara.warnakula@gmail.com",
-    },
-    {
-      title: "Mrs. Lumini Herath",
-      discrip: "lumini.herath@gmail.com",
-    },
-    {
-      title: "Ms.Hasini Peiris",
-      discrip: "hasini.peiris@gmail.com",
-    },
-  ];
+  const [modalData, setModalData] = useState(null);
+  const [mdataLoading, setMdataLoading] = useState(true);
 
-  const historyData = [
-    {
-      title: "Ms. Sandali Liyanage",
-      discrip: "sandali.liyanage@gmail.com",
-      status: "Accepted",
-    },
-    {
-      title: "Mr. Kapila Weerasinghe",
-      discrip: "kapila.weerasinghe@gmail.com",
-      status: "Rejected",
-    },
-    {
-      title: "Mr. Deepal Perera",
-      discrip: "deepal.perera@gmail.com",
-      status: "Accepted",
-    },
-    {
-      title: "Mrs. Deepani Kumari",
-      discrip: "deepani.kumari@gmail.com",
-      status: "Rejected",
-    },
-    {
-      title: "Mr. Lakshan Perera",
-      discrip: "lakshan.perera@gmail.com",
-      status: "Accepted",
-    },
-  ];
+  const [activeTab, setActiveTab] = useState("1");
+  //const handleCancel = () => setpopupvisible(false);
+
+  useEffect(() => {
+    let school_id = authenticationservice.currentUserValue.school_id;
+    axios
+      .get(`${apiurl}/tutor/tutorschoolreq/all/${school_id}`, authHeader())
+      .then((res) => {
+        setActiveList(res.data.active);
+        setPendingList(res.data.pending);
+      })
+      .catch((e) => {
+        message.error(e.response.data.message);
+      });
+
+    // console.log(data);
+  }, []);
+
+  const onListitemClick = async (e) => {
+    try {
+      const reqid = e.currentTarget.id;
+      setMdataLoading(true);
+      const { data } = await axios.get(
+        `${apiurl}/tutor/tutorschoolreq/${reqid}`,
+        authHeader()
+      );
+      console.log(data);
+      setModalData(data);
+      setMdataLoading(false);
+
+      setpopupvisible(true);
+    } catch (e) {
+      message.error(e.response.data.message);
+    }
+  };
+
+  const onAccept = async () => {
+    try {
+      // change db
+
+      await axios.patch(
+        `${apiurl}/tutor/tutorschoolreq/status`,
+        { id: modalData.id, status: enum_tutorschool_req.active },
+        authHeader()
+      );
+      setpopupvisible(false);
+      message.success("Tutor accepted successfully");
+
+      // update ui
+      const activedstu = pendingList.find(
+        (student) => student.id === modalData.id
+      );
+      setActiveList([...activeList, activedstu]);
+      setPendingList(
+        pendingList.filter((student) => student.id !== modalData.id)
+      );
+    } catch (e) {
+      message.error(e.response.data.message);
+    }
+  };
+
+  const onReject = async () => {
+    try {
+      await axios.patch(
+        `${apiurl}/tutor/tutorschoolreq/status`,
+        { id: modalData.id, status: enum_tutorschool_req.rejected },
+        authHeader()
+      );
+      setpopupvisible(false);
+      message.success("Tutor rejected successfully");
+
+      setPendingList(
+        pendingList.filter((student) => student.id !== modalData.id)
+      );
+      setActiveList(
+        activeList.filter((student) => student.id !== modalData.id)
+      );
+    } catch (error) {
+      message.error(error.message);
+    }
+  };
 
   return (
     <ContentLayout
       title="Tutor Management"
-      paths={["SchoolAdmin", "TutorManagement"]}
+      paths={["SchoolAdmin", "Tutor Management"]}
     >
       <Modal
         visible={popupvisible}
-        title="Activate tutor account"
-        onCancel={() => setpopvisible(false)}
-        footer={[
-          <Button key="back" onClick={() => setpopvisible(false)}>
-            Cancel
-          </Button>,
-          <Button danger key="" onClick={() => setpopvisible(false)}>
-            Reject
-          </Button>,
-          <Button
-            key="submit"
-            type="primary"
-            onClick={() => setpopvisible(false)}
-          >
-            Accept
-          </Button>,
-        ]}
+        onCancel={() => setpopupvisible(false)}
+        title="Tutor Details"
+        footer={
+          activeTab === "1"
+            ? [
+                <Button key="back" onClick={() => setpopupvisible(false)}>
+                  Cancel
+                </Button>,
+                <Button danger key="" onClick={onReject}>
+                  Reject
+                </Button>,
+                <Button type="primary" onClick={onAccept}>
+                  Accept
+                </Button>,
+              ]
+            : [
+                <Button danger key="" onClick={onReject}>
+                  Remove from school
+                </Button>,
+                <Button type="primary" onClick={() => setpopupvisible(false)}>
+                  Close Modal
+                </Button>,
+              ]
+        }
       >
-        <Descriptions title="Tutor Details" layout="vertical">
-          <Descriptions.Item label="Name">Mr. Lakmal Silva</Descriptions.Item>
-          <Descriptions.Item label="telephone Number">
-            0715537961
-          </Descriptions.Item>
-          <Descriptions.Item label="Email">
-            lakmal.si@gmail.com
-          </Descriptions.Item>
-          <Descriptions.Item label="Description" span={3}>
-            I believe that every student deserves access to quality education
-            and academic resources.
-          </Descriptions.Item>
-          <Descriptions.Item label="Assigner">
-            Mr. H.M.M. Senarath
-          </Descriptions.Item>
-          <Descriptions.Item label="Assigner Designation">
-            Principal
-          </Descriptions.Item>
-        </Descriptions>
+        {!mdataLoading ? (
+          <Descriptions layout="vertical">
+            <Descriptions.Item label="Name">
+              {modalData.tutor.username}
+            </Descriptions.Item>
+            <Descriptions.Item label="telephone Number">
+              {modalData.tutor.phone}
+            </Descriptions.Item>
+            <Descriptions.Item label="Email">
+              {modalData.tutor.email}
+            </Descriptions.Item>
+            <Descriptions.Item label="Qualification" span={3}>
+              {modalData.qualification}
+            </Descriptions.Item>
+            <Descriptions.Item label="Description" span={3}>
+              {modalData.discription}
+            </Descriptions.Item>
+          </Descriptions>
+        ) : (
+          <Spin />
+        )}
       </Modal>
-
       <Content
-        // className="site-layout-background"
         style={{
-          // padding: 24,
           margin: 0,
           minHeight: 280,
         }}
       >
-        <Row gutter={16}>
-          <Col xs={24} xl={12}>
-            <Card title="New tutor requests" className="tutorcard">
+        {/* <Row gutter={16}> */}
+        <Tabs
+          type="card"
+          defaultActiveKey="1"
+          onChange={(key) => setActiveTab(key)}
+        >
+          <TabPane tab="New Tutor requests" key="1">
+            <Card title="Pending Requests" className="teacherclscard">
               <List
                 itemLayout="horizontal"
-                dataSource={listData}
-                renderItem={(item) => (
-                  <List.Item onClick={() => setpopvisible(true)}>
-                    <List.Item.Meta
-                      avatar={
-                        <Avatar
-                          style={{ margin: 10 }}
-                          src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                        />
-                      }
-                      title={item.title}
-                      description={item.discrip}
-                    />
-                  </List.Item>
-                )}
-              />
-              ,
-            </Card>
-          </Col>
-          <Col xs={24} xl={12}>
-            <Card title="History" className="tutorcard">
-              <List
-                itemLayout="horizontal"
-                dataSource={historyData}
+                dataSource={pendingList}
                 renderItem={(item) => (
                   <List.Item
-                    onClick={() => setpopvisible(true)}
-                    style={{ paddingRight: 10 }}
+                    key={item.id}
+                    id={item.id}
+                    onClick={onListitemClick}
                   >
                     <List.Item.Meta
                       avatar={
@@ -164,20 +196,46 @@ export default function ViewTutorRequestPage() {
                           src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
                         />
                       }
-                      title={item.title}
-                      description={item.discrip}
+                      title={item.tutor.username}
+                      description={item.tutor.email}
+                    />
+                  </List.Item>
+                )}
+              />
+            </Card>
+          </TabPane>
+
+          <TabPane tab="Approved Tutors" key="2">
+            {/* <Col xs={24} xl={24}> */}
+            <Card title="Tutor List" className="teacherclscard">
+              <List
+                itemLayout="horizontal"
+                dataSource={activeList}
+                renderItem={(item) => (
+                  <List.Item
+                    key={item.id}
+                    id={item.id}
+                    onClick={onListitemClick}
+                  >
+                    <List.Item.Meta
+                      avatar={
+                        <Avatar
+                          style={{ margin: 10 }}
+                          src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                        />
+                      }
+                      title={item.tutor.username}
+                      description={item.tutor.email}
                     />
                     <div>{item.status}</div>
                   </List.Item>
                 )}
               />
-              ,
             </Card>
-          </Col>
-        </Row>
+            {/* </Col> */}
+          </TabPane>
+        </Tabs>
       </Content>
     </ContentLayout>
   );
 }
-
-//manageuser page have to be added

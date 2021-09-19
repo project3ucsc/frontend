@@ -1,142 +1,126 @@
-import React from "react";
+
+import React, { useState, useEffect } from "react";
 import { Layout, Row, Col, Card, Button, Statistic , Image } from "antd";
 
 //import img1 from "../../img/teacher_cover2.jpg";
 
-import ContentLayout from "components/ContentLayout";
-import { Content } from "antd/lib/layout/layout";
-import "./Tdashboard.scss";
 
-export default function Dashboard(){
-  const { Content } = Layout;
+import axios from "axios";
+import { authHeader } from "utils/authheader";
+import { apiurl, getDateTxt } from "utils/common";
+import authenticationservice from "services/authentication.service";
+
+import { Layout, message, Card } from "antd";
+import ContentLayout from "components/ContentLayout";
+
+import { Link } from "react-router-dom";
+
+// import { Avatar } from "antd";
+import {
+  EditOutlined,
+  // EllipsisOutlined,
+  SettingOutlined,
+} from "@ant-design/icons";
+
+const { Content } = Layout;
+
+const { Meta } = Card;
+
+export default function Dashboard() {
+  const [classroomList, setClassroomList] = useState([]);
+  useEffect(() => {
+    let userid = authenticationservice.currentUserValue.id;
+    axios
+      .get(`${apiurl}/tutor/classes/list/${userid}`, authHeader())
+      .then((res) => {
+        setClassroomList(res.data);
+        console.log(res.data);
+      })
+      .catch((e) => {
+        message.error(e.response.data.message);
+      });
+  }, []);
 
   return (
-    <ContentLayout paths={["Dashboard"]}>
+    <ContentLayout title="Dashboard" paths={["Home", "Dashboard"]}>
       <Content
-      className="tutor-header">
-     
-     
-     
-      
-        <Row>
-          <Col xs={24} xl={24}>
-           
-            <Row gutter={16}>
-              <Col span={6}>
-                <Statistic className="stat" title="Total Enrolled Students" value={500} />
-              </Col>
-              <Col span={6}>
-                <Statistic className="stat" title="Total No of classes conducted this week " value={24} />
-              </Col>
-              <Col span={6}>
-                < Statistic className="stat" title="Payment complete percentage" value={"80%"} />
-              </Col>
-              <Button style={{ marginTop: 16 }} type="primary">
-                Create Class
-              </Button>
-            </Row>
-            ,
-            <Card title="Knowladge Hub School List">
+        className="site-layout-background"
+        style={{
+          // padding: 24,
+          margin: 0,
+          minHeight: 280,
+        }}
+      >
+        <Card title="Class Management">
+          <div className="card-wrapper">
+            {/* <Row gutter={[10, 10]}> */}
+            {classroomList.map((classroom) => {
+              return (
+                // <Col key={classroom.id} span={8}>
+
+                <Card
+                  key={classroom.id}
+                  style={{ width: 200, margin: 10 }}
+                  // cover={
+                  //   <img
+                  //     style={{ height: 100 }}
+                  //     alt="example"
+                  //     src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                  //   />
+                  // }
+                  actions={[
+                    <Link to={"/classdetails/" + classroom.id}>
+                      {" "}
+                      <SettingOutlined key="setting" />
+                    </Link>,
+                    <Link to={"/classpage/" + classroom.id}>
+                      <EditOutlined key="edit" />
+                    </Link>,
+                    // <EllipsisOutlined key="ellipsis" />,
+                  ]}
+                >
+                  <Meta
+                    // avatar={
+                    //   <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                    // }
+                    title={classroom.subject + " | " + classroom.grade}
+                    description={
+                      <>
+                        {" "}
+                        <p style={{ margin: 3 }}>{classroom.day}</p>
+                        <p style={{ margin: 0 }}>
+                          {getDateTxt(
+                            classroom.sttime,
+                            classroom.endtime,
+                            "h12"
+                          )}
+                        </p>{" "}
+                      </>
+                    }
+                  />
+                </Card>
+                // </Col>
+              );
+            })}
+
+            <Link to="/addnewclasses">
               <Card
-                type="inner"
-                title="School_A"
-                extra={<Button type="link">More</Button>}
+                style={{ width: 200, height: 170, margin: 10 }}
+                // cover={
+                //   <img
+                //     style={{ height: 100 }}
+                //     alt="example"
+                //     src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                //   />
+                // }
               >
-                Principle : ABC
+                +
               </Card>
+            </Link>
 
-              <Card
-                style={{ marginTop: 16 }}
-                type="inner"
-                title="School_B"
-                extra={<Button type="link">More</Button>}
-              >
-                Principle : Lakshan
-              </Card>
-
-              <Card
-                style={{ marginTop: 16 }}
-                type="inner"
-                title="School_C"
-                extra={<Button type="link">More</Button>}
-              >
-                Principle : Malaka
-              </Card>
-            </Card>
-          </Col>
-
-          {/* <Col xs={24} xl={6}>
-            <>
-              <Alert
-                message="Success Tips"
-                type="success"
-                showIcon
-                action={
-                  <Button size="small" type="text">
-                    View
-                  </Button>
-                }
-                closable
-              />
-
-              <Alert
-                message="Success Tips"
-                type="success"
-                showIcon
-                action={
-                  <Button size="small" type="text">
-                    View
-                  </Button>
-                }
-                closable
-              />
-              <Alert
-                message="Success Tips"
-                type="success"
-                showIcon
-                action={
-                  <Button size="small" type="text">
-                    View
-                  </Button>
-                }
-                closable
-              />
-
-              <Alert
-                message="3 new Education programmes on the process stage."
-                type="warning"
-                action={
-                  <Space>
-                    <Button size="small" type="ghost">
-                      Done
-                    </Button>
-                  </Space>
-                }
-                closable
-              />
-              <Alert
-                message="Info Text"
-                description="Information about newly added schools"
-                type="info"
-                action={
-                  <Space direction="vertical">
-                    <Button size="small" type="primary">
-                      View
-                    </Button>
-                    <Button size="small" danger type="ghost">
-                      Decline
-                    </Button>
-                  </Space>
-                }
-                closable
-              />
-            </>
-            ,
-            <Button type="primary" onClick={openNotification}>
-              Open the notification box
-            </Button>
-          </Col> */}
-        </Row>
+            {/* </Row> */}
+          </div>
+        </Card>
       </Content>
     </ContentLayout>
   );
