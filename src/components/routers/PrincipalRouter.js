@@ -1,6 +1,6 @@
 import { Route, Switch } from "react-router-dom";
 
-import Dashboard from "pages/teacher/Dashboard";
+import Dashboard from "pages/principal/Dashboard";
 import NotFound404 from "pages/NotFound404";
 import NewSclAdminReq from "pages/principal/NewSclAdminReq";
 import Profile from "pages/student/Profile";
