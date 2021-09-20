@@ -120,10 +120,7 @@ export default function Dashboard() {
               {schoolSubs.map((item, i) => (
                 <Link key={i} to={"/subject/" + item.id}>
                   <Card hoverable style={{ width: 180 }}>
-                    <Meta
-                      title={item.subject.name}
-                      description={item.teacher.username}
-                    />
+                   
                   </Card>
                 </Link>
               ))}
@@ -135,7 +132,7 @@ export default function Dashboard() {
               {tutionClasses.map((item, i) => (
                 <Link key={i} to={"/tution/subject/" + item.id}>
                   <Card key={i} hoverable style={{ width: 220 }}>
-                    <Meta title={item.name} description={item.tutor} />
+                    
                   </Card>
                 </Link>
               ))}

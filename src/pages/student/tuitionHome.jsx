@@ -25,7 +25,6 @@ const { Search } = Input;
 const onSearch = (value) => console.log(value);
 
 export default function TuitionHome() {
-
   const [classes, setClasses] = useState([]);
   useEffect(() => {
     let school_id = authenticationservice.currentUserValue.school_id;
@@ -39,7 +38,6 @@ export default function TuitionHome() {
         message.error(e.response.data.message);
       });
   }, []);
-
 
   return (
     <ContentLayout
@@ -72,32 +70,13 @@ export default function TuitionHome() {
                 </Space>
                 <Divider />
                 <div className="site-card-wrapper">
-
                   {classes.map((cls, i) => {
                     return <TutionCardStu cls={cls} key={i} i={i} />;
                   })}
-
                 </div>
               </TabPane>
               <TabPane tab="Enrolled Classes" key="2">
-
-                <List
-                  itemLayout="horizontal"
-                  dataSource={data}
-                  renderItem={(item) => (
-                    <List.Item>
-                      <List.Item.Meta
-                        avatar={
-                          <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                        }
-                        title={<Link to="subjectPage">{item.title}</Link>}
-                        id={id}
-                        description="<Tutor name  |  Date  |  Time >"
-                      />
-                    </List.Item>
-                  )}
-                />
-
+                <StudentPclassList />
               </TabPane>
             </Tabs>
           </Col>

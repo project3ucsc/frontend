@@ -16,6 +16,7 @@ import {
   Input,
   DatePicker,
   Select,
+  Tabs,
 } from "antd";
 import { ArrowUpOutlined, ArrowDownOutlined } from "@ant-design/icons";
 import img1 from "../../img/admin_cover2.jpg";
@@ -26,6 +27,7 @@ import "./principal.scss";
 
 export default function Dashboard() {
   const { Content } = Layout;
+  const { TabPane } = Tabs;
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -207,7 +209,7 @@ export default function Dashboard() {
                   <Card>
                     <p className="analysis">
                       {" "}
-                       Teachers Enrolled in the System{" "}
+                      Teachers Enrolled in the System{" "}
                     </p>
                     <Progress
                       type="circle"
@@ -219,15 +221,12 @@ export default function Dashboard() {
 
                 <Col span={6}>
                   <Card>
-                    <p className="analysis">
-                      {" "}
-                      System Access Rate of School{" "}
-                    </p>
+                    <p className="analysis"> System Access Rate of School </p>
                     <Progress
                       type="circle"
                       colour="Green"
                       percent={100}
-                      format={(percent) =>`${percent}  `}
+                      format={(percent) => `${percent}  `}
                     />
                   </Card>
                 </Col>
@@ -252,7 +251,7 @@ export default function Dashboard() {
         </Row>
         <Row>
           <Col span={18}>
-            <Card>
+            <Card className="card-1">
               <Form className="filter table">
                 <Form.Item
                   span
@@ -285,7 +284,12 @@ export default function Dashboard() {
                     <Select.Option value="Science">Science</Select.Option>
                   </Select>
                 </Form.Item>
-                <Form.Item name="teacher" label="Select Teacher">
+                <Form.Item
+                  name="teacher"
+                  className="form"
+                  label="Select Teacher"
+                  column-width="40px"
+                >
                   <Select>
                     <Select.Option value="1">Mr. Aruna Peris</Select.Option>
                     <Select.Option value="2">Ms.Amala Rajakumara</Select.Option>
@@ -303,7 +307,45 @@ export default function Dashboard() {
         <Row>
           <Col span={18}>
             <Card className="reports">
-            <p className="T-report"> Analysis Report</p>
+              <p className="T-report"> Analysis Report</p>
+              <Tabs defaultActiveKey="1" centered>
+                <TabPane tab="Attendance Analysis of the Teacher" key="1">
+                  <Card Class name="details">
+                    <p>No of working days for the Month: </p>
+                    <p>No of periods for the Month : </p>
+                    <p>No of students assign for the teacher : </p>
+                    <p>No of leaves applied for the Month : </p>
+                    <h3>Attendance Percentage of ..(entered techer name)...  for the Month of ...(Entered month)... </h3>
+                    <Progress
+                      type="circle"
+                      percent={75} 
+                      format={(percent) => `${percent}% `}
+                    />
+
+                  </Card>
+                </TabPane>
+                <TabPane tab="Attendance Analysis of Students" key="2">
+                  <p>No of Students enrolled in particular subject : </p>
+                  <p>Required attendance for the month : </p>
+                  <p>Marked attendance for the month : </p>
+                  <h3> Attendance Analysis for the ..Subject.. </h3>
+                  <Progress
+                      type="circle"
+                      percent={75} 
+                      format={(percent) => `${percent}% `}
+                    />
+                </TabPane>
+                <TabPane tab="Subject Preference Status" key="3">
+                  <p>Total No of Students enrolled for ..Subject.. : </p>
+                  <p>No of students enrolled with teacher .. name.. : </p>
+                  <h3>Subject preference status</h3>
+                  <Progress
+                      type="circle"
+                      percent={75} 
+                      format={(percent) => `${percent}% `}
+                    />
+                </TabPane>
+              </Tabs>
             </Card>
           </Col>
         </Row>
