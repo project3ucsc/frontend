@@ -4,7 +4,7 @@ import ContentLayout from "components/ContentLayout";
 import TimeTableBig from "components/TimeTableBig";
 import TimeTableSm from "components/TimeTableSm";
 import timeslotservice from "services/timeslot.service";
-import { getClassName } from "utils/common";
+import { getClassName, spinStyle } from "utils/common";
 
 const { TabPane } = Tabs;
 
@@ -65,7 +65,7 @@ export default function StudentTimeTable() {
                   </TabPane>
                 </Tabs>
               ))}
-            {loading && <Spin size="large" />}
+            {loading && <Spin {...spinStyle} size="large" />}
           </Col>
         </Row>
       </Content>

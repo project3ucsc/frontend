@@ -13,7 +13,7 @@ import assmntservice from "services/assmnt.service";
 import { containers, getFileUrl } from "services/azureblob.service";
 import { TextRow } from "components/TextRow";
 
-const { Paragraph, Text } = Typography;
+const { Paragraph } = Typography;
 
 export default function AssessmentStuPage() {
   const { assid } = useParams();

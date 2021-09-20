@@ -4,6 +4,7 @@ import {
   UsergroupAddOutlined,
   DesktopOutlined,
   HomeOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 
 import { Layout, Menu } from "antd";
@@ -32,6 +33,7 @@ export default function PrincipalSideBar() {
         <Menu.Item key="3" icon={<UsergroupAddOutlined />}>
           <Link to="/SclAdminManagement">School Admin Management</Link>
         </Menu.Item>
+
         <MenuItem key="4" icon ={<UsergroupAddOutlined/>}>
           <Link to="/Teacher"> Teachers</Link>
         </MenuItem>
@@ -41,6 +43,13 @@ export default function PrincipalSideBar() {
         <MenuItem key="4" icon ={<UsergroupAddOutlined/>}>
           <Link to="/Access Analysis"> Access Analysis</Link>
         </MenuItem>
+
+
+
+        <Menu.Item key="5" icon={<UserOutlined />}>
+          <Link to="/profile">Profile</Link>
+        </Menu.Item>
+        
 
       </Menu>
     </Layout.Sider>
