@@ -10,7 +10,7 @@ import { authHeader } from "utils/authheader";
 import { apiurl, getDateTxt } from "utils/common";
 import authenticationservice from "services/authentication.service";
 
-import { Layout, message, Card } from "antd";
+import { message } from "antd";
 import ContentLayout from "components/ContentLayout";
 
 import { Link } from "react-router-dom";

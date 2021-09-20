@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import "./sysadmin.scss";
 import {
   Layout,
@@ -19,19 +19,66 @@ import { UploadOutlined } from "@ant-design/icons";
 import { List, Avatar } from "antd";
 
 import ContentLayout from "components/ContentLayout";
+import axios from "axios";
+import authenticationservice from "services/authentication.service";
+import { authHeader } from "utils/authheader";
+import { apiurl } from "utils/common";
 
 const { Content } = Layout;
 //time picker
 const format = "HH:mm";
 //Tabs
 const { TabPane } = Tabs;
+const { Option } = Select;
+
+const sectionData = ['Primary','OLevel','ALevel'];
+const gradeData = {
+  Primary: ['1','2','3','4','5'],
+  OLevel: ['6','7','8','9','10','11'],
+  ALevel: ['12','13']
+};
+const subjectnameData = {
+  Primary: ['Sinhala','Mathematics','Environment','English'],
+  OLevel: ['Mathematics','Science','History','English','Sinhala','Buddhism','Catholics','Tamil', 'IT','Geography','Commerce'],
+  ALevel: ['Combined Maths','Biology','Chemistry','Physics','IT','Agriculture','Business Studies','Accounting','Econ','Geography','Hindu']
+};
 
 //upload
 export default function EduProg() {
+
+  const [loading, setLoading] = useState(false);
+  const [sections,setSections] = useState(subjectnameData[sectionData[0]]);
+  const [subject,setSubject] = useState(subjectnameData[sectionData[0]][0]);
+
+  const[sectiongrade,setSectionGrade] = useState(gradeData[sectionData[0]]);
+  const [grade,setGrade] = useState(gradeData[sectionData[0]][0]);
+  const [form] = Form.useForm();
+
   const onfinish = (val) => {
-    console.log(val);
+    setLoading(true);
+    console.log("Success",val);
+    axios
+      .post(
+        apiurl + "/freeprog/add/" + authenticationservice.currentUserValue.id,
+        val,
+        authHeader()
+      )
+      .then( (res)=>{
+        console.log(res.data);
+        message.success("Edu program added successfully");
+        setLoading(false);
+        form.resetFields();
+      })
+      .catch((e) => {
+        message.error("Something went wrong");
+        console.log(e);
+        setLoading(false);
+      }); 
   };
-  const { option } = Select;
+
+  const onfinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
 
   function onChange(value) {
     console.log(`selected ${value}`);
@@ -48,6 +95,22 @@ export default function EduProg() {
   function onSearch(val) {
     console.log("search:", val);
   }
+
+  const handleSectionChange = (value) => {
+    setSections(subjectnameData[value]);
+    setSubject(subjectnameData[value][0]);
+
+    setSectionGrade(gradeData[value]);
+    setGrade(gradeData[value][0]);
+  };
+
+  const onSubjectChange = (value) => {
+    setSubject(value);
+  };
+
+  const onGradeChange = (value) => {
+    setGrade(value);
+  };
   //Suggested list
 
   const listData = [
@@ -83,7 +146,7 @@ export default function EduProg() {
     },
     {
       href: "https://ant.design",
-      title: `Science EduCation Programme`,
+      title: `Science Edu Programme`,
       avatar:
         "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
       description:
@@ -186,14 +249,16 @@ export default function EduProg() {
               </TabPane>
               <TabPane tab="Add new Education Programme" key="2">
                 <Form
+                  form={form}
                   onFinish={onfinish}
+                  onFinishFailed={onfinishFailed}
                   labelCol={{ span: 5 }}
                   wrapperCol={{ span: 15 }}
                 >
                   <Form.Item name="type" label="Select Programme type">
                     <Select
                       showSearch
-                      placeholder="Select a medium"
+                      placeholder="Select the program type"
                       optionFilterProp="children"
                       filterOption={(input, option) =>
                         option.children
@@ -201,9 +266,9 @@ export default function EduProg() {
                           .indexOf(input.toLowerCase()) >= 0
                       }
                     >
-                      <option value="tv">TV programme</option>
-                      <option value="radio">Radio Programme</option>
-                      <option value="video">Video</option>
+                      <Option value="tv">TV programme</Option>
+                      <Option value="radio">Radio Programme</Option>
+                      <Option value="video">YouTube Programme</Option>
                     </Select>
                   </Form.Item>
 
@@ -217,28 +282,34 @@ export default function EduProg() {
                       },
                     ]}
                   >
-                    <Input placeholder="Please input your name" />
+                    <Input placeholder="Please input program name" />
+                  </Form.Item>
+                  
+                  <Form.Item name="section" label="section" rules={[{
+                    required: true,
+                    message:"Please input targeted section",
+                  },]}>
+                    <Select onChange={handleSectionChange}>
+                      {sectionData.map(section =>(
+                        <Option key={section}>{section}</Option>
+                      ))}
+                    </Select>
                   </Form.Item>
 
-                  <Form.Item name="subject" label="subject" rules={[{
+                  <Form.Item name="grade" label="grade" rules={[{
                     required: true,
-                    message:"Please inout subject name",
+                    message:"Please input grade here",
                   },]}>
-                    <Input placeholder="Please input subject name"/>
+                    <Select 
+                      value={grade}
+                      onChange={onGradeChange}
+                    >
+                     {sectiongrade.map(gra=>(
+                       <Option key={gra}>{gra}</Option>
+                     ))}
+                    </Select>
                   </Form.Item>
- 
-                  <Form.Item
-                    name="discription"
-                    label="Programme discription"
-                    rules={[
-                      {
-                        required: false,
-                        message: "Please input project description",
-                      },
-                    ]}
-                  >
-                    <Input placeholder="Please input Programme discription" />
-                  </Form.Item>
+              
                   <Form.Item name="subject" label="Relevent Subject">
                     <Select
                       showSearch
@@ -254,11 +325,26 @@ export default function EduProg() {
                           .toLowerCase()
                           .indexOf(input.toLowerCase()) >= 0
                       }
+                      value={subject}
+                      onChange={onSubjectChange}
                     >
-                      <option value="Mathematics">Mathematics</option>
-                      <option value="Science">Science</option>
-                      <option value="Buddhisum">Buddhisum</option>
+                     {sections.map(sub=>(
+                       <Option key={sub}>{sub}</Option>
+                     ))} 
                     </Select>
+                  </Form.Item>
+    
+                  <Form.Item
+                    name="discription"
+                    label="Programme discription"
+                    rules={[
+                      {
+                        required: false,
+                        message: "Please input program description",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Please input Programme discription" />
                   </Form.Item>
 
                   <Form.Item name="day" label="Broadcast Date">
@@ -276,13 +362,13 @@ export default function EduProg() {
                           .indexOf(input.toLowerCase()) >= 0
                       }
                     >
-                      <option value="monday">Monday</option>
-                      <option value="tuesday">Tuesday</option>
-                      <option value="wednesday">Wednesday</option>
-                      <option value="thursday">Thursday</option>
-                      <option value="fryday">Fryday</option>
-                      <option value="saturday">Saturday</option>
-                      <option value="sunday">Sunday</option>
+                      <Option value="monday">Monday</Option>
+                      <Option value="tuesday">Tuesday</Option>
+                      <Option value="wednesday">Wednesday</Option>
+                      <Option value="thursday">Thursday</Option>
+                      <Option value="fryday">Fryday</Option>
+                      <Option value="saturday">Saturday</Option>
+                      <Option value="sunday">Sunday</Option>
                     </Select>
                   </Form.Item>
 
@@ -304,6 +390,7 @@ export default function EduProg() {
                       style={{ marginLeft: 250 }}
                       type="primary"
                       htmlType="submit"
+                      loading={loading}
                     >
                       Add Programme
                     </Button>

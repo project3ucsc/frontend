@@ -59,7 +59,7 @@ const tdata = [
   },
 ];
 
-
+const {Meta} = Card;
 
 export default function Dashboard() {
 
