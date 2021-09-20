@@ -30,6 +30,7 @@ const { Meta } = Card;
 
 export default function Home() {
   const [freeProgs, setFreeProgs] = useState([]);
+  let username=
 
   useEffect(() => {
     axios.get(apiurl + "/freeprog").then((res) => {
