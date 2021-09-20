@@ -42,7 +42,7 @@ export default function StudentRouter() {
           component={VideoPage}
         />
         <Route exact path="/timetable" component={StudentTimeTable} />
-        <Route exact path="/tvprogramme" component={Tvprogramme} />
+        <Route exact path="/Tvprogramme" component={Tvprogramme} />
 
         <Route exact path="/TuitionHome" component={TuitionHome} />
 
