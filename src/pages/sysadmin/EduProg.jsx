@@ -255,7 +255,16 @@ export default function EduProg() {
                   labelCol={{ span: 5 }}
                   wrapperCol={{ span: 15 }}
                 >
-                  <Form.Item name="type" label="Select Programme type">
+                  <Form.Item 
+                    name="type" 
+                    label="Select Programme type"
+                    rules={[
+                      {
+                        required: true,
+                        message: "please select a channel",
+                      },
+                    ]}
+                    >
                     <Select
                       showSearch
                       placeholder="Select the program type"
@@ -283,6 +292,19 @@ export default function EduProg() {
                     ]}
                   >
                     <Input placeholder="Please input program name" />
+                  </Form.Item>
+
+                  <Form.Item
+                    name="channel"
+                    label="Channel"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input channel name!",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Please input channel name here" />
                   </Form.Item>
                   
                   <Form.Item name="section" label="section" rules={[{
@@ -339,7 +361,7 @@ export default function EduProg() {
                     label="Programme discription"
                     rules={[
                       {
-                        required: false,
+                        required: true,
                         message: "Please input program description",
                       },
                     ]}
@@ -347,7 +369,16 @@ export default function EduProg() {
                     <Input placeholder="Please input Programme discription" />
                   </Form.Item>
 
-                  <Form.Item name="day" label="Broadcast Date">
+                  <Form.Item 
+                    name="day" 
+                    label="Broadcast Date"
+                    rules={[
+                      {
+                        required: true,
+                        message: "please select a date",
+                      },
+                    ]}
+                  >
                     <Select
                       showSearch
                       placeholder="Select broadcast date"
@@ -366,7 +397,7 @@ export default function EduProg() {
                       <Option value="tuesday">Tuesday</Option>
                       <Option value="wednesday">Wednesday</Option>
                       <Option value="thursday">Thursday</Option>
-                      <Option value="fryday">Fryday</Option>
+                      <Option value="friday">Friday</Option>
                       <Option value="saturday">Saturday</Option>
                       <Option value="sunday">Sunday</Option>
                     </Select>
