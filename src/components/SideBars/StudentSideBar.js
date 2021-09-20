@@ -4,11 +4,8 @@ import {
   AppstoreOutlined,
   PieChartOutlined,
   DesktopOutlined,
-  ContainerOutlined,
   HomeOutlined,
   UserOutlined,
-  ReadOutlined,
-  FolderAddOutlined,
 } from "@ant-design/icons";
 
 import { Layout, Menu } from "antd";
