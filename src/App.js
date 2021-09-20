@@ -27,7 +27,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState();
 
   const [notifivisible, setNotifivisible] = useState(false);
-  const [notifiCount, setNotifiCount] = useState(4);
+  const [notifiCount, setNotifiCount] = useState();
   const onNotiDrawerClose = () => {
     setNotifivisible(false);
   };
@@ -106,9 +106,18 @@ function App() {
               <PublicRoute exact path="/register" component={Register} />
               <MainUserRouter />
             </Switch>
+
+            <NotificationComponent
+              {...{
+                setNotifiCount,
+                onNotiDrawerClose,
+                notifivisible,
+                currentUser,
+              }}
+            />
           </Router>
         </Layout>
-
+        {/* 
         <Drawer
           width={350}
           style={{ marginTop: 64 }}
@@ -118,9 +127,9 @@ function App() {
           closable={true}
           onClose={onNotiDrawerClose}
           visible={notifivisible}
-        >
-          <NotificationComponent setNotifiCount={setNotifiCount} />
-        </Drawer>
+        > */}
+
+        {/* </Drawer> */}
       </Layout>
     </div>
   );
