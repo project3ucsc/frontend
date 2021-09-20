@@ -15,8 +15,6 @@ import AssessmentStuPage from "pages/student/AssessmentStuPage";
 import PSubpage from "pages/student/PSubpage";
 import PAssessmentStuPage from "pages/student/PAssessmentStuPage";
 
-// import { Role } from "utils/common";
-
 export default function StudentRouter() {
   return (
     <>

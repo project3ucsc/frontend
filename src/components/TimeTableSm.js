@@ -2,12 +2,29 @@ import "./Timetable.scss";
 import "./Timetablebig.scss";
 import { Card } from "antd";
 import { getDateTxt } from "utils/common";
+import { Link } from "react-router-dom";
 
-function Timecard({ name, time }) {
-  return (
-    <Card style={{ textAlign: "center" }} size="small" title={time}>
+function Timecard({ sdid, name, time }) {
+  return sdid === 0 ? (
+    <Card
+      className="timecard"
+      style={{ textAlign: "center" }}
+      size="small"
+      title={time}
+    >
       {name}
     </Card>
+  ) : (
+    <Link to={"/subject/" + sdid}>
+      <Card
+        className="timecard"
+        style={{ textAlign: "center" }}
+        size="small"
+        title={time}
+      >
+        {name}
+      </Card>
+    </Link>
   );
 }
 
@@ -22,16 +39,21 @@ export default function TimeTableSm({ data, day }) {
 
     const ts = row.timeslots.filter((ts) => ts.weekday === day);
     let subname = "";
-
+    let sdid = 0;
     if (ts.length === 0) subname = "None";
-    if (ts.length === 1) subname = ts[0].subject_detail.subject.name;
+    if (ts.length === 1) {
+      subname = ts[0].subject_detail.subject.name;
+      sdid = ts[0].sdid;
+    }
 
-    if (ts.length > 1)
+    if (ts.length > 1) {
       subname = ts.reduce(
         (a, b) =>
           a.subject_detail.subject.name + "/" + b.subject_detail.subject.name
       );
-    newdata.push({ datetime, subname });
+      sdid = ts[0].sdid;
+    }
+    newdata.push({ datetime, subname, sdid });
   });
 
   return (
@@ -50,7 +72,11 @@ export default function TimeTableSm({ data, day }) {
                 return (
                   <tr key={i} className="ant-table-row ant-table-row-level-0">
                     <td className="ant-table-cell">
-                      <Timecard time={row.datetime} name={row.subname} />
+                      <Timecard
+                        sdid={row.sdid}
+                        time={row.datetime}
+                        name={row.subname}
+                      />
                     </td>
                   </tr>
                 );
