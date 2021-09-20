@@ -197,7 +197,7 @@ export default function Dashboard() {
                       {" "}
                       Students Enrolled in the System{" "}
                     </p>
-                    <Progress
+                    <Progress ClassName="chart"
                       type="circle"
                       percent={75}
                       format={(percent) => `${percent}% `}
@@ -211,7 +211,7 @@ export default function Dashboard() {
                       {" "}
                       Teachers Enrolled in the System{" "}
                     </p>
-                    <Progress
+                    <Progress ClassName="chart"
                       type="circle"
                       percent={40}
                       format={(percent) => `${percent}% `}
@@ -222,7 +222,7 @@ export default function Dashboard() {
                 <Col span={6}>
                   <Card>
                     <p className="analysis"> System Access Rate of School </p>
-                    <Progress
+                    <Progress ClassName="chart"
                       type="circle"
                       colour="Green"
                       percent={100}
@@ -316,7 +316,7 @@ export default function Dashboard() {
                     <p>No of students assign for the teacher : </p>
                     <p>No of leaves applied for the Month : </p>
                     <h3>Attendance Percentage of ..(entered techer name)...  for the Month of ...(Entered month)... </h3>
-                    <Progress
+                    <Progress ClassName="chart"
                       type="circle"
                       percent={75} 
                       format={(percent) => `${percent}% `}
@@ -329,7 +329,7 @@ export default function Dashboard() {
                   <p>Required attendance for the month : </p>
                   <p>Marked attendance for the month : </p>
                   <h3> Attendance Analysis for the ..Subject.. </h3>
-                  <Progress
+                  <Progress ClassName="chart"
                       type="circle"
                       percent={75} 
                       format={(percent) => `${percent}% `}
@@ -339,7 +339,7 @@ export default function Dashboard() {
                   <p>Total No of Students enrolled for ..Subject.. : </p>
                   <p>No of students enrolled with teacher .. name.. : </p>
                   <h3>Subject preference status</h3>
-                  <Progress
+                  <Progress ClassName="chart"
                       type="circle"
                       percent={75} 
                       format={(percent) => `${percent}% `}
