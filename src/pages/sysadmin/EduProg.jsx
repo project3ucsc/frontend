@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import "./sysadmin.scss";
 import {
   Layout,
@@ -10,6 +10,10 @@ import {
   Select,
   TimePicker,
   Tabs,
+  Space,
+  Typography,
+  Tag,
+  InputNumber,
 } from "antd";
 
 import moment from "moment";
@@ -22,7 +26,7 @@ import ContentLayout from "components/ContentLayout";
 import axios from "axios";
 import authenticationservice from "services/authentication.service";
 import { authHeader } from "utils/authheader";
-import { apiurl } from "utils/common";
+import { apiurl, getDateTxt } from "utils/common";
 
 const { Content } = Layout;
 //time picker
@@ -30,6 +34,7 @@ const format = "HH:mm";
 //Tabs
 const { TabPane } = Tabs;
 const { Option } = Select;
+const { Text } = Typography;
 
 const sectionData = ['Primary','OLevel','ALevel'];
 const gradeData = {
@@ -47,12 +52,24 @@ const subjectnameData = {
 export default function EduProg() {
 
   const [loading, setLoading] = useState(false);
+  const [suggestion, setSuggestion] = useState([]);
+
   const [sections,setSections] = useState(subjectnameData[sectionData[0]]);
   const [subject,setSubject] = useState(subjectnameData[sectionData[0]][0]);
 
   const[sectiongrade,setSectionGrade] = useState(gradeData[sectionData[0]]);
   const [grade,setGrade] = useState(gradeData[sectionData[0]][0]);
+
   const [form] = Form.useForm();
+
+  useEffect( ()=> {
+    axios
+      .get( `${apiurl}/freeprog/stusuggest`, authHeader() )
+      .then( (res)=>{
+        console.log(res.data);
+        setSuggestion(res.data);
+    });
+  },[]);
 
   const onfinish = (val) => {
     setLoading(true);
@@ -112,54 +129,6 @@ export default function EduProg() {
     setGrade(value);
   };
   //Suggested list
-
-  const listData = [
-    {
-      href: "https://ant.design",
-      title: `Science EduCation Programme`,
-      avatar:
-        "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-      description:
-        "Science Teaching Programme, This is a grade 10 Science education Programme.Is conducted by well qualified teacher",
-      content: (
-        <htmlli>
-          {/* <li>Teacher : A.B.C. Rajakaruna </li> */}
-          <li>Subject : Science</li>
-          <li>Grade : Ordinary Level</li>
-        </htmlli>
-      ),
-    },
-    {
-      href: "https://ant.design",
-      title: `NanaSyura Programme`,
-      avatar:
-        "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-      description:
-        "NanaSyura, This is a grade 8 Science/Masths education Programme.Is conducted by well qualified teacher",
-      content: (
-        <htmlli>
-          {/* <li>Teacher : A.B.C. Rajakaruna </li> */}
-          <li>Subject : Maths</li>
-          <li>Grade : Ordinary Level</li>
-        </htmlli>
-      ),
-    },
-    {
-      href: "https://ant.design",
-      title: `Science Edu Programme`,
-      avatar:
-        "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-      description:
-        "BrainHub, This is a grade 8 Sinhala education Programme brdcast in ITN",
-      content: (
-        <htmlli>
-          {/* <li>Teacher : A.B.C. Rajakaruna </li> */}
-          <li>Subject : Sinhala</li>
-          <li>Grade : Ordinary Level</li>
-        </htmlli>
-      ),
-    },
-  ];
   // for (let i = 0; i < 10; i++) {
   //   listData.push();
   // }
@@ -221,10 +190,10 @@ export default function EduProg() {
                     },
                     pageSize: 3,
                   }}
-                  dataSource={listData}
+                  dataSource={suggestion}
                   renderItem={(item) => (
                     <List.Item
-                      key={item.title}
+                      key={item.id}
 
                       // extra={
                       //   <img
@@ -238,10 +207,19 @@ export default function EduProg() {
                         avatar={
                           <Avatar src="https://www.tele2.nl/Tele2/media/images/Tele2/thuis/tv-abonnement/oude-tv-img.png" />
                         }
-                        title={<a href={item.href}>{item.title}</a>}
-                        description={item.description}
+                        title={item.progtitle}
+                        description={item.discription}
                       />
-                      {item.content}
+                      {/* {item.content} */}
+                      <div>
+                        <Space direction="horizontal">
+                          <Text>At : <Tag color="orange">{getDateTxt(item.starttime, item.endtime, "h12")} </Tag></Text>
+                          <Text>For grade : <Tag color="magenta">{item.grade}</Tag></Text>
+                          <Text>On : <Tag color="gold">{item.channel}</Tag></Text>
+                          <Text>Program type : <Tag color="lime">{item.type.toUpperCase()}</Tag></Text>
+                          <Text>Subject : <Tag color="green">{item.subject}</Tag></Text>
+                        </Space>
+                      </div>
                     </List.Item>
                   )}
                 />
@@ -332,7 +310,10 @@ export default function EduProg() {
                     </Select>
                   </Form.Item>
               
-                  <Form.Item name="subject" label="Relevent Subject">
+                  <Form.Item name="subject" label="Relevent Subject" rules={[{
+                    required: true,
+                    message:"Please input grade here",
+                  },]}>
                     <Select
                       showSearch
                       style={{ width: 200 }}
@@ -403,11 +384,44 @@ export default function EduProg() {
                     </Select>
                   </Form.Item>
 
-                  <Form.Item name="time" label="Broadcast time">
+                  <Form.Item name="time" label="Broadcast time"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input time!!",
+                      },
+                    ]}
+                  >
                     <TimePicker
-                      defaultValue={moment("12:08", format)}
+                      initialValues={moment("12:08", format)}
                       format={format}
                     />
+                  </Form.Item>
+                  
+                  <Form.Item
+                    name="rating"
+                    label="Ratings"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input value of rating!!",
+                      },
+                    ]}
+                  >
+                    <InputNumber min={0.0} max={5.0} placeholder="Please input rating" />
+                  </Form.Item>
+
+                  <Form.Item
+                    name="link"
+                    label="Reference Link"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input website/video url!!",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Please input Website/Video url" />
                   </Form.Item>
 
                   <Form.Item name="upload" label="Upload the file">
