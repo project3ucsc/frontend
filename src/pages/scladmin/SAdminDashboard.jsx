@@ -10,19 +10,26 @@ import {
   Form,
   Input,
   Select,
+  Statistic,
+  Progress,
+  DatePicker,
+  Space,
 } from "antd";
 import ContentLayout from "components/ContentLayout";
 import { PlusOutlined, BellTwoTone } from "@ant-design/icons";
+import img1 from "../../img/t5.jpeg";
 
 import "./dash.scss";
+import Title from "antd/lib/skeleton/Title";
 const cstyle = {
   padding: 24,
-  margin: 10,
+  margin: 5,
   marginBottom: 0,
   minHeight: 280,
 };
 
 const { Option } = Select;
+const { RangePicker } = DatePicker;
 
 var adata = [
   {
@@ -41,7 +48,17 @@ var adata = [
 
 export default function SAdminDashboard() {
   const [drawervisible, setDrawervisible] = useState(false);
+  const [isDisable, setIsDisable] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [formann] = Form.useForm();
+
+  const onFinish = (values: any) => {
+    console.log('Success:', values);
+  };
+  
+  const onFinishFailed = (errorInfo: any) => {
+    console.log('Failed:', errorInfo);
+  };
 
   const onsubmitdrawer = (val) => {
     const formdata = formann.getFieldsValue();
@@ -86,7 +103,7 @@ export default function SAdminDashboard() {
               <Form.Item
                 name="title"
                 label="Title"
-                rules={[{ required: true, message: "Please tyep titel" }]}
+                rules={[{ required: true, message: "Please type title" }]}
               >
                 <Input placeholder="Please enter user name" />
               </Form.Item>
@@ -98,8 +115,9 @@ export default function SAdminDashboard() {
                 rules={[{ required: true, message: "Please choose the type" }]}
               >
                 <Select placeholder="Please choose the type">
-                  <Option value="private">Student</Option>
-                  <Option value="public">Teacher</Option>
+                  <Option value="student">Student</Option>
+                  <Option value="teacher">Teacher</Option>
+                  <Option value="public">All</Option>
                 </Select>
               </Form.Item>
             </Col>
@@ -113,13 +131,13 @@ export default function SAdminDashboard() {
                 rules={[
                   {
                     required: true,
-                    message: "please enter url description",
+                    message: "please enter description",
                   },
                 ]}
               >
                 <Input.TextArea
                   rows={4}
-                  placeholder="please enter url description"
+                  placeholder="please enter description"
                 />
               </Form.Item>
             </Col>
@@ -128,7 +146,19 @@ export default function SAdminDashboard() {
       </Drawer>
 
       <Row>
-        <Col xs={24} xl={12}>
+      <Col xs={24} xl={24} style={{ margin: 10 }}>
+       <img style={{ width: 1430, height:200 }} src={img1} alt="img1" />
+      </Col>
+      </Row>
+      {/*<Row>
+      <Col xs={24} xl={24}>
+        <Card style={{ margin: 10 }}>
+
+        </Card>
+        </Col>
+      </Row>*/}
+      <Row>
+        <Col xs={24} xl={18}>
           <Card
             title="Added Announcements"
             extra={
@@ -157,10 +187,95 @@ export default function SAdminDashboard() {
                       <a href="http://localhost:3000/dashboard">{item.title}</a>
                     }
                     description={item.dis}
+                    
                   />
+                  <Col className="editbtn">
+                    <Row>
+                      <Button style={{ margin: 10 }} type="primary" danger ghost  >
+                        Delete
+                      </Button>
+                    </Row>
+                  </Col>
                 </List.Item>
               )}
             />
+          </Card>
+        </Col>
+        <Col xs={24} xl={6}>
+          <Card style={{ margin: 5,padding: 24, }}>
+            <Row gutter={16}>
+              <Col span={12}>
+                <Statistic title="Total Teachers" value={52} />
+              </Col>
+              <Col span={12}>
+                <Statistic title="Total Students" value={3056}/>
+              </Col>
+              </Row>
+              <br /><br />
+              <Row>
+              <Col span={12}>
+                <Statistic title="Leave Teachers" value={7}/>
+              </Col>
+              <Col>
+                <Progress title="Leave Teachers" type="circle" percent={14} width={80} />
+              </Col>
+              </Row>
+          </Card>
+          <Card 
+            style={{ margin: 5,marginTop: 10, }}
+            title="Set Vacation Range"
+            >
+              <Form
+                  name="basic"
+                  initialValues={{ remember: true }}
+                  onFinish={onFinish}
+                  onFinishFailed={onFinishFailed}
+                  autoComplete="off"
+                  layout="vertical"
+                >
+                  <Form.Item
+                    label="Holiday/ Vacation Name"
+                    name="name"
+                    rules={[{ required: true, message: 'Please input holiday name!' }]}
+                  >
+                    <Input disabled={isDisable}/>
+                  </Form.Item>
+
+                  <Form.Item
+                    label="Time Rrange"
+                    name="trange"
+                    rules={[{ required: true, message: 'Please input timerange!' }]}
+                  >
+                    <RangePicker disabled={isDisable}/>
+                  </Form.Item>
+
+                  <Form.Item style={{ float: "right" }}>
+                      <Space>
+                        {!isDisable && (
+                          <Button
+                            onClick={() => setIsDisable(true)}
+                            htmlType="button"
+                            danger
+                          >
+                            Cancel
+                          </Button>
+                        )}
+                        <Button onClick={() => setIsDisable(false)} htmlType="button">
+                          Edit
+                        </Button>
+
+                        <Button
+                          loading={loading}
+                          disabled={isDisable}
+                          type="primary"
+                          htmlType="submit"
+                        >
+                          Save
+                        </Button>
+                      </Space>
+                    </Form.Item>
+                </Form>
+                
           </Card>
         </Col>
       </Row>
