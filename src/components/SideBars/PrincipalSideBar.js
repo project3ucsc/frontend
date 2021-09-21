@@ -38,10 +38,10 @@ export default function PrincipalSideBar() {
           <Link to="/TeacherAnalys"> Teachers</Link>
         </MenuItem>
         <MenuItem key="5" icon ={<UsergroupAddOutlined/>}>
-          <Link to="/Students"> Students</Link>
+          <Link to="/StudentAnalyse"> Students</Link>
         </MenuItem>
         <MenuItem key="6" icon ={<UsergroupAddOutlined/>}>
-          <Link to="/Access Analysis"> Access Analysis</Link>
+          <Link to="/AnalysisInstruction"> Analysis Instruction</Link>
         </MenuItem>
         <Menu.Item key="7" icon={<UserOutlined />}>
           <Link to="/profile">Profile</Link>

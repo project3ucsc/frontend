@@ -265,7 +265,7 @@ export default function Dashboard() {
                 <Form.Item
                   span
                   className="form"
-                  name="subject"
+                  name="grade"
                   label="Select Grade"
                 >
                   <Select>
@@ -276,7 +276,7 @@ export default function Dashboard() {
                 <Form.Item
                   span
                   className="form"
-                  name="grade"
+                  name="subject"
                   label="Select Subject"
                 >
                   <Select>
