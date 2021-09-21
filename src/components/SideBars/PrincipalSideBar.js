@@ -34,19 +34,16 @@ export default function PrincipalSideBar() {
           <Link to="/SclAdminManagement">School Admin Management</Link>
         </Menu.Item>
 
-        <MenuItem key="4" icon ={<UsergroupAddOutlined/>}>
-          <Link to="/Teacher"> Teachers</Link>
+        <MenuItem key="4" icon ={< UserOutlined/>}>
+          <Link to="/TeacherAnalys"> Teachers</Link>
         </MenuItem>
         <MenuItem key="5" icon ={<UsergroupAddOutlined/>}>
           <Link to="/Students"> Students</Link>
         </MenuItem>
-        <MenuItem key="4" icon ={<UsergroupAddOutlined/>}>
+        <MenuItem key="6" icon ={<UsergroupAddOutlined/>}>
           <Link to="/Access Analysis"> Access Analysis</Link>
         </MenuItem>
-
-
-
-        <Menu.Item key="5" icon={<UserOutlined />}>
+        <Menu.Item key="7" icon={<UserOutlined />}>
           <Link to="/profile">Profile</Link>
         </Menu.Item>
         

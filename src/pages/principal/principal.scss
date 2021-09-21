@@ -28,6 +28,9 @@ img{
     float: right;
     
 }
+.chart{
+    padding: 10px;
+}
 
 .filter table{
 display: inline-block;    
@@ -35,7 +38,8 @@ display: inline-block;
 .card-1{
     border: initial;
     border-radius: 8px;
-    background-color: rgb(228, 238, 238);
+    background-color: rgb(183, 226, 226);
+    height: 150px;
 }
 .form{
     display: inline-block;
@@ -44,6 +48,7 @@ display: inline-block;
    column-width: 200px;
    font-weight: bold;
    box-shadow: black;
+  
    
     
 }
