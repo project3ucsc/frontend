@@ -15,8 +15,9 @@ import {
   DatePicker,
   TimePicker,
   message,
+  Tag,
 } from "antd";
-import moment from "moment";
+// import moment from "moment";
 // import ContentLayout from "components/ContentLayout";
 import {
   DownOutlined,
@@ -25,7 +26,11 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import subjectdetailservice from "services/subjectdetail.service";
-import { getDateTxt, getDaybyNumber } from "utils/common";
+import { getDateTxt, getDaybyNumber, apiurl } from "utils/common";
+
+import axios from "axios";
+import { authHeader } from "utils/authheader";
+import authenticationservice from "services/authentication.service";
 
 const meetingcardstyle = {
   marginBottom: 10,
@@ -113,21 +118,74 @@ export default function MeetingUrlEditor({ sdid }) {
       }
     >
       <ul class="ant-list-items">
-        {!loading && day !== 6 && <MeetingUrl data={meetingData} />}
+        {!loading && day !== 6 && <MeetingUrl sdid={sdid} data={meetingData} />}
         {!loading &&
           day === 6 &&
-          meetingArr.map((data, i) => <MeetingUrl key={i} data={data} />)}
+          meetingArr.map((data, i) => (
+            <MeetingUrl sdid={sdid} key={i} data={data} />
+          ))}
       </ul>
     </Card>
   );
 }
 
-export function MeetingUrl({ data }) {
+export function MeetingUrl({ data, sdid }) {
+  const today = new Date();
   const [modalvisible, setModalvisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalTyp, setModalTyp] = useState("editl");
   const [mdata, setMdata] = useState(data);
   const [modalform] = Form.useForm();
+
+  const [att, setAtt] = useState({ status: "a", code: 0, id: 0 });
+
+  useEffect(() => {
+    axios
+      .get(`${apiurl}/attendance/isAtttakenToday/${mdata.id}`, authHeader())
+      .then(({ data }) => {
+        setAtt({ status: data.status, code: data.randomnum, id: data.id });
+      })
+      .catch((e) => {
+        message.error(e.response.data.message);
+      });
+  }, []);
+
+  const markAtt = async () => {
+    // console.log(code);
+
+    try {
+      const code = Math.floor(Math.random() * 9000 + 1000);
+
+      const teacherid = authenticationservice.currentUserValue.id;
+      const { data } = await axios.post(
+        `${apiurl}/attendance/startAttSession`,
+        { teacherid, tsid: mdata.id, sdid: parseInt(sdid), code },
+        authHeader()
+      );
+      setAtt({ status: "b", code: code, id: data.id });
+      message.success("Taking attendance started successfully");
+      // return res.data;
+    } catch (err) {
+      message.error(err.response.data.message);
+    }
+  };
+
+  const stopAtt = async () => {
+    try {
+      const teacherid = authenticationservice.currentUserValue.id;
+
+      setAtt({ status: "c", code: att.code });
+      await axios.patch(
+        `${apiurl}/attendance/stopAttSession`,
+        { id: att.id, sdid: parseInt(sdid), teacherid },
+        authHeader()
+      );
+      message.success("Taking attendance stopped successfully");
+      // return res.data;
+    } catch (err) {
+      message.error(err.response.data.message);
+    }
+  };
 
   const showModal = () => {
     setModalvisible(true);
@@ -163,6 +221,7 @@ export function MeetingUrl({ data }) {
         // const en = val.timerange[1].format("HH:mm");
         // const sttime = moment(thedate + " " + st);
         // const endtime = moment(thedate + " " + en);
+        message.success("Time Updated  successfuly");
       }
       //   setModalvisible(false);
       //   setConfirmLoading(false);
@@ -180,6 +239,17 @@ export function MeetingUrl({ data }) {
 
   const menu = (
     <Menu>
+      {today.getDay() === mdata.weekday && (
+        <Menu.Item disabled={att.status !== "a"} onClick={markAtt}>
+          <FieldTimeOutlined /> Mark Attendance
+        </Menu.Item>
+      )}
+      {att.status === "b" && (
+        <Menu.Item onClick={stopAtt}>
+          <FieldTimeOutlined /> Stop taking Attendance
+        </Menu.Item>
+      )}
+
       <Menu.Item
         onClick={() => {
           setModalTyp("editl");
@@ -211,14 +281,30 @@ export function MeetingUrl({ data }) {
         placement="start"
       >
         <Col xs={24} className="meetingUrlcol">
-          <Row style={{ marginBottom: 30 }}></Row>
+          <Row style={{ marginBottom: 30 }}> </Row>
           <Row>
-            <Col sm={12}>
+            <Col sm={12} md={12}>
               <a href={mdata.meetingurl} class="linkspan">
                 Go to Link
               </a>
+              {att.status === "b" && (
+                <div style={{ border: "#1990fc 1px solid", padding: 10 }}>
+                  <p style={{ fontSize: 16 }}>
+                    Attendance Code :{" "}
+                    <Tag style={{ fontSize: 20 }} color="blue">
+                      {att.code}
+                    </Tag>
+                  </p>
+                  <p style={{ fontSize: 16 }}>
+                    Students count :{" "}
+                    <Tag style={{ fontSize: 20 }} color="green">
+                      {13}
+                    </Tag>
+                  </p>
+                </div>
+              )}
             </Col>
-            <Col sm={12}>
+            <Col sm={12} md={12}>
               <p style={{ float: "right" }}>
                 Last updated : {lastupdated.toLocaleDateString()}
               </p>

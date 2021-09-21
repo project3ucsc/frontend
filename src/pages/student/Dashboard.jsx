@@ -1,10 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Card, Button, Timeline, List, message } from "antd";
+import {
+  Row,
+  Col,
+  Card,
+  Button,
+  Timeline,
+  List,
+  message,
+  PageHeader,
+  Calender,
+} from "antd";
+
 import ContentLayout from "components/ContentLayout";
 //import { PlusOutlined } from "@ant-design/icons";
 import { ClockCircleOutlined } from "@ant-design/icons";
 
 import "./dashboard.scss";
+
+import img1 from "../../img/student_cover1.jpg";
+
 import classroomservice from "services/classroom.service";
 import { Link } from "react-router-dom";
 
@@ -12,7 +26,7 @@ import axios from "axios";
 import { authHeader } from "utils/authheader";
 import { apiurl } from "utils/common";
 import authenticationservice from "services/authentication.service";
-
+const { Meta } = Card;
 const cstyle = {
   padding: 10,
   margin: "10px 0",
@@ -53,13 +67,13 @@ const tdata = [
   },
 ];
 
-const { Meta } = Card;
-
 export default function Dashboard() {
+  const today = new Date();
+
   const [schoolSubs, setSchoolSubs] = useState([]);
   const [tutionClasses, setTutionClasses] = useState([]);
   const [classroonName, setClassroonName] = useState("");
-
+  const [assTimelinedata, setAssTimelinedata] = useState([]);
   useEffect(() => {
     let userid = authenticationservice.currentUserValue.id;
     classroomservice
@@ -75,11 +89,22 @@ export default function Dashboard() {
       .catch((e) => {
         console.log(e.message);
       });
-
+    // for tution
     axios
       .get(`${apiurl}/tutor/studenttution/${userid}`, authHeader())
       .then((res) => {
         setTutionClasses(res.data);
+      })
+      .catch((e) => {
+        message.error(e.response.data.message);
+      });
+
+    // for assTimeline
+    axios
+      .get(`${apiurl}/assmnt/timeline/${userid}`, authHeader())
+      .then((res) => {
+        setAssTimelinedata(res.data);
+        console.log(res.data);
       })
       .catch((e) => {
         message.error(e.response.data.message);
@@ -185,25 +210,28 @@ export default function Dashboard() {
           </div> */}
           <Card
             title="Timeline"
-            className="timelinecard"
+            className="timeld"
             style={{ marginBottom: 10 }}
           >
             <Timeline>
-              <Timeline.Item>
-                <Button type="link">Thermal physics lesson 7</Button> 2021-09-01
-              </Timeline.Item>
-              <Timeline.Item>
-                <Button type="link">Thermal physics quiz 2</Button> 2021-09-06
-              </Timeline.Item>
-              <Timeline.Item
-                dot={<ClockCircleOutlined className="timeline-clock-icon" />}
-                color="red"
-              >
-                <Button type="link">Electronic Lesson 1</Button> 2021-09-10
-              </Timeline.Item>
-              <Timeline.Item>
-                <Button type="link">Electronic quiz 1</Button> 2015-09-01
-              </Timeline.Item>
+              {assTimelinedata.map((item) => {
+                let duedate = new Date(item.duedate);
+                let tprops =
+                  today > duedate
+                    ? {
+                        dot: (
+                          <ClockCircleOutlined className="timeline-clock-icon" />
+                        ),
+                        color: "red",
+                      }
+                    : {};
+                return (
+                  <Timeline.Item {...tprops}>
+                    <Link type="link">{item.title}</Link>{" "}
+                    {duedate.toLocaleString()}
+                  </Timeline.Item>
+                );
+              })}
             </Timeline>
           </Card>
 

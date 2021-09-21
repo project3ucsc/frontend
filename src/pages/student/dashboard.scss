@@ -6,6 +6,38 @@
 //     // background-color:#dfe6eb;
 //   }
 
+.cover {
+  height: 400px;
+}
+
+.msg {
+  font-weight: bold;
+  color: darkslategray;
+  font-size: 24px;
+}
+
+.msg2 {
+  font-weight: bold;
+  color: rgb(20, 94, 94);
+  font-size: 18px;
+}
+.card-wrapper-student-dash {
+  display: flex;
+  flex-wrap: wrap;
+
+  //justify-content: space-between;
+}
+.card {
+  border-radius: 10px;
+  border-width: thick;
+  background-color: rgb(197, 243, 176);
+  :hover {
+    border-radius: 10px;
+    background-color: rgb(202, 186, 92);
+    font-weight: bold;
+  }
+}
+
 .card-wrapper-student-dash {
   display: flex;
   flex-wrap: wrap;

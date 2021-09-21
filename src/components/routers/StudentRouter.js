@@ -4,7 +4,7 @@ import Dashboard from "pages/student/Dashboard";
 import StudentTimeTable from "pages/student/StudentTimeTable";
 import Profile from "pages/student/Profile";
 import Subpage from "pages/student/Subpage";
-import tvprogramme from "pages/student/tvprogramme";
+import Tvprogramme from "pages/student/Tvprogramme";
 import NotFound404 from "pages/NotFound404";
 import EnrollPage from "pages/student/EnrollPage";
 import VideoPage from "pages/VideoPage";
@@ -15,8 +15,6 @@ import AssessmentStuPage from "pages/student/AssessmentStuPage";
 import PSubpage from "pages/student/PSubpage";
 import PAssessmentStuPage from "pages/student/PAssessmentStuPage";
 import ViewPublicResources from "pages/student/ViewPublicResources";
-
-// import { Role } from "utils/common";
 
 export default function StudentRouter() {
   return (
@@ -44,7 +42,7 @@ export default function StudentRouter() {
           component={VideoPage}
         />
         <Route exact path="/timetable" component={StudentTimeTable} />
-        <Route exact path="/tvprogramme" component={tvprogramme} />
+        <Route exact path="/Tvprogramme" component={Tvprogramme} />
 
         <Route exact path="/TuitionHome" component={TuitionHome} />
         <Route exact path="/viewpublicresources" component={ViewPublicResources} />

@@ -4,7 +4,19 @@ import "./register.scss";
 import logo from "img/cbg2.png";
 import auth from "services/authentication.service";
 
-import { Form, Input, Select, Button, Row, Col, Divider, message } from "antd";
+import {
+  Form,
+  Input,
+  Select,
+  Button,
+  Row,
+  Col,
+  Divider,
+  message,
+  Typography,
+} from "antd";
+import FileUpload from "components/FileUpload";
+import { containers } from "services/azureblob.service";
 const { Option } = Select;
 
 const formItemLayout = {
@@ -44,6 +56,7 @@ const Register = ({ history }) => {
   const [schools, setSchools] = useState([]);
   const [form] = Form.useForm();
 
+  const [filename, setFilename] = useState("");
   useEffect(() => {
     auth
       .getschools()
@@ -59,9 +72,13 @@ const Register = ({ history }) => {
 
   const onFinish = (values) => {
     console.log(values);
+    if (userRole === Role.PRINCIPAl && filename === "") {
+      message.warn("You have to upload the document");
+      return;
+    }
     setLoading(true);
     auth
-      .register(values)
+      .register({ ...values, filename })
       .then((data) => {
         setLoading(false);
         // show success messge
@@ -261,6 +278,15 @@ const Register = ({ history }) => {
 
                   <Form.Item name="schooladr" label="School Adress">
                     <Input />
+                  </Form.Item>
+                  <Divider>
+                    Upload a ...... document to aprrove you are a principal
+                  </Divider>
+                  <Form.Item name="file" label="Upload document">
+                    <FileUpload
+                      container={containers.attachments}
+                      setFilename={setFilename}
+                    />
                   </Form.Item>
                 </>
               ) : (

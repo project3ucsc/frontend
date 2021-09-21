@@ -193,9 +193,10 @@ export default function ClassRoomManagePage() {
                     style={{ minWidth: 100 }}
                     onChange={onGradeChange}
                   >
-                    {gradesnclasses.map((gradesnclass) => {
+                    {gradesnclasses.map((gradesnclass, i) => {
                       return (
                         <Option
+                          key={i}
                           value={
                             gradesnclass.grade + "." + gradesnclass.classcount
                           }

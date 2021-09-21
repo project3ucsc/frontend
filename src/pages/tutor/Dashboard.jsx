@@ -1,12 +1,18 @@
+
 import React, { useState, useEffect } from "react";
+import { Layout, Row, Col, Card, Button, Statistic , Image } from "antd";
+
+//import img1 from "../../img/teacher_cover2.jpg";
+
 
 import axios from "axios";
 import { authHeader } from "utils/authheader";
 import { apiurl, getDateTxt } from "utils/common";
 import authenticationservice from "services/authentication.service";
 
-import { Layout, message, Card } from "antd";
+import { message } from "antd";
 import ContentLayout from "components/ContentLayout";
+
 import { Link } from "react-router-dom";
 
 // import { Avatar } from "antd";
