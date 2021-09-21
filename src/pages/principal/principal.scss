@@ -1,62 +1,67 @@
-img{
-    height: 50%;
-     width: 100%;
-     padding: 5px;
-     
-     //margin-left: 50%;
- }
- 
- 
- h2{
-     margin-left: 10%;
- }
- .principal-header{
-     
-     border-radius: 20px;
-     background: #fff;
- 
- }
- .T_overview{
- font-weight: bold;
- 
- }
- .analysis{
-     font-weight: bold;
- }
-.btn{
-    padding-block: 5px;
-    float: right;
-    
-}
-.chart{
-    padding: 10px;
+img {
+  height: 50%;
+  width: 100%;
+  padding: 5px;
+
+  //margin-left: 50%;
 }
 
-.filter table{
-display: inline-block;    
+h2 {
+  margin-left: 10%;
 }
-.card-1{
-    border: initial;
-    border-radius: 8px;
-    background-color: rgb(183, 226, 226);
-    height: 150px;
+.principal-header {
+  border-radius: 20px;
+  background: #fff;
 }
-.form{
-    display: inline-block;
-   margin-right: 20px;
-   margin-bottom: 20px;
-   column-width: 200px;
-   font-weight: bold;
-   box-shadow: black;
-  
-   
-    
+.T_overview {
+  font-weight: bold;
 }
-.reports{
-    margin-block: 20px;
+.analysis {
+  font-weight: bold;
 }
-.T-report{
-    font-weight: bold;
-    float: centre;
-    
+.btn {
+  padding-block: 5px;
+  float: right;
+}
+.chart {
+  padding: 10px;
+}
+
+.filter table {
+  display: inline-block;
+}
+.card-1 {
+  border: initial;
+  border-radius: 8px;
+  background-color: rgb(183, 226, 226);
+  height: 150px;
+}
+.form {
+  display: inline-block;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  column-width: 200px;
+  font-weight: bold;
+  box-shadow: black;
+}
+.reports {
+  margin-block: 20px;
+  margin-top: 40px;
+}
+.T-report {
+  font-weight: bold;
+  float: centre;
+}
+
+.dashcard {
+  border-radius: 5px;
+  border: #00d2ff 1px solid;
+  //   border-left: #3443f3 2px solid;
+  background: linear-gradient(90deg, #3443f3 0%, #00d2ff 100%);
+  .ant-card-body {
+    background-color: aliceblue;
+  }
+  .ant-card-head {
+    color: #fff;
+  }
 }
