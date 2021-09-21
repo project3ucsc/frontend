@@ -14,6 +14,7 @@ import {
   Input,
   Space,
   Table,
+  Progress,
 } from "antd";
 import ContentLayout from "components/ContentLayout";
 import { useState } from "react";
@@ -98,8 +99,8 @@ export default function TeacherAnalys() {
               </Col>
 
               <Col span={5}>
-                <Card className="relief">
-                  <h3> Todat Relief Teachers List</h3>
+                <Tag ClassName="Box" color="green">
+                  <p className="relief"> Today Relief Teachers List</p>
                   <ul>
                     <li>teacher 1</li>
                     <li>teacher 1</li>
@@ -108,7 +109,7 @@ export default function TeacherAnalys() {
                     <li>teacher 1</li>
                     <li>teacher 1</li>
                   </ul>
-                </Card>
+                </Tag>
               </Col>
             </Row>
             <Divider />
@@ -122,12 +123,17 @@ export default function TeacherAnalys() {
         </Row>
 
         <Row>
-          <Col xs={24} xl={18}>
+          <Col xs={24} xl={24}>
             <Table className="table">
               <Column title="Teacher name" dataindex="T-name" key="name" />
 
               <ColumnGroup title="Teaching Description">
-                <Column title="Subject" dataIndex="subject" key="subject" />
+                <Column
+                  title="Subject"
+                  dataIndex="subject"
+                  key="subject"
+                  color="black"
+                />
                 <Column title="Grade" dataIndex="grade" key="grade" />
               </ColumnGroup>
               <Column
@@ -135,15 +141,55 @@ export default function TeacherAnalys() {
                 dataIndex="at_percentage"
                 key="at_percentage"
               />
-              <Column dataIndex="action" key="action">
-                  <Button type="submit"
-Generate Report
->
-                  </Button>
-                  </Column>
+              <Column
+                title="Total assigned Periods"
+                dataIndex="T-periodst"
+                key="T-periods"
+              />
+              <Column
+                title="Teached Periods out of assigned periods"
+                dataIndex="A-periods"
+                key="A-periods"
+              />
+              <Column
+                title="Total Students enrolled with class"
+                dataIndex="E-students"
+                key="E-students"
+              />
+              <Column
+                title="Activly participated students"
+                dataIndex="A-students"
+                key="A-students"
+              />
             </Table>
           </Col>
-          <Col xs={24} xl={6}></Col>
+          <divide />
+          <Row>
+            <Card ClassName="box-card">
+              <p ClassName="a-title">
+                {" "}
+                Analysys Report of ......... Subject ............Grade
+              </p>
+
+              <Card>
+                <p ClassName="c-title"> Teacher Attendance Analysys</p>
+                <Progress
+                  ClassName="chart"
+                  type="circle"
+                  percent={75}
+                  format={(percent) => `${percent}% `}
+                />
+
+                <p ClassName="c-title"> Student Attendance Analysys</p>
+                <Progress
+                  ClassName="chart"
+                  type="circle"
+                  percent={75}
+                  format={(percent) => `${percent}% `}
+                />
+              </Card>
+            </Card>
+          </Row>
         </Row>
       </Content>
     </ContentLayout>
