@@ -57,32 +57,34 @@ export default function TimeTableSm({ data, day }) {
   });
 
   return (
-    <div className="ant-table ant-table-bordered">
-      <div className="ant-table-container">
-        <div className="ant-table-content">
-          <table style={{ tableLayout: "auto" }}>
-            <colgroup></colgroup>
-            {/* <thead className="ant-table-thead">
+    <div className="timelines">
+      <div className="timelines ant-table ant-table-bordered">
+        <div className="ant-table-container">
+          <div className="ant-table-content">
+            <table style={{ tableLayout: "auto" }}>
+              <colgroup></colgroup>
+              {/* <thead className="ant-table-thead">
               <tr>
                 <th className="ant-table-cell">{day}</th>
               </tr>
             </thead> */}
-            <tbody className="ant-table-tbody">
-              {newdata.map((row, i) => {
-                return (
-                  <tr key={i} className="ant-table-row ant-table-row-level-0">
-                    <td className="ant-table-cell">
-                      <Timecard
-                        sdid={row.sdid}
-                        time={row.datetime}
-                        name={row.subname}
-                      />
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+              <tbody className="ant-table-tbody">
+                {newdata.map((row, i) => {
+                  return (
+                    <tr key={i} className="ant-table-row ant-table-row-level-0">
+                      <td className="ant-table-cell">
+                        <Timecard
+                          sdid={row.sdid}
+                          time={row.datetime}
+                          name={row.subname}
+                        />
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
