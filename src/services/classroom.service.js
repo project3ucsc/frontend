@@ -18,6 +18,20 @@ async function CreateConfigureClasses(data) {
     throw new Error(err.response.data.message);
   }
 }
+async function addnewClasses(data) {
+  const schoolid = authenticationservice.currentUserValue.school_id;
+
+  try {
+    const res = await axios.post(
+      `${apiurl}/classes/addclass/${schoolid}`,
+      data,
+      authHeader()
+    );
+    return res.data;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+}
 
 async function setClassteacher(classid, teacherid) {
   try {
@@ -247,6 +261,7 @@ async function updateSubjectDetail(data, sdid) {
 const classroomservice = {
   getClass,
   CreateConfigureClasses,
+  addnewClasses,
   setClassteacher,
   getSubDetailsforTeacher,
   getSubDetailsforStudent,

@@ -8,6 +8,7 @@ import {
 } from "@ant-design/icons";
 
 import { Layout, Menu } from "antd";
+import MenuItem from "antd/lib/menu/MenuItem";
 
 export default function PrincipalSideBar() {
   return (
@@ -33,10 +34,20 @@ export default function PrincipalSideBar() {
           <Link to="/SclAdminManagement">School Admin Management</Link>
         </Menu.Item>
 
-        <Menu.Item key="4" icon={<UserOutlined />}>
+        <MenuItem key="4" icon ={< UserOutlined/>}>
+          <Link to="/TeacherAnalys"> Teachers</Link>
+        </MenuItem>
+        <MenuItem key="5" icon ={<UsergroupAddOutlined/>}>
+          <Link to="/Students"> Students</Link>
+        </MenuItem>
+        <MenuItem key="6" icon ={<UsergroupAddOutlined/>}>
+          <Link to="/Access Analysis"> Access Analysis</Link>
+        </MenuItem>
+        <Menu.Item key="7" icon={<UserOutlined />}>
           <Link to="/profile">Profile</Link>
         </Menu.Item>
         
+
       </Menu>
     </Layout.Sider>
   );

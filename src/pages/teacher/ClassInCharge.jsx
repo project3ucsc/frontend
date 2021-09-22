@@ -15,7 +15,11 @@ import {
 import ContentLayout from "components/ContentLayout";
 import "./ClassInCharge.scss";
 import classroomservice from "services/classroom.service";
-import { Enum_std_detail_status, getSubGroupDiscription } from "utils/common";
+import {
+  Enum_std_detail_status,
+  getClassNameTea,
+  getSubGroupDiscription,
+} from "utils/common";
 
 const { TabPane } = Tabs;
 const { Content } = Layout;
@@ -104,7 +108,10 @@ export default function ClassInCharge() {
   };
 
   return (
-    <ContentLayout title="Class In Charge" paths={["teacher", "ClassInCharge"]}>
+    <ContentLayout
+      title={`Class In Charge (${getClassNameTea()})`}
+      paths={["teacher", "ClassInCharge"]}
+    >
       <Modal
         visible={popupvisible}
         onCancel={() => setpopupvisible(false)}
