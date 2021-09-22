@@ -14,6 +14,7 @@ import {
   Progress,
   DatePicker,
   Space,
+  message,
 } from "antd";
 import ContentLayout from "components/ContentLayout";
 import { PlusOutlined, BellTwoTone } from "@ant-design/icons";
@@ -46,18 +47,30 @@ var adata = [
   },
 ];
 
+const getVacdata = () => {
+  let data = localStorage.getItem("vacdata");
+  if (data) return JSON.parse(data);
+  return "";
+};
+const setVacdata = (val) => {
+  localStorage.setItem("vacdata", JSON.stringify(val));
+};
+
 export default function SAdminDashboard() {
   const [drawervisible, setDrawervisible] = useState(false);
   const [isDisable, setIsDisable] = useState(true);
   const [loading, setLoading] = useState(false);
   const [formann] = Form.useForm();
 
-  const onFinish = (values: any) => {
-    console.log('Success:', values);
-  };
-  
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+  const onFinish = (values) => {
+    setLoading(true);
+    setTimeout(() => {
+      setVacdata(values);
+      setLoading(false);
+      setIsDisable(true);
+      message.success("Vacation range set successfully");
+    }, 400);
+    console.log("Success:", values);
   };
 
   const onsubmitdrawer = (val) => {
@@ -146,9 +159,9 @@ export default function SAdminDashboard() {
       </Drawer>
 
       <Row>
-      <Col xs={24} xl={24} style={{ margin: 10 }}>
-       <img style={{ width: 1430, height:200 }} src={img1} alt="img1" />
-      </Col>
+        <Col xs={24} xl={24} style={{ margin: 10 }}>
+          <img style={{ width: 1430, height: 200 }} src={img1} alt="img1" />
+        </Col>
       </Row>
       {/*<Row>
       <Col xs={24} xl={24}>
@@ -187,11 +200,15 @@ export default function SAdminDashboard() {
                       <a href="http://localhost:3000/dashboard">{item.title}</a>
                     }
                     description={item.dis}
-                    
                   />
                   <Col className="editbtn">
                     <Row>
-                      <Button style={{ margin: 10 }} type="primary" danger ghost  >
+                      <Button
+                        style={{ margin: 10 }}
+                        type="primary"
+                        danger
+                        ghost
+                      >
                         Delete
                       </Button>
                     </Row>
@@ -202,80 +219,83 @@ export default function SAdminDashboard() {
           </Card>
         </Col>
         <Col xs={24} xl={6}>
-          <Card style={{ margin: 5,padding: 24, }}>
+          <Card style={{ margin: 5, padding: 24 }}>
             <Row gutter={16}>
               <Col span={12}>
                 <Statistic title="Total Teachers" value={52} />
               </Col>
               <Col span={12}>
-                <Statistic title="Total Students" value={3056}/>
+                <Statistic title="Total Students" value={3056} />
               </Col>
-              </Row>
-              <br /><br />
-              <Row>
+            </Row>
+            <br />
+            <br />
+            <Row>
               <Col span={12}>
-                <Statistic title="Leave Teachers" value={7}/>
+                <Statistic title="Leave Teachers" value={7} />
               </Col>
               <Col>
-                <Progress title="Leave Teachers" type="circle" percent={14} width={80} />
+                <Progress
+                  title="Leave Teachers"
+                  type="circle"
+                  percent={14}
+                  width={80}
+                />
               </Col>
-              </Row>
+            </Row>
           </Card>
-          <Card 
-            style={{ margin: 5,marginTop: 10, }}
-            title="Set Vacation Range"
+          <Card style={{ margin: 5, marginTop: 10 }} title="Set Vacation Range">
+            <Form
+              name="basic"
+              initialValues={getVacdata()}
+              onFinish={onFinish}
+              autoComplete="off"
+              layout="vertical"
             >
-              <Form
-                  name="basic"
-                  initialValues={{ remember: true }}
-                  onFinish={onFinish}
-                  onFinishFailed={onFinishFailed}
-                  autoComplete="off"
-                  layout="vertical"
-                >
-                  <Form.Item
-                    label="Holiday/ Vacation Name"
-                    name="name"
-                    rules={[{ required: true, message: 'Please input holiday name!' }]}
+              <Form.Item
+                label="Holiday/ Vacation Name"
+                name="name"
+                rules={[
+                  { required: true, message: "Please input holiday name!" },
+                ]}
+              >
+                <Input disabled={isDisable} />
+              </Form.Item>
+
+              <Form.Item
+                label="Time Rrange"
+                name="trange"
+                rules={[{ required: true, message: "Please input timerange!" }]}
+              >
+                <RangePicker disabled={isDisable} />
+              </Form.Item>
+
+              <Form.Item style={{ float: "right" }}>
+                <Space>
+                  {!isDisable && (
+                    <Button
+                      onClick={() => setIsDisable(true)}
+                      htmlType="button"
+                      danger
+                    >
+                      Cancel
+                    </Button>
+                  )}
+                  <Button onClick={() => setIsDisable(false)} htmlType="button">
+                    Edit
+                  </Button>
+
+                  <Button
+                    loading={loading}
+                    disabled={isDisable}
+                    type="primary"
+                    htmlType="submit"
                   >
-                    <Input disabled={isDisable}/>
-                  </Form.Item>
-
-                  <Form.Item
-                    label="Time Rrange"
-                    name="trange"
-                    rules={[{ required: true, message: 'Please input timerange!' }]}
-                  >
-                    <RangePicker disabled={isDisable}/>
-                  </Form.Item>
-
-                  <Form.Item style={{ float: "right" }}>
-                      <Space>
-                        {!isDisable && (
-                          <Button
-                            onClick={() => setIsDisable(true)}
-                            htmlType="button"
-                            danger
-                          >
-                            Cancel
-                          </Button>
-                        )}
-                        <Button onClick={() => setIsDisable(false)} htmlType="button">
-                          Edit
-                        </Button>
-
-                        <Button
-                          loading={loading}
-                          disabled={isDisable}
-                          type="primary"
-                          htmlType="submit"
-                        >
-                          Save
-                        </Button>
-                      </Space>
-                    </Form.Item>
-                </Form>
-                
+                    Save
+                  </Button>
+                </Space>
+              </Form.Item>
+            </Form>
           </Card>
         </Col>
       </Row>
