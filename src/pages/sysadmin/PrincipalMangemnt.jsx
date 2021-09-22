@@ -10,12 +10,15 @@ import {
   Tabs,
   message,
   Spin,
+  Divider,
 } from "antd";
 
 import ContentLayout from "components/ContentLayout";
 // import "./ClassInCharge.scss";
 import { Role } from "utils/common";
 import authenticationservice from "services/authentication.service";
+import { containers, getFileUrl } from "services/azureblob.service";
+import { TextRow } from "components/TextRow";
 
 const { TabPane } = Tabs;
 const { Content } = Layout;
@@ -156,6 +159,17 @@ export default function PrincipalMangemnt() {
                 {modalData.school.address}
               </Descriptions.Item>
             </Descriptions>
+            <br />
+            <TextRow labelspan={[8, 10]} label="Verification Document">
+              <a
+                href={getFileUrl(
+                  modalData.school.filename,
+                  containers.attachments
+                )}
+              >
+                {modalData.school.filename.split("-nm-")[1]}
+              </a>
+            </TextRow>
           </>
         ) : (
           <Spin />

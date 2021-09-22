@@ -100,9 +100,11 @@ export default function AssessmentStuPage() {
               <Paragraph style={{ whiteSpace: "pre-wrap", fontSize: 16 }}>
                 {data.assmnt.discription}
               </Paragraph>
-              <TextRow label="Attachments">{getAttchLink()}</TextRow>
+              <TextRow labelspan={[4, 6]} label="Attachments">
+                {getAttchLink()}
+              </TextRow>
               <Card title="" className="f">
-                <TextRow label="Due Date">
+                <TextRow labelspan={[4, 6]} label="Due Date">
                   <Tag style={tagstyle} color="geekblue">
                     {`${getDaybyNumber(
                       duedate.getDay()
@@ -110,19 +112,19 @@ export default function AssessmentStuPage() {
                   </Tag>
                 </TextRow>
 
-                <TextRow label="Time remaining">
+                <TextRow labelspan={[4, 6]} label="Time remaining">
                   {getTimeRemainigTxt(submitData.status)}
                 </TextRow>
 
-                <TextRow label="Submission status">
+                <TextRow labelspan={[4, 6]} label="Submission status">
                   {getSubmitStatusText(submitData.status)}
                 </TextRow>
-                <TextRow label="Last modified">
+                <TextRow labelspan={[4, 6]} label="Last modified">
                   {submitData.filename === "NA"
                     ? "-"
                     : getLastModDate(new Date(submitData.submitdate))}
                 </TextRow>
-                <TextRow label="Submission">
+                <TextRow labelspan={[4, 6]} label="Submission">
                   <AttachUpload
                     dbid={assid + "." + submitData.id}
                     duedate={duedate}

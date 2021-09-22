@@ -17,12 +17,24 @@ const { SubMenu } = Menu;
 
 export default function TeacherSideBar() {
   const [subLinks, setSubLinks] = useState([]);
+  const [isClsT, setIsClsT] = useState(false);
   const teacher_id = authenticationservice.currentUserValue.id;
   useEffect(() => {
     classroomservice
       .getSubDetailsforTeacher()
       .then((data) => {
         setSubLinks(data);
+        var classroom = data.find(
+          (item) => teacher_id === item.classroom.classteacher_id
+        );
+        console.log("cls", classroom);
+        if (classroom) {
+          setIsClsT(true);
+          localStorage.setItem(
+            "tclsname",
+            `${classroom.classroom.grade}-${classroom.classroom.name}`
+          );
+        }
       })
       .catch((e) => {
         console.log(e);
@@ -66,7 +78,6 @@ export default function TeacherSideBar() {
               key={"s" + item.id}
             >
               <Link to={"/subject/" + item.id}>
-                {" "}
                 {`${item.classroom.grade}-${item.classroom.name} ${item.subject.name}`}
               </Link>
             </Menu.Item>
@@ -79,9 +90,11 @@ export default function TeacherSideBar() {
         <Menu.Item key="8" icon={<AuditOutlined />}>
           <Link to="/applyleave">ApplyLeave</Link>
         </Menu.Item>
-        <Menu.Item key="9" icon={<FolderOpenOutlined />}>
-          <Link to="/classincharge">ClassInCharge</Link>
-        </Menu.Item>
+        {isClsT && (
+          <Menu.Item key="9" icon={<FolderOpenOutlined />}>
+            <Link to="/classincharge">ClassInCharge</Link>
+          </Menu.Item>
+        )}
         <Menu.Item key="10" icon={<UserOutlined />}>
           <Link to="/profile">Profile</Link>
         </Menu.Item>

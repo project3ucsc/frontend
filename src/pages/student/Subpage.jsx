@@ -1,15 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, List, Card, message, Badge, Spin, Tabs } from "antd";
+import {
+  Row,
+  Col,
+  List,
+  Card,
+  message,
+  Badge,
+  Spin,
+  Tabs,
+  Input,
+  Tag,
+  Button,
+  InputNumber,
+} from "antd";
 import ContentLayout from "components/ContentLayout";
 import "./physics.scss";
 import { useParams } from "react-router-dom";
 import subjectdetailservice from "services/subjectdetail.service";
 import { getLearnMatUrl } from "services/azureblob.service";
 import { getResourceIcon } from "components/Resources";
-import { getDateTxt, getDaybyNumber } from "utils/common";
+import { getDateTxt, getDaybyNumber, apiurl } from "utils/common";
 import AssesmentListStu from "components/AssesmentListStu";
 import reliefservice from "services/relief.service";
 
+import axios from "axios";
+import { authHeader } from "utils/authheader";
 const cstyle = {
   marginBottom: 0,
   marginRight: 10,
@@ -116,6 +131,9 @@ export function MeetingUrl({ sdid }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [relifTxt, setRelifTxt] = useState("");
+  const [attcode, setAttcode] = useState(0);
+  const [att, setAtt] = useState({ status: "a", code: 0, id: 0 });
+  const [atloading, setatloading] = useState(false);
   useEffect(() => {
     const today = new Date();
     setLoading(true);
@@ -126,6 +144,20 @@ export function MeetingUrl({ sdid }) {
         console.log(data);
         setData(data);
         setLoading(false);
+
+        axios
+          .get(`${apiurl}/attendance/isAtttakenToday/${data.id}`, authHeader())
+          .then(({ data }) => {
+            if (data.status === "b") {
+              let date = localStorage.getItem("attdate" + sdid);
+
+              if (today.toLocaleDateString() !== date)
+                setAtt({ status: "b", code: data.randomnum, id: data.id });
+            }
+          })
+          .catch((e) => {
+            message.error(e.response.data.message);
+          });
 
         reliefservice
           .checkRelifinStudent(data.id, sdid)
@@ -140,8 +172,34 @@ export function MeetingUrl({ sdid }) {
       .catch((e) => {
         message.error(e.message);
       });
+    // chekin att is taking
   }, [sdid]);
 
+  const onCodeSubmit = async () => {
+    const today = new Date();
+    try {
+      setatloading(true);
+      console.log(attcode);
+      if (attcode !== att.code) message.error("Invalid attendance code");
+      else {
+        const { data } = await axios.patch(
+          `${apiurl}/attendance/stuclick`,
+          { id: att.id },
+          authHeader()
+        );
+        setatloading(false);
+
+        localStorage.setItem("attdate" + sdid, today.toLocaleDateString());
+        setAtt({ status: "a", code: 0, id: 0 });
+        message.success("Attendance taking successful");
+      }
+      setatloading(false);
+    } catch (err) {
+      message.error(err.response.data.message);
+      setAtt({ status: "a", code: 0, id: 0 });
+      setatloading(false);
+    }
+  };
   // const lastupdated = new Date(data.lastupdated);
   return !loading ? (
     <>
@@ -159,12 +217,36 @@ export function MeetingUrl({ sdid }) {
             <Col xs={24} className="meetingUrlcol">
               <Row style={{ marginBottom: 30 }}></Row>
               <Row>
-                <Col sm={12}>
+                <Col sm={15}>
                   <a href={data.meetingurl} class="linkspan">
                     Go to Link
                   </a>
+                  {att.status === "b" && (
+                    <div
+                      style={{
+                        border: "#1990fc 1px solid",
+                        padding: 10,
+                        marginTop: 5,
+                      }}
+                    >
+                      <p style={{ fontFamily: "serif" }}>
+                        To get the attendance, enter the code given by teacher
+                      </p>
+                      <p style={{ margin: 0 }}>
+                        Enter Attendance Code :{" "}
+                        <InputNumber
+                          onChange={(val) => setAttcode(val)}
+                          style={{ width: 150, margin: "0 5px" }}
+                          color="blue"
+                        />
+                        <Button loading={atloading} onClick={onCodeSubmit}>
+                          Submit
+                        </Button>
+                      </p>
+                    </div>
+                  )}
                 </Col>
-                <Col sm={12}>
+                <Col sm={9}>
                   <p style={{ float: "right" }}>
                     Last updated :{" "}
                     {new Date(data.lastupdated).toLocaleDateString()}

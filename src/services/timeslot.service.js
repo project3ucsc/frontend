@@ -36,6 +36,19 @@ async function getTimeSlotsForStudent() {
   }
 }
 
+async function getTimeSlotsForTeacher() {
+  const userid = authenticationservice.currentUserValue.id;
+
+  try {
+    console.log(userid);
+    const res = await axios.get(`${apiurl}/timeslot/${userid}`, authHeader());
+    return res.data;
+  } catch (err) {
+    console.log(err.response.data.message);
+    throw new Error(err.response.data.message);
+  }
+}
+
 async function addTimeslot(data) {
   const schoolid = authenticationservice.currentUserValue.school_id;
 
@@ -77,6 +90,7 @@ async function deleteTimeslot(tsid) {
 const timeslotservice = {
   getTimeslotsSclAdmin,
   getTimeSlotsForStudent,
+  getTimeSlotsForTeacher,
   addTimeslot,
   updateTimeslot,
   deleteTimeslot,

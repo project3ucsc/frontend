@@ -133,6 +133,12 @@ export function getClassName() {
   else return "";
 }
 
+export function getClassNameTea() {
+  let name = localStorage.getItem("tclsname");
+  if (name) return name;
+  else return "";
+}
+
 export function getTimeAgo(subdate, now, prefix) {
   var dYrs = now.getFullYear() - subdate.getFullYear();
   var dMonths = now.getMonth() - subdate.getMonth();
