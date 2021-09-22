@@ -25,14 +25,23 @@
 
 .reg-form {
   padding: 20px;
-  background-color: #ffffffd2;
+  border-radius: 35px;
+  
+  opacity: 95%;
+  //background-color: #ffffffd2;
+  background-color: rgb(119, 192, 192);
   max-width: 600px;
-  min-width: 200px;
-  height: 100%;
+  min-width: 370px;
+  height: 95%;
+  font-weight: bold;
+  
+  
+  
 }
 .img-container {
   max-width: 600px;
   min-width: 200px;
+  margin-top: 400px;
 }
 .slide-img {
   width: fit-content;

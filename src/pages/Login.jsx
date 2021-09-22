@@ -4,7 +4,10 @@ import { Form, Input, Button, Checkbox, message } from "antd";
 import { MailOutlined, LockOutlined } from "@ant-design/icons";
 import auth from "services/authentication.service";
 import "./login.scss";
-import logo from "img/logo.png";
+import logo from "img/knowledgeHUB4.png";
+
+
+
 
 const Login = ({ history }) => {
   const [loading, setLoading] = useState(false);
@@ -30,8 +33,8 @@ const Login = ({ history }) => {
           remember: true,
         }}
         onFinish={onFinish}
-      >
-        <img src={logo} alt="logo" />
+      > 
+        <img className="logo" src={logo} alt="logo" />
 
         <Form.Item
           name="email"

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Role } from "utils/common";
 import "./register.scss";
-import logo from "img/cbg2.png";
+import logo from "img/signUp2.png";
 import auth from "services/authentication.service";
+import notificationservice from "services/notification.service";
 
 import {
   Form,
@@ -18,6 +19,9 @@ import {
 import FileUpload from "components/FileUpload";
 import { containers } from "services/azureblob.service";
 const { Option } = Select;
+
+
+
 
 const formItemLayout = {
   labelCol: {
@@ -55,6 +59,8 @@ const Register = ({ history }) => {
   const [loading, setLoading] = useState(false);
   const [schools, setSchools] = useState([]);
   const [form] = Form.useForm();
+
+  
 
   const [filename, setFilename] = useState("");
   useEffect(() => {
@@ -114,12 +120,15 @@ const Register = ({ history }) => {
     <div className="reg-container">
       <Col>
         <Row>
-          <div className="topic">Register</div>
+          <div className="topic"></div>
+          <br />
+          <br />
+
         </Row>
         <Row>
           <Col sm={24} xl={12}>
             <div className="img-container">
-              <img src={logo} className="slide-img" alt="logo" />
+            <img src={logo} alt="logo" />
             </div>
           </Col>
           <Col sm={24} xl={12}>
