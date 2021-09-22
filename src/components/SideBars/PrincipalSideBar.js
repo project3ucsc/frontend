@@ -35,14 +35,12 @@ export default function PrincipalSideBar() {
         </Menu.Item>
 
         <MenuItem key="4" icon ={< UserOutlined/>}>
-          <Link to="/TeacherAnalys"> Teachers</Link>
+          <Link to="/TeacherAnalys"> Teacher Performance</Link>
         </MenuItem>
         <MenuItem key="5" icon ={<UsergroupAddOutlined/>}>
-          <Link to="/StudentAnalyse"> Students</Link>
+          <Link to="/StudentAnalyse"> Student Performance</Link>
         </MenuItem>
-        <MenuItem key="6" icon ={<UsergroupAddOutlined/>}>
-          <Link to="/AnalysisInstruction"> Analysis Instruction</Link>
-        </MenuItem>
+        
         <Menu.Item key="7" icon={<UserOutlined />}>
           <Link to="/profile">Profile</Link>
         </Menu.Item>
