@@ -18,8 +18,6 @@ import {
   message,
 } from "antd";
 import { Line } from "react-chartjs-2";
-import { ArrowUpOutlined, ArrowDownOutlined } from "@ant-design/icons";
-import img1 from "../../img/admin_cover2.jpg";
 import ContentLayout from "components/ContentLayout";
 import "./principal.scss";
 import { spinStyle } from "utils/common";
@@ -358,11 +356,9 @@ export default function Dashboard() {
                   </Card>
                 </Col>
               </Row>
-
             ) : (
               <Spin {...spinStyle} />
             )}
-
           </Col>
         </Row>
       </Content>

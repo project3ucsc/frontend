@@ -65,3 +65,38 @@ h2 {
     color: #fff;
   }
 }
+
+.statcard {
+  border-radius: 10px;
+  margin: 5px;
+  // border: #00d2ff 1px solid;
+  border: none;
+  width: 220px;
+  background: rgb(198, 205, 211);
+
+  .ant-card {
+  }
+  .ant-card-body {
+    margin: 5px;
+    border-radius: 10px;
+    background: rgb(63, 94, 251);
+    background: linear-gradient(
+      184deg,
+      rgba(63, 94, 251, 1) 0%,
+      rgba(252, 70, 107, 1) 100%
+    );
+
+    .ant-statistic-title {
+      color: #ffffff;
+      font-size: small;
+    }
+  }
+  .ant-card-head {
+    color: rgb(255, 255, 255);
+  }
+}
+
+.dahswrapper {
+  display: flex;
+  flex-wrap: wrap;
+}

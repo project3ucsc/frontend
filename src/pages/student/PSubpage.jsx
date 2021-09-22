@@ -72,7 +72,7 @@ export default function PSubpage() {
   return (
     <ContentLayout title={title} paths={["Home", title]}>
       <Row>
-        <Col xs={24} xl={16}>
+        <Col xs={24} xl={24}>
           <Card
             title="Online lessons"
             className="lesson-card"
@@ -129,28 +129,6 @@ export default function PSubpage() {
         </Col>
 
         {/* <Col xl={1}></Col> */}
-
-        <Col xs={24} xl={8}>
-          <Card title="Timeline" className="timelinecard" style={cstyle}>
-            <Timeline>
-              <Timeline.Item>
-                <Button type="link">Thermal physics lesson 7</Button> 2021-09-01
-              </Timeline.Item>
-              <Timeline.Item>
-                <Button type="link">Thermal physics quiz 2</Button> 2021-09-06
-              </Timeline.Item>
-              <Timeline.Item
-                dot={<ClockCircleOutlined className="timeline-clock-icon" />}
-                color="red"
-              >
-                <Button type="link">Electronic Lesson 1</Button> 2021-09-10
-              </Timeline.Item>
-              <Timeline.Item>
-                <Button type="link">Electronic quiz 1</Button> 2015-09-01
-              </Timeline.Item>
-            </Timeline>
-          </Card>
-        </Col>
       </Row>
     </ContentLayout>
   );

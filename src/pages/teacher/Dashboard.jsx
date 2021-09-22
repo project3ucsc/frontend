@@ -135,7 +135,10 @@ export default function Dashboard() {
                 style={{ marginBottom: 10 }}
                 cover={<img alt="example" src={img2} />}
               >
-                <Meta title="InCharge Class" description="Grade Class" />
+                <Meta
+                  title="InCharge Class"
+                  description={localStorage.getItem("tclsname")}
+                />
               </Card>
             </Link>
           )}

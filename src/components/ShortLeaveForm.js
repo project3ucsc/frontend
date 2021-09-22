@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Form, Input, Button, Select, DatePicker, message } from "antd";
 import reliefservice from "services/relief.service";
 import { useForm } from "antd/lib/form/Form";
+import authenticationservice from "services/authentication.service";
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -20,7 +21,9 @@ export default function ShortLeaveForm() {
   const onFinish = async (values) => {
     try {
       setLoading(true);
-      const tc = await reliefservice.addleaveNreleif(values);
+      let userid = authenticationservice.currentUserValue.id;
+
+      const tc = await reliefservice.addleaveNreleif({ ...values, userid });
       console.log(tc);
       setLoading(false);
       message.success(

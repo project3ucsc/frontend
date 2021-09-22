@@ -13,11 +13,11 @@ const tailLayout = {
 
 export default function LongLeaveForm() {
   const [loading, setLoading] = useState(false);
-  const onFinishLong = (values) => {
+  const onFinishLong = async (values) => {
     console.log("Success:", values);
     try {
       setLoading(true);
-      // await reliefservice.(values);
+      const tc = await reliefservice.addleave(values);
       setLoading(false);
       message.success("Leave added successfully ");
     } catch (error) {
