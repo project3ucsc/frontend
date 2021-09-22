@@ -18,8 +18,8 @@ import {
 
 import moment from "moment";
 //upload file
-import { Upload, message } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { message } from "antd";
+// import { UploadOutlined } from "@ant-design/icons";
 import { List, Avatar } from "antd";
 
 import ContentLayout from "components/ContentLayout";
@@ -398,7 +398,7 @@ export default function EduProg() {
                     />
                   </Form.Item>
                   
-                  <Form.Item
+                  {/* <Form.Item
                     name="rating"
                     label="Ratings"
                     rules={[
@@ -409,7 +409,7 @@ export default function EduProg() {
                     ]}
                   >
                     <InputNumber min={0.0} max={5.0} placeholder="Please input rating" />
-                  </Form.Item>
+                  </Form.Item> */}
 
                   <Form.Item
                     name="link"
@@ -424,10 +424,17 @@ export default function EduProg() {
                     <Input placeholder="Please input Website/Video url" />
                   </Form.Item>
 
-                  <Form.Item name="upload" label="Upload the file">
-                    <Upload {...props}>
-                      <Button icon={<UploadOutlined />}>Click to Upload</Button>
-                    </Upload>
+                  <Form.Item 
+                    name="imgurl" 
+                    label="Url of the image"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input image url",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Please input url of the program image" />
                   </Form.Item>
 
                   <Form.Item>
