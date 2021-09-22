@@ -33,16 +33,16 @@ const { RangePicker } = DatePicker;
 
 var adata = [
   {
-    title: "Grade 9 - Timetable updated",
-    dis: "Grade 9 mathematics time slot will be changed...",
+    title: "Tuesday break",
+    dis: "There will not be any academic activities on next Tuesday",
   },
   {
-    title: "Mr. L.N.S. Fernando",
-    dis: "fernan@yahoo.com",
+    title: "Activity change",
+    dis: "There will not be any lessons, assignments or activities on tomorrow in the 10.00am - 11.00am time slot",
   },
   {
-    title: "Mr. M.T. Premarathna",
-    dis: "mtp@hotmail.com",
+    title: "Meeting for all teachers",
+    dis: "Please participate for the tomorrow meeting which will e held on tomorrow 10.00am to 11.00am",
   },
 ];
 
@@ -52,11 +52,11 @@ export default function SAdminDashboard() {
   const [loading, setLoading] = useState(false);
   const [formann] = Form.useForm();
 
-  const onFinish = (values: any) => {
+  const onFinish = (values) => {
     console.log('Success:', values);
   };
   
-  const onFinishFailed = (errorInfo: any) => {
+  const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
 

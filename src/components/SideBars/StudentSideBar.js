@@ -6,10 +6,12 @@ import {
   DesktopOutlined,
   HomeOutlined,
   UserOutlined,
+  TableOutlined,
   ReadOutlined,
   FolderAddOutlined,
   SnippetsOutlined,
-
+  BulbOutlined,
+  CompassOutlined,
 } from "@ant-design/icons";
 
 import { Layout, Menu } from "antd";
@@ -61,7 +63,7 @@ export default function StudentSideBar() {
         <Menu.Item key="1" icon={<HomeOutlined />}>
           <Link to="/">Home</Link>
         </Menu.Item>
-        <Menu.Item key="2" icon={<PieChartOutlined />}>
+        <Menu.Item key="2" icon={<DesktopOutlined />}>
           <Link to="/Dashboard">Dashboard</Link>
         </Menu.Item>
         {!loadingSubs && subLinks.length !== 0 && (
@@ -84,23 +86,24 @@ export default function StudentSideBar() {
           </Menu.Item>
         )}
 
-        <Menu.Item key="3" icon={<DesktopOutlined />}>
+        <Menu.Item key="3" icon={<TableOutlined />}>
           <Link to="/timetable">Time Table</Link>
         </Menu.Item>
-        <Menu.Item key="4" icon={<UserOutlined />}>
-          <Link to="/Profile">Profile</Link>
-        </Menu.Item>
 
-        <Menu.Item key="7" icon={<UserOutlined />}>
-          <Link to="/tvprogramme">Suggest Free Programmes</Link>
-        </Menu.Item>
-
-        <Menu.Item key="8" icon={<HomeOutlined />}>
+        <Menu.Item key="8" icon={<CompassOutlined />}>
           <Link to="/tuitionHome">Extra Classes</Link>
         </Menu.Item>
 
         <Menu.Item key="9" icon={<SnippetsOutlined/>}>
           <Link to="/viewpublicresources">Public Resources</Link>
+        </Menu.Item>
+
+        
+        <Menu.Item key="7" icon={<BulbOutlined />}>
+          <Link to="/tvprogramme">Suggest Free Programmes</Link>
+        </Menu.Item>
+        <Menu.Item key="4" icon={<UserOutlined />}>
+          <Link to="/Profile">Profile</Link>
         </Menu.Item>
 
         {/* <SubMenu key="sub2" icon={<MailOutlined />} title="Navigation Two">

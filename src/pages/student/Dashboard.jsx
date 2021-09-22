@@ -36,19 +36,12 @@ const cstyle = {
 
 var adata = [
   {
-    title: "Last Chemistry quiz results released",
-    dis: "10 hour ago",
-    moredis: "Grade 9 mathematics time slot will be changed...",
+    title: "Tuesday break",
+    dis: "There will not be any academic activities on next Tuesday",
   },
   {
-    title: "Today Com.Maths period will be late for an one hour",
-    dis: "22 hour ago",
-    moredis: "Grade 9 mathematics time slot will be changed...",
-  },
-  {
-    title: "Next Friday have online quiz for Physics",
-    dis: "2 days ago",
-    moredis: "Grade 9 mathematics time slot will be changed...",
+    title: "Activity change",
+    dis: "There will not be any lessons, assignments or activities on tomorrow in the 10.00am - 11.00am time slot",
   },
 ];
 
@@ -66,10 +59,6 @@ const tdata = [
     dis: "Test",
   },
 ];
-
-
-const {Meta} = Card;
-
 
 export default function Dashboard() {
   const today = new Date();
