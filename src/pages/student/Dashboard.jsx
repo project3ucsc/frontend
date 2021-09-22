@@ -67,10 +67,6 @@ const tdata = [
   },
 ];
 
-
-const {Meta} = Card;
-
-
 export default function Dashboard() {
   const today = new Date();
 

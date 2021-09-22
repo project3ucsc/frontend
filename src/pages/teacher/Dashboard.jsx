@@ -7,6 +7,7 @@ import img2 from "../../img/t4.jpg";
 import "../student/dashboard.scss";
 import { Link } from "react-router-dom";
 import TeacherTimleline from "components/TeacherTimleline";
+import classroomservice from "services/classroom.service";
 
 //import classroomservice from "services/classroom.service";
 //import axios from "axios";
@@ -65,33 +66,16 @@ export default function Dashboard() {
   const [tutionClasses, setTutionClasses] = useState([]);
   const [classroonName, setClassroonName] = useState("");
 
-  {
-    /*useEffect(() => {
-    let userid = authenticationservice.currentUserValue.id;
+  useEffect(() => {
     classroomservice
-      .getSubDetailsForStudentDash()
+      .getSubDetailsforTeacher()
       .then((data) => {
-        setSchoolSubs(data.subs);
-        setClassroonName(
-          `(${data.classroom.grade}-${data.classroom.name} classroom)`
-        );
-
-        console.log(data);
+        setSchoolSubs(data);
       })
       .catch((e) => {
-        console.log(e.message);
+        console.log(e);
       });
-
-    axios
-      .get(`${apiurl}/tutor/studenttution/${userid}`, authHeader())
-      .then((res) => {
-        setTutionClasses(res.data);
-      })
-      .catch((e) => {
-        message.error(e.response.data.message);
-      });
-  }, []);*/
-  }
+  }, []);
 
   return (
     <ContentLayout title="DashBoard" paths={["Home", "Dashboard"]}>
@@ -108,19 +92,18 @@ export default function Dashboard() {
       <Row gutter={[10, 0]}>
         <Col xs={24} xl={18}>
           <Card title="Your Classes" className="classcard">
-            {subjects.map((subject, index) => {
-              return (
-                <Link>
-                  <Card.Grid
-                    key={index}
-                    title={subject}
-                    style={{ gridStyle, width: 330, margin: 5 }}
-                  >
-                    {subject}
-                  </Card.Grid>
+            <div className="card-wrapper-student-dash">
+              {schoolSubs.map((item, i) => (
+                <Link key={i} to={"/subject/" + item.id}>
+                  <Card hoverable style={{ width: 180 }}>
+                    <Meta
+                      description={`${item.subject.name}`}
+                      title={`${item.classroom.grade}-${item.classroom.name}`}
+                    />
+                  </Card>
                 </Link>
-              );
-            })}
+              ))}
+            </div>
           </Card>
 
           <div className="site-card-border-less-wrapper-2">
@@ -135,11 +118,7 @@ export default function Dashboard() {
                       // avatar={
                       //   <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                       // }
-                      title={
-                        <a href="http://localhost:3000/dashboard">
-                          {item.title}
-                        </a>
-                      }
+                      title={item.title}
                       description={item.dis}
                     />
                   </List.Item>
@@ -150,13 +129,16 @@ export default function Dashboard() {
         </Col>
 
         <Col xs={24} xl={6}>
-          <Card
-            style={{ marginBottom: 10 }}
-            cover={<img alt="example" src={img2} />}
-          >
-            <Meta title="InCharge Class" description="Grade Class" />
-          </Card>
-
+          {localStorage.getItem("tclsname") && (
+            <Link to="classincharge">
+              <Card
+                style={{ marginBottom: 10 }}
+                cover={<img alt="example" src={img2} />}
+              >
+                <Meta title="InCharge Class" description="Grade Class" />
+              </Card>
+            </Link>
+          )}
           <TeacherTimleline />
         </Col>
       </Row>

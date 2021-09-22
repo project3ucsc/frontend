@@ -90,6 +90,10 @@ async function getPrincipalDetail(userid) {
 
 function logout() {
   localStorage.removeItem("user");
+  localStorage.removeItem("tclsname");
+  localStorage.removeItem("clsname");
+  localStorage.removeItem("enroldata");
+
   currentUserSubject.next(null);
 }
 

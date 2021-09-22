@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Layout,
   Row,
@@ -8,25 +8,24 @@ import {
   Statistic,
   Avatar,
   Tag,
-  Space,
   Progress,
   List,
-  Divider,
   Modal,
   Form,
   Input,
-  DatePicker,
-  Select,
   Tabs,
+  Spin,
+  message,
 } from "antd";
 import { Line } from "react-chartjs-2";
 import { ArrowUpOutlined, ArrowDownOutlined } from "@ant-design/icons";
 import img1 from "../../img/admin_cover2.jpg";
 import ContentLayout from "components/ContentLayout";
 import "./principal.scss";
+import { spinStyle } from "utils/common";
 
 const data = {
-  labels: ["1", "2", "3", "4", "5", "6"],
+  labels: ["Mar", "Apr", "May", "Jun", "Jul", "Aug"],
   datasets: [
     {
       label: "AL",
@@ -64,29 +63,65 @@ const options = {
   },
 };
 
-const datalist = [
+const bestteacherlist = [
   {
-    title: "Ant Design Title 1",
+    title: "Mr.Atukorala",
+    percentage: 89,
   },
   {
     title: "Ant Design Title 2",
+    percentage: 84,
   },
   {
     title: "Ant Design Title 3",
+    percentage: 83,
   },
   {
     title: "Ant Design Title 4",
+    percentage: 83,
+  },
+];
+const worstteacherlist = [
+  {
+    title: "Mr.Atukorala",
+    percentage: 35,
+  },
+  {
+    title: "Ant Design Title 2",
+    percentage: 42,
+  },
+  {
+    title: "Ant Design Title 3",
+    percentage: 43,
+  },
+  {
+    title: "Ant Design Title 4",
+    percentage: 46,
   },
 ];
 
-//import { FALSE } from 'node-sass';
+const { Content } = Layout;
+const { TabPane } = Tabs;
+
+const getEnrolldata = () => {
+  let data = localStorage.getItem("enroldata");
+  if (data) return JSON.parse(data);
+  return "";
+};
+const setEnrolldata = (val) => {
+  localStorage.setItem("enroldata", JSON.stringify(val));
+};
 
 export default function Dashboard() {
-  const { Content } = Layout;
-  const { TabPane } = Tabs;
-
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const [eloading, setEloading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, Math.random() * 600 + 500);
+  }, []);
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -94,81 +129,21 @@ export default function Dashboard() {
   const handleOk = () => {
     setIsModalVisible(false);
   };
+  const onEnrolladd = (val) => {
+    setEloading(true);
+    setTimeout(() => {
+      setEnrolldata(val);
+      setEloading(false);
+
+      message.success("Updated successfully");
+      setIsModalVisible(false);
+    }, 500);
+  };
 
   const handleCancel = () => {
     setIsModalVisible(false);
   };
 
-  const treeData = [
-    {
-      title: "Primary Section",
-      key: "0-0",
-      children: [
-        {
-          title: "Grade 1",
-          key: "0-0-0",
-          disabled: true,
-          children: [
-            {
-              title: "Class A",
-              key: "0-0-0-0",
-            },
-            {
-              title: "Class B",
-              key: "0-0-0-1",
-            },
-          ],
-        },
-        {
-          title: "Grade 2",
-          key: "0-0-1",
-          children: [
-            {
-              title: <span style={{ color: "#1890ff" }}>sss</span>,
-              key: "0-0-1-0",
-            },
-          ],
-        },
-      ],
-      title: "Ordinary Level",
-      key: "0-",
-      children: [
-        {
-          title: "Grade 6",
-          key: "0-0-0",
-          disabled: false,
-          children: [
-            {
-              title: "Class A",
-              key: "0-0-0-0",
-            },
-            {
-              title: "Class B",
-              key: "0-0-0-1",
-            },
-          ],
-        },
-        {
-          title: "Grade 7",
-          key: "0-0-1",
-          children: [
-            {
-              title: <span style={{ color: "#1890ff" }}>Class A</span>,
-              key: "0-0-1-0",
-            },
-          ],
-        },
-      ],
-    },
-  ];
-
-  // const onSelect = (selectedKeys: React.Key[], info: any) => {
-  //   console.log("selected", selectedKeys, info);
-  // };
-
-  // const onCheck = (checkedKeys: React.Key[], info: any) => {
-  //   console.log("onCheck", checkedKeys, info);
-  // };
   const x = 7;
 
   return (
@@ -215,7 +190,7 @@ export default function Dashboard() {
                 onOk={handleOk}
                 onCancel={handleCancel}
               >
-                <Form>
+                <Form onFinish={onEnrolladd} initialValues={getEnrolldata()}>
                   <Form.Item
                     label="Total Number of Students :"
                     name="Tstudents"
@@ -243,7 +218,12 @@ export default function Dashboard() {
                   </Form.Item>
 
                   <Form.Item>
-                    <Button className="btn" type="primary" htmlType="submit">
+                    <Button
+                      loading={eloading}
+                      className="btn"
+                      type="primary"
+                      htmlType="submit"
+                    >
                       Submit
                     </Button>
                   </Form.Item>
@@ -251,123 +231,136 @@ export default function Dashboard() {
               </Modal>
             </Row>
             <br />
-            <Row gutter={16}>
-              <Col span={19}>
-                <Row gutter={16}>
-                  <Col span={16}>
-                    {" "}
+            {!loading ? (
+              <Row gutter={16}>
+                <Col span={19}>
+                  <Row gutter={16}>
+                    <Col span={16}>
+                      {" "}
+                      <Card
+                        className="dashcard"
+                        title="Teaching performance with sections"
+                      >
+                        <Line height={200} data={data} options={options} />
+                      </Card>
+                    </Col>
+                    <Col span={8}>
+                      <Card
+                        className="dashcard"
+                        title="Top 5 Best performing teachers"
+                        style={{ marginBottom: 16 }}
+                      >
+                        <List
+                          itemLayout="horizontal"
+                          dataSource={bestteacherlist}
+                          renderItem={(item) => (
+                            <List.Item>
+                              <List.Item.Meta
+                                avatar={
+                                  <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                                }
+                                title={item.title}
+                                description={
+                                  <p>
+                                    {" "}
+                                    Perfomance pecentage{" "}
+                                    <Tag color="blue">{item.percentage}%</Tag>
+                                  </p>
+                                }
+                              />
+                            </List.Item>
+                          )}
+                        />
+                      </Card>
+                      <Card
+                        className="dashcard"
+                        title="Lowest perforrming teachers"
+                      >
+                        <List
+                          itemLayout="horizontal"
+                          dataSource={worstteacherlist}
+                          renderItem={(item) => (
+                            <List.Item>
+                              <List.Item.Meta
+                                avatar={
+                                  <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                                }
+                                title={item.title}
+                                description={
+                                  <p>
+                                    {" "}
+                                    Perfomance pecentage{" "}
+                                    <Tag color="blue">{item.percentage}%</Tag>
+                                  </p>
+                                }
+                              />
+                            </List.Item>
+                          )}
+                        />
+                      </Card>
+                    </Col>
+                  </Row>
+                </Col>
+
+                <Col span={5}>
+                  <Card className="dashcard" title="User enrollment Progress">
                     <Card
-                      className="dashcard"
-                      title="Teaching performance with sections"
+                      style={{
+                        border: "#34393d5c 1px solid",
+                        marginBottom: 10,
+                      }}
                     >
-                      <Line height={200} data={data} options={options} />
-                    </Card>
-                  </Col>
-                  <Col span={8}>
-                    <Card
-                      className="dashcard"
-                      title="Top 5 Best performing teachers"
-                      style={{ marginBottom: 16 }}
-                    >
-                      <List
-                        itemLayout="horizontal"
-                        dataSource={datalist}
-                        renderItem={(item) => (
-                          <List.Item>
-                            <List.Item.Meta
-                              avatar={
-                                <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                              }
-                              title={item.title}
-                              description={
-                                <p>
-                                  {" "}
-                                  Perfomance pecentage{" "}
-                                  <Tag color="blue">80%</Tag>
-                                </p>
-                              }
-                            />
-                          </List.Item>
-                        )}
+                      <p className="analysis">
+                        {" "}
+                        Students Enrolled in the System{" "}
+                      </p>
+                      <Progress
+                        ClassName="chart"
+                        type="circle"
+                        percent={75}
+                        format={(percent) => `${percent}% `}
                       />
                     </Card>
+
                     <Card
-                      className="dashcard"
-                      title="Lowest perforrming teachers"
+                      style={{
+                        border: "#34393d5c 1px solid",
+                        marginBottom: 10,
+                      }}
                     >
-                      <List
-                        itemLayout="horizontal"
-                        dataSource={datalist}
-                        renderItem={(item) => (
-                          <List.Item>
-                            <List.Item.Meta
-                              avatar={
-                                <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                              }
-                              title={item.title}
-                              description={
-                                <p>
-                                  {" "}
-                                  Perfomance pecentage{" "}
-                                  <Tag color="blue">20%</Tag>
-                                </p>
-                              }
-                            />
-                          </List.Item>
-                        )}
+                      <p className="analysis">
+                        {" "}
+                        Teachers Enrolled in the System{" "}
+                      </p>
+                      <Progress
+                        ClassName="chart"
+                        type="circle"
+                        percent={40}
+                        format={(percent) => `${percent}% `}
                       />
                     </Card>
-                  </Col>
-                </Row>
-              </Col>
 
-              <Col span={5}>
-                <Card className="dashcard" title="User enrollment Progress">
-                  <Card
-                    style={{ border: "#34393d5c 1px solid", marginBottom: 10 }}
-                  >
-                    <p className="analysis">
-                      {" "}
-                      Students Enrolled in the System{" "}
-                    </p>
-                    <Progress
-                      ClassName="chart"
-                      type="circle"
-                      percent={75}
-                      format={(percent) => `${percent}% `}
-                    />
+                    <Card
+                      style={{
+                        border: "#34393d5c 1px solid",
+                        marginBottom: 10,
+                      }}
+                    >
+                      <p className="analysis"> System Access Rate of School </p>
+                      <Progress
+                        ClassName="chart"
+                        type="circle"
+                        colour="Green"
+                        percent={100}
+                        format={(percent) => `${percent}  `}
+                      />
+                    </Card>
                   </Card>
-
-                  <Card
-                    style={{ border: "#34393d5c 1px solid", marginBottom: 10 }}
-                  >
-                    <p className="analysis">
-                      {" "}
-                      Teachers Enrolled in the System{" "}
-                    </p>
-                    <Progress
-                      ClassName="chart"
-                      type="circle"
-                      percent={40}
-                      format={(percent) => `${percent}% `}
-                    />
-                  </Card>
-
-                  <Card
-                    style={{ border: "#34393d5c 1px solid", marginBottom: 10 }}
-                  >
-                    <p className="analysis"> System Access Rate of School </p>
-                    <Progress
-                      ClassName="chart"
-                      type="circle"
-                      colour="Green"
-                      percent={100}
-                      format={(percent) => `${percent}  `}
-                    />
-                  </Card>
-                </Card>
-              </Col>
-            </Row>
+                </Col>
+              </Row>
+            ) : (
+              <Spin {...spinStyle} />
+            )}
           </Col>
         </Row>
       </Content>
