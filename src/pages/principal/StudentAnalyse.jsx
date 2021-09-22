@@ -22,6 +22,7 @@ import { useState } from "react";
 import "./studentAnalyse.scss";
 import { Bar } from "react-chartjs-2";
 import { Pie } from "react-chartjs-2";
+import { Line } from 'react-chartjs-2';
 const { Search } = Input;
 const { Column, ColumnGroup } = Table;
 
@@ -48,11 +49,60 @@ export default function StudentAnalyse() {
     console.log(`switch to ${checked}`);
   }
 
-  const data = {
-    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+  const Monthlydata = {
+    labels:["Janu","Feb","March","April","June","July","Auguest","Sept","Oct","Nov","December"],
     datasets: [
       {
-        label: "# of Votes",
+        label: 'Percentage of attendies',
+        data: [12, 19, 3, 5, 2, 3],
+        fill: false,
+      backgroundColor: "rgb(28, 40, 204)",
+      borderColor: "rgba(28, 40, 204, 0.2)",
+      },
+    ],
+  };
+  
+  const options = {
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
+    },
+  };
+
+  const data ={
+    labels:["Janu","Feb","March","April","June","July","Auguest","Sept","Oct","Nov","December"],
+    datasets:[{
+      labels:"Percentage of attendies",
+data:[10,20,30,40,50],
+backgroundColor: [
+  "rgba(255, 99, 132, 0.2)",
+  "rgba(54, 162, 235, 0.2)",
+  "rgba(255, 206, 86, 0.2)",
+  "rgba(75, 192, 192, 0.2)",
+  "rgba(153, 102, 255, 0.2)",
+  "rgba(255, 159, 64, 0.2)",
+],
+borderColor: [
+  "rgba(255, 99, 132, 1)",
+  "rgba(54, 162, 235, 1)",
+  "rgba(255, 206, 86, 1)",
+  "rgba(75, 192, 192, 1)",
+  "rgba(153, 102, 255, 1)",
+  "rgba(255, 159, 64, 1)",
+],
+borderWidth: 1,
+    }]
+  }
+  const Classdata = {
+    labels: ["Class1", "Class2", "Class3", "Class4", "Class5", "Class6"],
+    datasets: [
+      {
+        label: "Percentage of attendies",
         data: [12, 19, 3, 5, 2, 3],
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",
@@ -75,17 +125,7 @@ export default function StudentAnalyse() {
     ],
   };
 
-  const options = {
-    scales: {
-      yAxes: [
-        {
-          ticks: {
-            beginAtZero: true,
-          },
-        },
-      ],
-    },
-  };
+  
 
   const { Content } = Layout;
 
@@ -135,6 +175,16 @@ export default function StudentAnalyse() {
                     </Select>
                   </Form.Item>
 
+                  <Form.Item span className="form" name="class">
+                    <Select placeholder="Select Class">
+                      <Select.Option value="1">1</Select.Option>
+                      <Select.Option value="1">2</Select.Option>
+                      <Select.Option value="1">3</Select.Option>
+                      <Select.Option value="1">4</Select.Option>
+                      <Select.Option value="1">5</Select.Option>
+                    </Select>
+                  </Form.Item>
+
                   <Form.Item span className="form">
                     <Button type="primary" htmlType="submit">
                       Check Performance
@@ -143,9 +193,14 @@ export default function StudentAnalyse() {
                 </Form>
 
                 
-                  <h1 className="title">..Subject .. Grade ... Student Interaction Analysis</h1>
+                  <h1 className="title"> Student Interaction Vs Classes of the grade</h1>
                
-                <Bar data={data} options={options} />
+                <Bar data={Classdata} options={options} />
+
+                <dvider/>
+                <h1 className="title"> Monthly progress of the Student Interaction </h1>
+               
+                <Line data={Monthlydata} options={options} />
               </Col>
 
               <Col span={6}>
@@ -203,29 +258,7 @@ export default function StudentAnalyse() {
         <Row>
         <Col gutter={16}>
 
-          <Card ClassName="box-card">
-            <p ClassName="a-title">
-              Analysis Report of ......... Subject ........... Grade
-            </p>
-
-            <Card>
-              <p ClassName="c-title"> Teacher Attendance Analysis</p>
-              <Pie data={data} />
-            </Card>
-          </Card>
-          <br />
-        <br />
-          <Card ClassName="box-card">
-            <p ClassName="a-title">
-              
-              Analysis Report of ......... Subject ........... Grade
-            </p>
-
-            <Card>
-              <p ClassName="c-title"> Student Attendance Analysis</p>
-              <Pie data={data} />
-            </Card>
-          </Card>
+         
 
           
 
