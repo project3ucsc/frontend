@@ -27,6 +27,7 @@ export default function Tvprogramme() {
   const [loading,setLoading] = useState(false);
 
   const [form] = Form.useForm();
+  const format = "HH:mm";
 
   const onFinish = (values) => {
     setLoading(true);
@@ -163,7 +164,7 @@ export default function Tvprogramme() {
                 name="timeRange"
                 rules={[{ required: true, message: "Time range is required" }]}
               >
-                <TimePicker.RangePicker />
+                <TimePicker.RangePicker format={format}/>
               </Form.Item>
 
               <Form.Item name="description" label="Description">
