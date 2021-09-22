@@ -14,11 +14,13 @@ import {
   Input,
   Space,
   Table,
+  Spin,
   Progress,
 } from "antd";
 import ContentLayout from "components/ContentLayout";
 import { useState } from "react";
 import "./teacherAnalys.scss";
+import "./principal.scss";
 const { Search } = Input;
 const { Column, ColumnGroup } = Table;
 
@@ -45,10 +47,53 @@ export default function TeacherAnalys() {
     console.log(`switch to ${checked}`);
   }
 
+  const data = [
+    {
+      name: "John",
+      tags: ["loser"],
+      at_percentage: 32,
+      T_periods: "New York No. 1 Lake Park",
+      E_students: "New York No. 1 Lake Park",
+    },
+    {
+      name: "John",
+      tags: ["loser"],
+      at_percentage: 32,
+      T_periods: "New York No. 1 Lake Park",
+      E_students: "New York No. 1 Lake Park",
+    },
+    {
+      name: "John",
+      tags: ["loser"],
+      at_percentage: 32,
+      T_periods: "New York No. 1 Lake Park",
+      E_students: "New York No. 1 Lake Park",
+    },
+  ];
+
+  const reliefteacherlist = [
+    {
+      title: "Mr.Aruna Rajakumara",
+      percentage: 89,
+    },
+
+    {
+      title: "Mr.Shantha Perera",
+      percentage: 83,
+    },
+    {
+      title: "Mr.Balachandran kumar",
+      percentage: 83,
+    },
+  ];
+
   const { Content } = Layout;
 
   return (
-    <ContentLayout title="Teacher Analysis" paths={["Home", "Teacher"]}>
+    <ContentLayout
+      title="Teacher Perfomance Analysis"
+      paths={["Home", "Student"]}
+    >
       <Content
         className="site-layout-background"
         style={{
@@ -60,7 +105,8 @@ export default function TeacherAnalys() {
         <Row>
           <Col xs={24} xl={24}>
             <Row gutter={16}>
-              <Col span={19}>
+              <Col span={18}>
+                <Card  className="dashcard" title=" Subjects of the School">
                 <Tag name="subject" color="geekblue">
                   <p className="title">Science</p>
                   <p className="item">Teacher</p>
@@ -96,26 +142,31 @@ export default function TeacherAnalys() {
                   <p className="item">Teacher</p>
                   <p className="item">Teacher</p>
                 </Tag>
+                </Card>
               </Col>
 
-              <Col span={5}>
-                <Tag ClassName="Box" color="green">
-                  <p className="relief"> Today Relief Teachers List</p>
-                  <ul>
-                    <li>teacher 1</li>
-                    <li>teacher 1</li>
-                    <li>teacher 1</li>
-                    <li>teacher 1</li>
-                    <li>teacher 1</li>
-                    <li>teacher 1</li>
-                  </ul>
-                </Tag>
+              <Col span={6}>
+                <Card
+                  className="dashcard"
+                  title="Today leave teachers"
+                  style={{ marginBottom: 16 }}
+                >
+                  <List
+                    itemLayout="horizontal"
+                    dataSource={reliefteacherlist}
+                    renderItem={(item) => (
+                      <List.Item>
+                        <List.Item.Meta title={item.title} />
+                      </List.Item>
+                    )}
+                  />
+                </Card>
               </Col>
             </Row>
             <Divider />
             <Search
               className="search"
-              placeholder="input teacher name here"
+              placeholder="Input teacher name here"
               onSearch={onSearch}
               enterButton
             />
@@ -124,18 +175,24 @@ export default function TeacherAnalys() {
 
         <Row>
           <Col xs={24} xl={24}>
-            <Table className="table">
-              <Column title="Teacher name" dataindex="T-name" key="name" />
+            <Table className="table" dataSource={data}>
+              <Column title="Teacher name" dataindex="name" key="name" />
 
-              <ColumnGroup title="Teaching Description">
-                <Column
-                  title="Subject"
-                  dataIndex="subject"
-                  key="subject"
-                  color="black"
-                />
-                <Column title="Grade" dataIndex="grade" key="grade" />
-              </ColumnGroup>
+              <Column
+                title="Tags"
+                dataIndex="tags"
+                key="tags"
+                render={(tags) => (
+                  <>
+                    {tags.map((tag) => (
+                      <Tag color="blue" key={tag}>
+                        {tag}
+                      </Tag>
+                    ))}
+                  </>
+                )}
+              />
+
               <Column
                 title="Attendance Percentage"
                 dataIndex="at_percentage"
@@ -143,54 +200,61 @@ export default function TeacherAnalys() {
               />
               <Column
                 title="Total assigned Periods"
-                dataIndex="T-periodst"
-                key="T-periods"
+                dataIndex="T_periodst"
+                key="T_periods"
               />
               <Column
                 title="Teached Periods out of assigned periods"
-                dataIndex="A-periods"
-                key="A-periods"
+                dataIndex="A_periods"
+                key="A_periods"
               />
               <Column
                 title="Total Students enrolled with class"
-                dataIndex="E-students"
-                key="E-students"
+                dataIndex="E_students"
+                key="E_students"
               />
               <Column
                 title="Activly participated students"
-                dataIndex="A-students"
-                key="A-students"
+                dataIndex="A_students"
+                key="A_students"
               />
             </Table>
           </Col>
-          <divide />
-          <Row>
-            <Card ClassName="box-card">
-              <p ClassName="a-title">
-                {" "}
-                Analysys Report of ......... Subject ............Grade
-              </p>
-
-              <Card>
-                <p ClassName="c-title"> Teacher Attendance Analysys</p>
-                <Progress
-                  ClassName="chart"
-                  type="circle"
-                  percent={75}
-                  format={(percent) => `${percent}% `}
-                />
-
-                <p ClassName="c-title"> Student Attendance Analysys</p>
-                <Progress
-                  ClassName="chart"
-                  type="circle"
-                  percent={75}
-                  format={(percent) => `${percent}% `}
-                />
-              </Card>
-            </Card>
           </Row>
-        </Row>
+          <br />
+          < br />
+          <Row>
+          
+            <Card
+              className="dashcard2"
+              title="Teachers attendance analysis"
+              style={{ marginBottom: 16 }}
+            >
+              <Progress
+                itemLayout="horizontal"
+                ClassName="chart"
+                type="circle"
+                percent={75}
+                format={(percent) => `${percent}% `}
+              />
+              </Card>
+ <Card
+              className="dashcard2"
+              title="Students attendance analysis"
+              style={{ marginBottom: 16 }}
+            >
+              
+              <Progress
+                ClassName="chart"
+                type="circle"
+                percent={75}
+                format={(percent) => `${percent}% `}
+              />
+            </Card>
+
+            
+          </Row>
+        
       </Content>
     </ContentLayout>
   );

@@ -89,8 +89,25 @@ export default function StudentAnalyse() {
 
   const { Content } = Layout;
 
+  const Low_performance_subjects=[
+    {
+      title: "Buddhisum",
+      percentage: 89,
+    },
+
+    {
+      title: "History",
+      percentage: 83,
+    },
+    {
+      title: "Geogrophy",
+      percentage: 83,
+    },
+
+  ];
+
   return (
-    <ContentLayout title="Teacher Analysis" paths={["Home", "Teacher"]}>
+    <ContentLayout title="Student Performance Analysis" paths={["Home", "Teacher"]}>
       <Content
         className="site-layout-background"
         style={{
@@ -102,7 +119,7 @@ export default function StudentAnalyse() {
         <Row>
           <Col xs={24} xl={24}>
             <Row gutter={16}>
-              <Col span={19}>
+              <Col span={18}>
                 <Form>
                   <Form.Item span className="form" name="subject">
                     <Select placeholder="Select Subject">
@@ -131,9 +148,17 @@ export default function StudentAnalyse() {
                 <Bar data={data} options={options} />
               </Col>
 
-              <Col span={5}>
-                <Card>
-                  <p>Low Student Interactive Subjects</p>
+              <Col span={6}>
+                <Card className="dashcard" title="Low Student Interactive Subjects">
+                <List
+                    itemLayout="horizontal"
+                    dataSource={Low_performance_subjects}
+                    renderItem={(item) => (
+                      <List.Item>
+                        <List.Item.Meta title={item.title} />
+                      </List.Item>
+                    )}
+                  />
                 </Card>
               </Col>
             </Row>

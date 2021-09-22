@@ -33,7 +33,7 @@
     font-size: 24;
     
     font-weight: bold;
-    background-color: rgb(160, 181, 207);
+    background: linear-gradient(90deg, #3443f3 0%, #00d2ff 100%);
     padding: 5px;
     border-radius:8px ;
     
@@ -55,3 +55,17 @@
     padding: 8px;
     margin-top: 10px;
 }
+
+.dashcard {
+    border-radius: 5px;
+    border: #00d2ff 1px solid;
+    //   border-left: #3443f3 2px solid;
+    background: linear-gradient(90deg, #3443f3 0%, #00d2ff 100%);
+    .ant-card-body {
+      background-color: aliceblue;
+    }
+    .ant-card-head {
+      color: #fff;
+    }
+  }
+  
