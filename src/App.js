@@ -22,6 +22,7 @@ import SideBar from "components/SideBars";
 import PublicRoute from "utils/PublicRoute";
 import ForgotPass from "pages/ForgotPass";
 import NotificationComponent from "components/NotificationComponent";
+import logo from "img/knowledgeHUB4.png";
 
 function App() {
   const [currentUser, setCurrentUser] = useState();
@@ -56,7 +57,7 @@ function App() {
         <Affix>
           <Layout.Header className="header">
             <div className="logo" onClick={() => history.push("/dashboard")}>
-              KH
+            <img src={logo} alt="logo" />
             </div>
 
             {currentUser ? (

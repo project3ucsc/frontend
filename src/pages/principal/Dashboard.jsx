@@ -69,33 +69,33 @@ const bestteacherlist = [
     percentage: 89,
   },
   {
-    title: "Ant Design Title 2",
+    title: "Ms.Samantha Fernando",
     percentage: 84,
   },
   {
-    title: "Ant Design Title 3",
+    title: "Mr.Ajantha Muthukumarana",
     percentage: 83,
   },
   {
-    title: "Ant Design Title 4",
+    title: "Ms.Malika Chandrasekara",
     percentage: 83,
   },
 ];
 const worstteacherlist = [
   {
-    title: "Mr.Atukorala",
+    title: "Mr.Namal Bandara",
     percentage: 35,
   },
   {
-    title: "Ant Design Title 2",
+    title: "Ms.Kamalanath Jayasinghe",
     percentage: 42,
   },
   {
-    title: "Ant Design Title 3",
+    title: "Mr.Mahesh Jayanath",
     percentage: 43,
   },
   {
-    title: "Ant Design Title 4",
+    title: "Mr.Madushanka Perera",
     percentage: 46,
   },
 ];
