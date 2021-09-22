@@ -358,9 +358,11 @@ export default function Dashboard() {
                   </Card>
                 </Col>
               </Row>
+
             ) : (
               <Spin {...spinStyle} />
             )}
+
           </Col>
         </Row>
       </Content>

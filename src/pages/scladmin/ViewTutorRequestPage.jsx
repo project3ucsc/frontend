@@ -45,7 +45,7 @@ export default function ViewTutorRequestPage() {
         message.error(e.response.data.message);
       });
 
-    // console.log(data);
+    console.log(activeList);
   }, []);
 
   const onListitemClick = async (e) => {

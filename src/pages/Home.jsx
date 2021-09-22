@@ -15,10 +15,20 @@ import {
   Input,
   Space,
   Spin,
+  Table,
+  Tag,
+  Descriptions,
+  Avatar,
 } from "antd";
 //import ContentLayout from "components/ContentLayout";
 
-import { DownOutlined } from "@ant-design/icons";
+import {
+  DownOutlined,
+  ClockCircleOutlined,
+  FieldTimeOutlined,
+  EllipsisOutlined,
+  CalendarOutlined,
+} from "@ant-design/icons";
 import "./Home.scss";
 import axios from "axios";
 import { apiurl, spinStyle } from "utils/common";
@@ -28,6 +38,7 @@ const { Content } = Layout;
 const { TabPane } = Tabs;
 const { Search } = Input;
 const { Meta } = Card;
+const { Column, ColumnGroup } = Table;
 
 const progtype = {
   tv: "tv",

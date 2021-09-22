@@ -5,6 +5,7 @@ import NotFound404 from "pages/NotFound404";
 import NewSclAdminReq from "pages/principal/NewSclAdminReq";
 import Profile from "pages/student/Profile";
 import TeacherAnalys from "pages/principal/TeacherAnalys";
+import StudentAnalyse from "pages/principal/StudentAnalyse";
 
 export default function PrincipalRouter() {
   return (
@@ -12,6 +13,7 @@ export default function PrincipalRouter() {
       <Switch>
         <Route exact path="/dashboard" component={Dashboard} />
         <Route exact path="/TeacherAnalys" component={TeacherAnalys}/>
+        <Route exact path="/StudentAnalyse" component={StudentAnalyse}/>
         <Route exact path="/SclAdminManagement" component={NewSclAdminReq} />
         <Route exact path="/profile" component={Profile} />
         <Route component={NotFound404} />
