@@ -1,6 +1,9 @@
-.site-card-wrapper {
+.tuition-card {
   display: flex;
   flex-wrap: wrap;
+  padding-inline: 20px;
+  padding-bottom: 10px;
+  font: black;
 }
 .details {
   //font-family: source-serif-pro;
@@ -13,7 +16,7 @@
 
 
 .title {
-  margin-top: 5px;
+  margin-top: 10px;
   font-size: 20px;
   font-display: bold;
 
@@ -35,7 +38,10 @@
 $cardwidth: 280px;
 
 .card-body1{
-    background-color: rgb(212, 222, 231);
+    padding-inline: 15px;
+    
+    padding-bottom: 10px;
+    //background-color: rgb(212, 222, 231);
     border-radius: 10px;
    width: $cardwidth;
     
@@ -60,7 +66,7 @@ font-size: 16px;
 }
 
 .card-body2{
-    background-color: rgb(243, 229, 204);
+    //background-color: rgb(243, 229, 204);
     border-radius: 10px;  
    width: $cardwidth;
     
@@ -86,7 +92,7 @@ font-size: 16px;
 
 .card-body3{
    width: $cardwidth;
-    background-color: rgb(210, 205, 219);
+    //background-color: rgb(210, 205, 219);
     border-radius: 10px;   
     
     :hover{

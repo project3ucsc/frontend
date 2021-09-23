@@ -153,6 +153,9 @@ export default function Profile() {
               <Form.Item label="Phone number" name="phone">
                 <Input disabled={isDisable} />
               </Form.Item>
+              <Form.Item label="Adreess" name="adr">
+                <Input disabled={isDisable} />
+              </Form.Item>
 
               <Form.Item label="Gender" name="gender">
                 <Select disabled={isDisable} placeholder="select your gender">

@@ -28,7 +28,7 @@ export default function TeacherSideBar() {
           (item) => teacher_id === item.classroom.classteacher_id
         );
         console.log("cls", classroom);
-        if (classroom !== null) {
+        if (classroom) {
           setIsClsT(true);
           localStorage.setItem(
             "tclsname",
