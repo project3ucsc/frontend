@@ -17,19 +17,12 @@ import classroomservice from "services/classroom.service";
 
 var adata = [
   {
-    title: "Last Chemistry quiz results released",
-    dis: "10 hour ago",
-    moredis: "Grade 9 mathematics time slot will be changed...",
+    title: "Tuesday break",
+    dis: "There will not be any academic activities on next Tuesday",
   },
   {
-    title: "Today Com.Maths period will be late for an one hour",
-    dis: "22 hour ago",
-    moredis: "Grade 9 mathematics time slot will be changed...",
-  },
-  {
-    title: "Next Friday have online quiz for Physics",
-    dis: "2 days ago",
-    moredis: "Grade 9 mathematics time slot will be changed...",
+    title: "Meeting for all teachers",
+    dis: "Please participate for the tomorrow meeting which will e held on tomorrow 10.00am to 11.00am",
   },
 ];
 
