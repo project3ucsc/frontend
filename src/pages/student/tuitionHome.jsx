@@ -69,7 +69,7 @@ export default function TuitionHome() {
                   />
                 </Space>
                 <Divider />
-                <div className="tuition-card">
+                
                   {classes.map((cls, i) => {
                     return <TutionCardStu cls={cls} key={i} i={i} />;
                   })}
@@ -84,4 +84,4 @@ export default function TuitionHome() {
       </Content>
     </ContentLayout>
   );
-                }
+}
