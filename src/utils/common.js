@@ -72,6 +72,14 @@ export const enum_tutorschool_req = {
   active: "b",
   rejected: "c",
 };
+
+export const enum_payment = {
+  notpaid: "a",
+  paid: "b",
+  accepted: "c",
+  rejected: "d",
+}
+
 export const spinStyle = { style: { marginLeft: "35vw", marginTop: "20vh" } };
 
 var datemap = new Map();

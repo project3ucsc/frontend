@@ -11,6 +11,7 @@ import {
   Image,
   Descriptions,
   Select,
+  Spin,
 } from "antd";
 
 import { Form, Input, message } from "antd";
@@ -21,73 +22,23 @@ import authenticationservice from "services/authentication.service";
 
 import ContentLayout from "components/ContentLayout";
 import "./PaymentSlipCheck.scss";
+import {enum_payment } from "utils/common";
+import { getFileUrl } from "services/azureblob.service";
 
 const { Content } = Layout;
 const { Option } = Select;
-
-const paidList = [
-  {
-    id: 1001,
-    name: "Shashini Tharuka",
-    email: "shashinit@gmail.com",
-    telnum: "0710019452",
-    submit: "03-09-2021",
-  },
-  {
-    id: 1002,
-    name: "Lakshan Sandaruwan",
-    email: "lakshan@gmail.com",
-    telnum: "0718519452",
-    submit: "01-09-2021",
-  },
-  {
-    id: 1003,
-    name: "Shamali Sathindra",
-    email: "shamali@gmail.com",
-    telnum: "0718919452",
-    submit: "08-09-2021",
-  },
-  {
-    id: 1004,
-    name: "Sewwandi Navodya",
-    email: "sewwandi@gmail.com",
-    telnum: "0710011022",
-    submit: "12-09-2021",
-  },
-];
-
-const notPaidList = [
-  {
-    id: 1021,
-    name: "Thenura Perera",
-    email: "thenura@gmail.com",
-    telnum: "0711519452",
-  },
-  {
-    id: 1007,
-    name: "Mewantha Fernando",
-    email: "mewantha@gmail.com",
-    telnum: "0718009452",
-  },
-  {
-    id: 1008,
-    name: "Sahan Viraj",
-    email: "sahanviraj@gmail.com",
-    telnum: "0718519300",
-  },
-  {
-    id: 1015,
-    name: "Chethaka Kalmith",
-    email: "chethaka@gmail.com",
-    telnum: "0779519452",
-  },
-];
 
 export default function ManagePayments() {
   const [classRoom, setClassRooms] = useState([]);
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
   const [, forceUpdate] = useState({});
+
+  const [paidList, setPaidList] = useState([]);
+  const [notpaidList, setNotPaidList] = useState([]);
+  const [modalData, setModalData] = useState(null);
+  const [mdataLoading, setMdataLoading] = useState(true);
+  
 
   // To disable submit button at the beginning.
   useEffect(() => {
@@ -106,29 +57,127 @@ export default function ManagePayments() {
 
   const onFinish = async (values) => {
     console.log("Success:", values);
-    try {
-      setLoading(true);
-
-      setLoading(false);
-    } catch (error) {}
+    axios
+      .get(`${apiurl}/tutor/tutorpayment/all`, authHeader())
+      .then((res) => {
+        setPaidList(res.data.paid);
+        setNotPaidList(res.data.notpaid);
+        //console.log(res.data.paid);
+        //console.log(res.data.notpaid);
+      })
+      .catch((e) => {
+        message.error(e.response.data.message);
+      });    
   };
 
   const [paidvisible, setpaidvisible] = useState(false);
   const [notpaidvisible, setnotpaidvisible] = useState(false);
 
+  //view the modal for the paid items
+  const onclickpaiditem = async (e) => {
+    try {
+      const paymntid = e.currentTarget.id;
+      setMdataLoading(true);
+      const { data } = await axios.get(
+        `${apiurl}/tutor/tutorpayment/${paymntid}`,
+        authHeader()
+      );
+      console.log(data);
+      setModalData(data);
+      setMdataLoading(false);
+
+      setpaidvisible(true);
+    } catch (e) {
+      message.error(e.response.data.message);
+    }
+  };
+
+  //view the modal for the not paid items
+  const onclicknotpaiditem = async (e) => {
+    try {
+      const paymntid = e.currentTarget.id;
+      setMdataLoading(true);
+      const { data } = await axios.get(
+        `${apiurl}/tutor/tutorpayment/${paymntid}`,
+        authHeader()
+      );
+      console.log(data);
+      setModalData(data);
+      setMdataLoading(false);
+      //setMdataLoading(true);
+
+      setnotpaidvisible(true);
+    } catch (e) {
+      //message.error(e.response.data.message);
+    }
+  };
+
+  const onApprove = async () => {
+    try {
+      // change db
+
+      await axios.patch(
+        `${apiurl}/tutor/tutorpayment/status`,
+        { id: modalData.id, status: enum_payment.accepted },
+        authHeader()
+      );
+      setpaidvisible(false);
+      message.success("Accepted the students payment successfully");
+
+      
+    } catch (e) {
+      message.error(e.response.data.message);
+    }
+  };
+
+  const onReject = async () => {
+    try {
+      await axios.patch(
+        `${apiurl}/tutor/tutorpayment/status`,
+        { id: modalData.id, status: enum_payment.rejected },
+        authHeader()
+      );
+      setpaidvisible(false);
+      message.success("Rejected the students payment successfully");
+
+      // update ui
+      const activedstu = paidList.find(
+        (student) => student.id === modalData.id
+      );
+      setNotPaidList([...notpaidList, activedstu]);
+      setPaidList(
+        paidList.filter((student) => student.id !== modalData.id)
+      );
+      
+    } catch (error) {
+      message.error(error.message);
+    }
+  };
+
+  {/*setPendingList(
+    pendingList.filter((student) => student.id !== modalData.id)
+  );
+  setActiveList(
+    activeList.filter((student) => student.id !== modalData.id)
+  );*/}
+  
+
   return (
     <ContentLayout title="Manage Payments" paths={["Home", "Manage Payments"]}>
+
+      {/* Modal for the paid items*/}
       <Modal
         visible={paidvisible}
         onCancel={() => setpaidvisible(false)}
-        footer={[
+        footer={
+          [
           <Button key="back" onClick={() => setpaidvisible(false)}>
             Cancel
           </Button>,
-          <Button danger key="" onClick={() => setpaidvisible(false)}>
+          <Button danger key="" onClick={onReject}>
             Reject
           </Button>,
-          <Button type="primary" key="" onClick={() => setpaidvisible(false)}>
+          <Button type="primary" key="" onClick={onApprove}>
             Approve
           </Button>,
         ]}
@@ -136,31 +185,32 @@ export default function ManagePayments() {
         <Image
           width={450}
           height={200}
-          src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+         // src= {getFileUrl(modalData.filename)}
+          
+          
         />
-
+      {!mdataLoading ? (
         <Descriptions>
-          <Descriptions.Item label="Student ID">1001</Descriptions.Item>
+          <Descriptions.Item label="Student ID">{modalData.student.id}</Descriptions.Item>
           <Descriptions.Item label="Name" span={3}>
-            Shashini Tharuka
+              {modalData.student.username}
           </Descriptions.Item>
           <Descriptions.Item label="Email" span={3}>
-            shashini@gamil.com
+            {modalData.student.email}
           </Descriptions.Item>
           <Descriptions.Item label="Contact Number" span={3}>
-            0718956123
+            {modalData.student.phone}
           </Descriptions.Item>
-          <Descriptions.Item label="Submitted Date" span={3}>
+         {/* <Descriptions.Item label="Submitted Date" span={3}>
             13-09-2021
-          </Descriptions.Item>
+          </Descriptions.Item>*/}
         </Descriptions>
-
-        {/* <p><b>Student ID :</b>   </p>
-                <p><b>Name : </b>   </p>
-                <p><b>Email :</b>    </p>
-                <p><b>Contact Number :</b>   </p>
-                <p><b>Submitted Date :</b>   </p>*/}
+        ) : (
+          <Spin />
+        )}
       </Modal>
+
+      {/* Modal for the not paid items*/}
       <Modal
         visible={notpaidvisible}
         onCancel={() => setnotpaidvisible(false)}
@@ -173,24 +223,24 @@ export default function ManagePayments() {
           </Button>,
         ]}
       >
+        {!mdataLoading ? (
         <Descriptions>
-          <Descriptions.Item label="Student ID">1021</Descriptions.Item>
+          <Descriptions.Item label="Student ID">{modalData.student.id}</Descriptions.Item>
           <Descriptions.Item label="Name" span={3}>
-            Sahan Viraj
+             {modalData.student.username}
           </Descriptions.Item>
           <Descriptions.Item label="Email" span={3}>
-            sahanviraj@gamil.com
+            {modalData.student.email}
           </Descriptions.Item>
           <Descriptions.Item label="Contact Number" span={3}>
-            0718956123
+            {modalData.student.phone}
           </Descriptions.Item>
         </Descriptions>
-
-        {/*<p><b>Student ID :</b> </p>
-                <p><b>Name : </b>      </p>
-                <p><b>Email : </b>     </p>
-                <p><b>Contact Number : </b>  </p>*/}
+        ) : (
+          <Spin />
+        )}
       </Modal>
+
       <Content
         // className="site-layout-background"
         style={{
@@ -202,7 +252,7 @@ export default function ManagePayments() {
         <Card style={{ marginBottom: 10 }}>
           <Form form={form} layout="inline" onFinish={onFinish}>
             <Form.Item
-              name="pclass"
+              name="pclassid"
               label="Class"
               rules={[{ required: true, message: "Please select class!" }]}
             >
@@ -215,18 +265,7 @@ export default function ManagePayments() {
                 ))}
               </Select>
             </Form.Item>
-            {/* <Form.Item
-              name="grade"
-              rules={[{ required: true, message: "Please input grade!" }]}
-            >
-              <Input
-                type="number"
-                min="1"
-                max="13"
-                placeholder="Grade"
-                width="400"
-              />
-            </Form.Item> */}
+            
             <Form.Item
               name="month"
               label="Month"
@@ -267,6 +306,8 @@ export default function ManagePayments() {
             </Form.Item>
           </Form>
         </Card>
+
+
         <Row gutter="10">
           <Col xs={24} xl={12}>
             <Card title="Paid Students" className="paymentcard">
@@ -274,7 +315,12 @@ export default function ManagePayments() {
                 itemLayout="horizontal"
                 dataSource={paidList}
                 renderItem={(item) => (
-                  <List.Item onClick={() => setpaidvisible(true)}>
+                  <List.Item 
+                    key={item.id}
+                    id={item.id}
+                    //onClick={() => setpaidvisible(true)}
+                    onClick={onclickpaiditem}
+                  >
                     <List.Item.Meta
                       avatar={
                         <Avatar
@@ -282,8 +328,8 @@ export default function ManagePayments() {
                           src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
                         />
                       }
-                      title={item.id + "      " + item.name}
-                      description={"Submit Date -   " + item.submit}
+                      title={item.student.username}
+                      description={item.student.phone}
                     />
                   </List.Item>
                 )}
@@ -295,9 +341,14 @@ export default function ManagePayments() {
             <Card title="Not Paid Students" className="paymentcard">
               <List
                 itemLayout="horizontal"
-                dataSource={notPaidList}
+                dataSource={notpaidList}
                 renderItem={(item) => (
-                  <List.Item onClick={() => setnotpaidvisible(true)}>
+                  <List.Item 
+                    key={item.id}
+                    id={item.id}
+                    //onClick={() => setpaidvisible(true)}
+                    onClick={onclicknotpaiditem}
+                  >
                     <List.Item.Meta
                       avatar={
                         <Avatar
@@ -305,8 +356,8 @@ export default function ManagePayments() {
                           src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
                         />
                       }
-                      title={item.id + "      " + item.name}
-                      description={item.telnum}
+                      title={item.student.username}
+                      description={item.student.phone}
                     />
                   </List.Item>
                 )}
