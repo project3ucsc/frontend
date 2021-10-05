@@ -4,11 +4,11 @@
  
  ## Group Members 
  
- #####   18000738   2018/CS/073   L.D.L.S. Jayasinghe
- #####   18000614   2018/CS/061   R.M.D.S. Harischandra
- #####   18001513   2018/CS/151   G.R.N. Sankalani
- #####   18020712   2018/IS/071   P.R.S.T. Sandeepani
- #####   18020722   2018/IS/072   G.T.S. Sathindra
+ #####   18000738      L.D.L.S. Jayasinghe
+ #####   18000614      R.M.D.S. Harischandra
+ #####   18001513      G.R.N. Sankalani
+ #####   18020712      P.R.S.T. Sandeepani
+ #####   18020722      G.T.S. Sathindra
 
 
 ## Configure the FrontEnd
@@ -42,11 +42,11 @@
     $ npm run build
 
 ### Step 05.2
-  #### To run this build you need ‘serve’, To install it:
+  #### To run this build you need ‘serve’. To install it,
     $ npm i serve 
 
 ### Step 05.3
-  #### To run the production build:
+  #### To run the production build
     $ serve -s build
 
 
