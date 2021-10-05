@@ -31,22 +31,22 @@
 
   #### If you running the backend server in a different host, You need to change the value of apiurl constant in ‘/src/utils/common.js’ file
 
-### Step 05:
+### Step 05
   #### Then to run the development build
     $ npm start
     
   ## To run the production build:
 
-  #### Step 05.1
-   ##### To create an optimized build of the app in the build folder
+  ### Step 05.1
+   #### To create an optimized build of the app in the build folder
     $ npm run build
 
-#### Step 05.2
-  ##### To run this build you need ‘serve’. To install it,
+### Step 05.2
+  #### To run this build you need ‘serve’. To install it,
     $ npm i serve 
 
-#### Step 05.3
-  ##### To run the production build
+### Step 05.3
+  #### To run the production build
     $ serve -s build
 
 
