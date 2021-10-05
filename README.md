@@ -13,6 +13,10 @@
 |18020712  |P.R.S.T. Sandeepani  |
 |18020722  |G.T.S. Sathindra     |
 
+## Description
+ #### Knowledge Hub is a web application which provides a platform for teachers and students to do their distance learning process efficiently for multiple schools.Multiple schools can create their learning management system through this system.
+ 
+   ##### This is the frontend repository. We use react.js library.
 
 ## Configure the FrontEnd
 
