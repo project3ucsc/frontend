@@ -1,3 +1,11 @@
+#### team member details 
+
+ R.M.D.S. Harishchandra | 2018/CS/061 | 18000614
+ L.D.L.S. Jayasinghe    | 2018/CS/073 | 18000738
+ G.R.N. Sankalani       | 2018/CS/151 | 18001513
+ P.R.S.T .Sandeepani    | 2018/IS/071 | 18020712
+ G.T.S. Sathindra       | 2018/IS/072 | 18020722
+ 
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
